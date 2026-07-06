@@ -5,34 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="刘万正的 AI 产品博客与实验索引，聚焦 Agent、多轮对话、模型评测与 AIGC 产品。"
+      content="刘万正的 AI 产品作品集，聚焦 Agent、多轮对话、模型评测与 AIGC 产品。"
     />
-    <title>刘万正 - AI Product Experiments</title>
+    <title>刘万正 - AI Product Portfolio</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
     <header class="header">
-      <a class="logo" href="#index" aria-label="回到 Index">
+      <a class="logo" href="#index" aria-label="回到首页">
         <span class="logo-grid" aria-hidden="true">
           <i></i><i></i><i></i><i></i>
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="#index">Index</a>
-        <a href="#articles">Articles</a>
+        <a href="#index">展示</a>
+        <a href="#about">介绍</a>
+        <a href="#work">经历</a>
+        <a href="#projects">项目</a>
+        <a href="#message">留言</a>
         <button id="openCommand" type="button">Cmd</button>
-        <a href="mailto:1584365828@qq.com">Ask</a>
       </nav>
     </header>
 
     <main class="grid-shell">
-      <section class="scene-section" id="index" aria-label="Interactive index scene">
+      <section class="scene-section" id="index" aria-label="Interactive hero">
         <canvas id="scene"></canvas>
         <div class="viewfinder" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
         </div>
         <div class="scene-vignette" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p>AI Product / Agent UX / Model Evaluation</p>
+          <h1>刘万正</h1>
+          <span>把复杂 AI 能力，做成可理解、可验证、可复盘的产品体验。</span>
+        </div>
         <div class="scene-caption">
           <span>Agent</span>
           <span>Evaluation</span>
@@ -41,67 +48,69 @@
         </div>
       </section>
 
-      <section class="intro">
+      <section class="intro glass-section" id="about">
         <div>
-          <h1>Experiments and essays on AI product systems.</h1>
+          <h2>总体介绍</h2>
           <p>
             Hi 我是 <strong>刘万正</strong>，北京理工大学产品设计硕士，AI 产品经理。
-            这里整理我在 Agent、多轮对话、模型评测、AIGC 消费产品里做过的项目，以及我希望写给自己的交互式文章。
+            这里整理我在 Agent、多轮对话、模型评测、AIGC 消费产品里做过的项目，
+            以及我希望写给自己的交互式文章。
           </p>
         </div>
         <p>
-          每个项目都尝试把复杂问题拆成可以被理解的链路：用户动机、模型能力目标、评测口径、原型验证和反馈闭环。
-          我希望这个站点像一个小型实验笔记本：有清晰的文字，也有能拖动、能观察、能复盘的 playground。
+          每个项目都尝试把复杂问题拆成可以被理解的链路：用户动机、模型能力目标、
+          评测口径、原型验证和反馈闭环。我希望这个站点像一个小型实验笔记本：
+          有清晰的文字，也有能拖动、能观察、能复盘的 playground。
         </p>
       </section>
 
-      <section class="articles" id="articles" aria-label="Articles and experiments">
+      <section class="articles" id="work" aria-label="Internship and work experience">
+        <div class="section-kicker">Internship / Work</div>
         <div class="year-group" data-year-group>
           <button class="year-label" type="button">2026</button>
-          <a class="article-link" href="#agent-feedback">
-            <span class="article-title" data-scramble>AI Agent 多任务执行体验</span>
-            <span class="article-subtitle">低打扰、可感知、可恢复的任务反馈系统</span>
-            <time>Jul 05</time>
-          </a>
-          <a class="article-link" href="#stock-party">
-            <span class="article-title" data-scramble>《我不是股神》AI 股票派对游戏</span>
-            <span class="article-subtitle">游戏化学习 + 熟人社交 + AI 复盘官</span>
-            <time>May 18</time>
-          </a>
-          <a class="article-link" href="#digital-human">
-            <span class="article-title" data-scramble>TeleStudio 实时交互数字人模块</span>
-            <span class="article-subtitle">数字人设置、实时交互、状态流转和验收口径</span>
-            <time>Mar 22</time>
-          </a>
+          <button class="article-link experience-trigger" type="button" data-experience="xiaomi">
+            <span class="article-title" data-scramble>AI 创新产品经理 · 小米</span>
+            <span class="article-subtitle">智能硬件与 AI 生态 | AI Agent 多任务执行体验与 Codex 宠物生态方向验证</span>
+            <time>2026/4 - 2026/7</time>
+          </button>
         </div>
 
         <div class="year-group" data-year-group>
           <button class="year-label" type="button">2025</button>
-          <a class="article-link" href="#chat-eval">
-            <span class="article-title" data-scramble>聊天扮演理想态与模型评测</span>
-            <span class="article-subtitle">从“聊得好”到多轮连贯性、主动性和人设稳定</span>
-            <time>Sep 12</time>
-          </a>
-          <a class="article-link" href="#slang-sft">
-            <span class="article-title" data-scramble>俚语理解 badcase 到 SFT 数据</span>
-            <span class="article-subtitle">500+ query、100+ response 与训练前后盲评</span>
-            <time>Aug 21</time>
-          </a>
-          <a class="article-link" href="#buding">
-            <span class="article-title" data-scramble>布叮 AI：AIGC 动态表情包小程序 0-1</span>
-            <span class="article-subtitle">1 个月上线，200+ 新增用户，13 位首次付费用户</span>
-            <time>Mar 03</time>
-          </a>
+          <button class="article-link experience-trigger" type="button" data-experience="baidu">
+            <span class="article-title" data-scramble>大模型策略产品经理 · 百度</span>
+            <span class="article-subtitle">文心一言 | 聊天扮演理想态调研、模型评测与端功能设计</span>
+            <time>2025/5 - 2025/9</time>
+          </button>
         </div>
 
         <div class="year-group" data-year-group>
           <button class="year-label" type="button">2024</button>
-          <a class="article-link" href="#mvp-funnel">
-            <span class="article-title" data-scramble>AIGC MVP 漏斗：先验证情绪，再验证功能</span>
-            <span class="article-subtitle">小红书内容投放、微信落地页、客服沟通与风格偏好</span>
-            <time>Dec 27</time>
-          </a>
+          <button class="article-link experience-trigger" type="button" data-experience="buding">
+            <span class="article-title" data-scramble>AIGC 产品经理 · 扩散未来</span>
+            <span class="article-subtitle">AIGC 创业公司 | 动态表情包小程序“布叮 AI”0-1 上线</span>
+            <time>2024/12 - 2025/3</time>
+          </button>
         </div>
+      </section>
+
+      <section class="project-board" id="projects">
+        <div class="section-kicker">Projects</div>
+        <a class="project-card" href="#agent-feedback">
+          <span>01</span>
+          <h3>AI Agent 多任务执行体验</h3>
+          <p>低打扰、可感知、可恢复的任务反馈系统。</p>
+        </a>
+        <a class="project-card" href="#agent-feedback">
+          <span>02</span>
+          <h3>《我不是股神》AI 股票派对游戏</h3>
+          <p>清华黑客松最佳创意奖，游戏化学习 + 熟人社交 + AI 复盘。</p>
+        </a>
+        <a class="project-card" href="#agent-feedback">
+          <span>03</span>
+          <h3>TeleStudio 实时交互数字人模块</h3>
+          <p>数字人设置、实时交互、状态流转、合规与 corner case。</p>
+        </a>
       </section>
 
       <section class="post-preview" id="agent-feedback">
@@ -134,6 +143,20 @@
         </div>
       </section>
 
+      <section class="message" id="message">
+        <div>
+          <span class="eyebrow">Message board</span>
+          <h2>留言板</h2>
+          <p>这里先做成静态留言入口：后续可以接表单服务、飞书多维表格或 GitHub Issues。</p>
+        </div>
+        <form class="message-form">
+          <input type="text" placeholder="你的名字" />
+          <input type="email" placeholder="邮箱 / 联系方式" />
+          <textarea placeholder="想聊的问题、合作方向或反馈"></textarea>
+          <a href="mailto:1584365828@qq.com">发送邮件</a>
+        </form>
+      </section>
+
       <footer class="footer">
         <div>
           <span>Metadata</span>
@@ -155,11 +178,24 @@
       </footer>
     </main>
 
+    <dialog class="experience-modal" id="experienceModal">
+      <article class="experience-sheet">
+        <button class="modal-close" id="closeExperience" type="button" aria-label="关闭详情">×</button>
+        <p class="modal-kicker" id="modalKicker">Experience</p>
+        <h2 id="modalTitle">经历详情</h2>
+        <p class="modal-meta" id="modalMeta"></p>
+        <div class="modal-body" id="modalBody"></div>
+      </article>
+    </dialog>
+
     <dialog class="command" id="command">
       <div class="command-box">
         <input id="commandInput" type="search" placeholder="Search pages and experiments..." />
         <a href="#index">Index</a>
-        <a href="#articles">Articles</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#message">Message</a>
         <a href="#agent-feedback">Agent feedback tuner</a>
         <a href="mailto:1584365828@qq.com">Ask by email</a>
       </div>
