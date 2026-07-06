@@ -175,10 +175,7 @@ textarea {
   overflow: hidden;
   border-bottom-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
-  background:
-    radial-gradient(circle at 50% 38%, rgba(65, 87, 255, 0.18), transparent 31rem),
-    radial-gradient(circle at 34% 62%, rgba(0, 168, 143, 0.14), transparent 26rem),
-    linear-gradient(180deg, #ffffff 0%, #f7f6f1 82%);
+  background: linear-gradient(180deg, #ffffff 0%, #f9f8f4 70%, #f2f0e9 100%);
 }
 
 #scene {
@@ -193,8 +190,8 @@ textarea {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(247, 246, 241, 0) 45%, var(--bg) 100%),
-    radial-gradient(circle at 50% 45%, transparent 0 34%, rgba(247, 246, 241, 0.76) 88%);
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0) 24%, rgba(247, 246, 241, 0) 62%, var(--bg) 100%),
+    radial-gradient(circle at 50% 52%, transparent 0 43%, rgba(247, 246, 241, 0.52) 92%);
 }
 
 .viewfinder {
@@ -242,12 +239,13 @@ textarea {
 
 .hero-copy {
   position: absolute;
-  top: 31%;
+  top: 21%;
   left: 50%;
   z-index: 2;
   width: min(760px, calc(100vw - 36px));
   text-align: center;
   transform: translate(-50%, -48%);
+  pointer-events: none;
   will-change: opacity, transform, filter;
 }
 
@@ -264,19 +262,21 @@ textarea {
 .hero-copy h1 {
   margin: 0;
   color: var(--text);
-  font-size: clamp(72px, 10vw, 132px);
+  font-size: clamp(62px, 9vw, 118px);
   line-height: 0.88;
   letter-spacing: 0;
+  text-shadow: 0 12px 34px rgba(255, 255, 255, 0.9), 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .hero-copy span {
   display: block;
-  max-width: 640px;
-  margin: 16px auto 0;
-  color: var(--soft);
-  font-size: clamp(18px, 2vw, 24px);
+  max-width: 590px;
+  margin: 12px auto 0;
+  color: rgba(55, 55, 47, 0.74);
+  font-size: clamp(16px, 1.7vw, 21px);
   font-weight: 720;
-  line-height: 1.5;
+  line-height: 1.48;
+  text-shadow: 0 10px 28px rgba(255, 255, 255, 0.95);
 }
 
 .scene-caption {
@@ -935,12 +935,18 @@ h2 {
     min-height: 640px;
   }
 
+  .hero-copy {
+    top: 24%;
+    width: min(520px, calc(100vw - 28px));
+  }
+
   .hero-copy h1 {
-    font-size: clamp(62px, 19vw, 92px);
+    font-size: clamp(50px, 17vw, 82px);
   }
 
   .hero-copy span {
-    font-size: 17px;
+    max-width: 360px;
+    font-size: 16px;
   }
 
   .scene-caption {

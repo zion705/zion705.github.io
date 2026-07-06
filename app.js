@@ -1,6 +1,7 @@
 const canvas = document.querySelector("#scene");
 const ctx = canvas.getContext("2d");
-const pointer = { x: 0.5, y: 0.52, active: false };
+const pointer = { x: 0.5, y: 0.52, targetX: 0.5, targetY: 0.52, active: false };
+const revealTrail = [];
 let width = 0;
 let height = 0;
 let dpr = 1;
@@ -56,29 +57,51 @@ function drawImageCover(context, img) {
 function paintRevealMask(time) {
   maskCtx.save();
   maskCtx.globalCompositeOperation = "destination-out";
-  maskCtx.fillStyle = "rgba(0, 0, 0, 0.035)";
+  maskCtx.fillStyle = pointer.active ? "rgba(0, 0, 0, 0.026)" : "rgba(0, 0, 0, 0.05)";
   maskCtx.fillRect(0, 0, width, height);
   maskCtx.restore();
 
   if (!pointer.active) return;
 
+  pointer.x += (pointer.targetX - pointer.x) * 0.18;
+  pointer.y += (pointer.targetY - pointer.y) * 0.18;
+
   const x = pointer.x * width;
   const y = pointer.y * height;
-  const pulse = Math.sin(time * 0.004) * 8;
-  const radius = Math.min(width, height) * 0.17 + pulse;
+  const dx = (pointer.targetX - pointer.x) * width;
+  const dy = (pointer.targetY - pointer.y) * height;
+  const speed = Math.min(Math.hypot(dx, dy), 80);
+  const pulse = Math.sin(time * 0.0034) * 7;
+  const radius = Math.min(width, height) * 0.155 + speed * 0.52 + pulse;
+
+  revealTrail.unshift({ x, y, radius, time });
+  if (revealTrail.length > 15) revealTrail.pop();
 
   maskCtx.save();
   maskCtx.globalCompositeOperation = "source-over";
 
-  const outer = maskCtx.createRadialGradient(x, y, radius * 0.08, x, y, radius);
-  outer.addColorStop(0, "rgba(255,255,255,0.95)");
-  outer.addColorStop(0.38, "rgba(255,255,255,0.72)");
-  outer.addColorStop(0.72, "rgba(255,255,255,0.22)");
-  outer.addColorStop(1, "rgba(255,255,255,0)");
-  maskCtx.fillStyle = outer;
-  maskCtx.beginPath();
-  maskCtx.arc(x, y, radius, 0, Math.PI * 2);
-  maskCtx.fill();
+  revealTrail.forEach((point, index) => {
+    const age = index / revealTrail.length;
+    const alpha = Math.max(0, 1 - age * 1.1);
+    const trailRadius = point.radius * (1 - age * 0.32);
+    const outer = maskCtx.createRadialGradient(point.x, point.y, trailRadius * 0.05, point.x, point.y, trailRadius);
+    outer.addColorStop(0, `rgba(255,255,255,${0.9 * alpha})`);
+    outer.addColorStop(0.28, `rgba(255,255,255,${0.66 * alpha})`);
+    outer.addColorStop(0.62, `rgba(255,255,255,${0.22 * alpha})`);
+    outer.addColorStop(1, "rgba(255,255,255,0)");
+    maskCtx.fillStyle = outer;
+    maskCtx.beginPath();
+    maskCtx.ellipse(
+      point.x,
+      point.y,
+      trailRadius * (1.08 + speed / 360),
+      trailRadius * 0.78,
+      Math.atan2(dy, dx || 0.001) * 0.18,
+      0,
+      Math.PI * 2
+    );
+    maskCtx.fill();
+  });
 
   for (let i = 0; i < 7; i += 1) {
     const angle = time * 0.0013 + i * 1.71;
@@ -140,8 +163,8 @@ window.addEventListener("resize", resize);
 const sceneSection = document.querySelector(".scene-section");
 sceneSection.addEventListener("pointermove", (event) => {
   const rect = sceneSection.getBoundingClientRect();
-  pointer.x = (event.clientX - rect.left) / rect.width;
-  pointer.y = (event.clientY - rect.top) / rect.height;
+  pointer.targetX = (event.clientX - rect.left) / rect.width;
+  pointer.targetY = (event.clientY - rect.top) / rect.height;
   pointer.active = true;
   const cursor = document.querySelector("#cursorDot");
   if (cursor) {
@@ -151,6 +174,7 @@ sceneSection.addEventListener("pointermove", (event) => {
 });
 sceneSection.addEventListener("pointerleave", () => {
   pointer.active = false;
+  revealTrail.length = 0;
 });
 resize();
 Promise.all([
