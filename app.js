@@ -57,7 +57,7 @@ function drawImageCover(context, img) {
 function paintRevealMask(time) {
   maskCtx.save();
   maskCtx.globalCompositeOperation = "destination-out";
-  maskCtx.fillStyle = pointer.active ? "rgba(0, 0, 0, 0.026)" : "rgba(0, 0, 0, 0.05)";
+  maskCtx.fillStyle = pointer.active ? "rgba(0, 0, 0, 0.04)" : "rgba(0, 0, 0, 0.12)";
   maskCtx.fillRect(0, 0, width, height);
   maskCtx.restore();
 
@@ -145,17 +145,6 @@ function drawScene(time) {
 
   ctx.drawImage(revealCanvas, 0, 0, width, height);
 
-  if (pointer.active) {
-    const x = pointer.x * width;
-    const y = pointer.y * height;
-    const glow = ctx.createRadialGradient(x, y, 0, x, y, Math.min(width, height) * 0.24);
-    glow.addColorStop(0, "rgba(151, 219, 77, 0.16)");
-    glow.addColorStop(0.5, "rgba(151, 219, 77, 0.08)");
-    glow.addColorStop(1, "rgba(151, 219, 77, 0)");
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, width, height);
-  }
-
   requestAnimationFrame(drawScene);
 }
 
@@ -166,15 +155,12 @@ sceneSection.addEventListener("pointermove", (event) => {
   pointer.targetX = (event.clientX - rect.left) / rect.width;
   pointer.targetY = (event.clientY - rect.top) / rect.height;
   pointer.active = true;
-  const cursor = document.querySelector("#cursorDot");
-  if (cursor) {
-    cursor.style.opacity = "1";
-    cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
-  }
 });
 sceneSection.addEventListener("pointerleave", () => {
   pointer.active = false;
   revealTrail.length = 0;
+  maskCtx.clearRect(0, 0, width, height);
+  revealCtx.clearRect(0, 0, width, height);
 });
 resize();
 Promise.all([
@@ -189,8 +175,11 @@ function updateHeroFade() {
   const progress = Math.min(window.scrollY / (window.innerHeight * 0.72), 1);
   const opacity = Math.max(0, 1 - progress * 1.25);
   if (heroCopy) {
+    const isCompact = window.innerWidth <= 840;
+    const xOffset = isCompact ? "0" : "-50%";
+    const yBase = isCompact ? -42 : -48;
     heroCopy.style.opacity = opacity.toFixed(3);
-    heroCopy.style.transform = `translate(-50%, ${-48 - progress * 24}%) scale(${1 - progress * 0.04})`;
+    heroCopy.style.transform = `translate(${xOffset}, ${yBase - progress * 24}%) scale(${1 - progress * 0.04})`;
     heroCopy.style.filter = `blur(${progress * 8}px)`;
   }
   if (viewfinder) {
@@ -208,11 +197,11 @@ const articles = document.querySelector(".articles");
 const groups = [...document.querySelectorAll("[data-year-group]")];
 groups.forEach((group) => {
   group.addEventListener("pointerenter", () => {
-    articles.dataset.hovering = "";
+    if (articles) articles.dataset.hovering = "";
     groups.forEach((item) => item.toggleAttribute("data-active", item === group));
   });
   group.addEventListener("pointerleave", () => {
-    articles.removeAttribute("data-hovering");
+    if (articles) articles.removeAttribute("data-hovering");
     groups.forEach((item) => item.removeAttribute("data-active"));
   });
 });
@@ -253,10 +242,26 @@ const experiences = {
     title: "AI 创新产品经理 · 小米",
     meta: "智能硬件与 AI 生态 | 2026/4 - 2026/7",
     points: [
-      "参与 AI 创新项目 0-1，面向 Agent 多任务执行场景，拆解等待执行、设备连接、状态切换、结果回收中的失控感与打扰感。",
-      "围绕首次配置、设备连接、Agent 选择、状态反馈、用量信息展示等链路，输出用户流程、信息优先级、原型方案和验收标准。",
-      "主动提出兼容 Codex 宠物生态与 UGC 资产的产品方向，将高成本的从零生成转化为资产复用、个性化改造和社区传播玩法。",
-      "使用 AI coding 搭建可交互前后端原型，并用 Agent 搭建自动化资产生产工作流；相关项目获小红书 5k+ 点赞、GitHub 50+ stars、开源平台 8k+ 浏览。"
+      "参与面向 AI Agent 用户场景的 0-1 开源硬件创新项目，将“桌面陪伴终端”的发散方向收敛为“Agent 长任务状态反馈载体”，明确用户需要感知任务是否顺利、是否异常、是否需要介入。",
+      "负责梳理用户首次配置与核心使用链路，覆盖设备连接、Agent 选择、形象选择、任务状态理解、异常处理、用量信息展示、解绑与后台运行等场景，输出用户流程、信息优先级、原型方案与验收标准。",
+      "在信息展示上做产品取舍：不把所有字段堆给用户，而是判断哪些状态有决策价值；例如弱化不稳定的费用估算，保留 token 消耗、工具调用次数等更稳定、可解释的信息。",
+      "提出复用 Codex 宠物生态和社区 UGC 资产的方向，把高成本的“从零生成形象”转化为资产复用、个性化改造和社区传播玩法，降低创作门槛并增强扩散潜力。",
+      "参与 README、装配说明、开源审查、品牌与安全合规、嘉立创/GitHub 展示材料、KOC/KOL 名单和传播路径设计，补齐项目从内部 demo 到外部可理解、可复现、可反馈的发布闭环。",
+      "使用 AI coding 快速搭建可交互前后端原型，并用 Agent 搭建自动化资产生产工作流，在设计、前端、运营等角色之间加速 MVP 验证；相关传播获得小红书 5k+ 点赞、GitHub 50+ stars、开源平台 8k+ 浏览。"
+    ],
+    links: [
+      {
+        label: "开源硬件项目",
+        url: "https://oshwhub.com/eda_gqvzlprk/project_cnbmkbjc"
+      },
+      {
+        label: "HachimoDock GitHub",
+        url: "https://github.com/YizhengWw/HachimoDock"
+      },
+      {
+        label: "小红书运营主页",
+        url: "https://xhslink.com/m/3HigzaMrUu"
+      }
     ]
   },
   baidu: {
@@ -285,6 +290,126 @@ const experiences = {
   }
 };
 
+const portalPages = {
+  work: {
+    kicker: "Internship / Work",
+    title: "实习工作",
+    summary: "三段经历共同指向一个问题：怎样把 AI 能力做成用户能理解、能信任、能持续使用的产品系统。",
+    items: [
+      {
+        title: "AI 创新产品经理 · 小米",
+        meta: "智能硬件与 AI 生态 | 2026/4 - 2026/7",
+        action: "xiaomi"
+      },
+      {
+        title: "大模型策略产品经理 · 百度",
+        meta: "文心一言 | 2025/5 - 2025/9",
+        action: "baidu"
+      },
+      {
+        title: "AIGC 产品经理 · 扩散未来",
+        meta: "布叮 AI 0-1 | 2024/12 - 2025/3",
+        action: "buding"
+      }
+    ]
+  },
+  projects: {
+    kicker: "Projects",
+    title: "项目",
+    summary: "更偏向可被试用和复盘的产品原型：Agent 反馈、AI 游戏、数字人交互与自动化资产生产。",
+    items: [
+      {
+        title: "AI Agent 多任务执行体验",
+        meta: "低打扰、可感知、可恢复的任务反馈系统。"
+      },
+      {
+        title: "《我不是股神》AI 股票派对游戏",
+        meta: "清华黑客松最佳创意奖，游戏化学习 + 熟人社交 + AI 复盘。"
+      },
+      {
+        title: "TeleStudio 实时交互数字人模块",
+        meta: "数字人设置、实时交互、状态流转、合规与 corner case。"
+      }
+    ]
+  },
+  thinking: {
+    kicker: "Writing / Notes",
+    title: "个人思考",
+    summary: "这里会放一些关于 AI 产品、交互实验、模型评测和个人成长的短文。先把它作为一个可继续扩展的子页面入口。",
+    items: [
+      {
+        title: "AI 产品不是把模型能力翻译成按钮",
+        meta: "真正重要的是让用户知道系统在做什么、为什么这样做，以及失败后如何恢复。"
+      },
+      {
+        title: "评测是一种产品语言",
+        meta: "评测不是只服务算法迭代，也是在定义用户体验里的边界、优先级和信任感。"
+      },
+      {
+        title: "个人品牌应该像实验笔记本",
+        meta: "比起罗列结论，更有价值的是展示问题、假设、试错和方法。"
+      }
+    ]
+  },
+  early: {
+    kicker: "Early path",
+    title: "早期经历",
+    summary: "从产品设计训练到 AI 产品实践，早期经历更多是在建立审美、结构化表达和把想法做成原型的能力。",
+    items: [
+      {
+        title: "北京理工大学 · 产品设计",
+        meta: "从设计研究、交互表达、原型验证进入产品问题。"
+      },
+      {
+        title: "AIGC 工具与内容实验",
+        meta: "用小红书、开源社区和 AI coding 验证创意传播与原型效率。"
+      },
+      {
+        title: "跨学科协作",
+        meta: "在 UI、算法、前后端、运营之间做翻译和推进。"
+      }
+    ]
+  }
+};
+
+const portalPanel = document.querySelector("#portalPanel");
+const bubbleButtons = [...document.querySelectorAll("[data-panel]")];
+const portalSection = document.querySelector("#portal");
+
+function renderPortalPanel(key) {
+  const page = portalPages[key] || portalPages.work;
+  portalPanel.innerHTML = `
+    <header>
+      <span class="eyebrow">${page.kicker}</span>
+      <h3>${page.title}</h3>
+      <p>${page.summary}</p>
+    </header>
+    <div class="portal-items">
+      ${page.items
+        .map(
+          (item) => `
+            <div class="portal-item">
+              <div>
+                <strong>${item.title}</strong>
+                <span>${item.meta}</span>
+              </div>
+              ${item.action ? `<button type="button" data-experience="${item.action}">详情</button>` : ""}
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+bubbleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    bubbleButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+    renderPortalPanel(button.dataset.panel);
+    portalSection?.classList.add("has-panel");
+  });
+});
+
 const experienceModal = document.querySelector("#experienceModal");
 const closeExperience = document.querySelector("#closeExperience");
 const modalKicker = document.querySelector("#modalKicker");
@@ -292,35 +417,49 @@ const modalTitle = document.querySelector("#modalTitle");
 const modalMeta = document.querySelector("#modalMeta");
 const modalBody = document.querySelector("#modalBody");
 
+function syncDialogState() {
+  const hasOpenDialog = [...document.querySelectorAll("dialog")].some((dialog) => dialog.open);
+  document.documentElement.classList.toggle("dialog-open", hasOpenDialog);
+  document.body.classList.toggle("dialog-open", hasOpenDialog);
+}
+
 function openExperience(key) {
   const data = experiences[key];
   if (!data) return;
   modalKicker.textContent = data.kicker;
   modalTitle.textContent = data.title;
   modalMeta.textContent = data.meta;
-  modalBody.innerHTML = `<ul>${data.points.map((point) => `<li>${point}</li>`).join("")}</ul>`;
+  const points = `<ul>${data.points.map((point) => `<li>${point}</li>`).join("")}</ul>`;
+  const links = data.links?.length
+    ? `<div class="modal-links">${data.links
+        .map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer">${link.label}</a>`)
+        .join("")}</div>`
+    : "";
+  modalBody.innerHTML = `${links}${points}`;
   experienceModal.showModal();
-  document.body.classList.add("modal-open");
+  syncDialogState();
 }
 
 function closeExperienceModal() {
   experienceModal.close();
-  document.body.classList.remove("modal-open");
+  syncDialogState();
 }
 
-document.querySelectorAll("[data-experience]").forEach((button) => {
-  button.addEventListener("click", () => openExperience(button.dataset.experience));
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-experience]");
+  if (button) openExperience(button.dataset.experience);
 });
 closeExperience.addEventListener("click", closeExperienceModal);
 experienceModal.addEventListener("click", (event) => {
   if (event.target === experienceModal) closeExperienceModal();
 });
-experienceModal.addEventListener("close", () => document.body.classList.remove("modal-open"));
+experienceModal.addEventListener("close", syncDialogState);
 
 const controls = [...document.querySelectorAll("[data-control]")];
 const scoreEl = document.querySelector("#score");
 const moodEl = document.querySelector("#mood");
 function updateTuner() {
+  if (!controls.length || !scoreEl || !moodEl) return;
   const values = Object.fromEntries(controls.map((control) => [control.dataset.control, Number(control.value)]));
   const score = Math.round(values.visibility * 0.42 + values.recovery * 0.42 + (100 - values.interrupt) * 0.16);
   scoreEl.textContent = score;
@@ -333,31 +472,114 @@ function updateTuner() {
 controls.forEach((control) => control.addEventListener("input", updateTuner));
 updateTuner();
 
-const command = document.querySelector("#command");
-const commandInput = document.querySelector("#commandInput");
-function openCommand() {
-  command.showModal();
-  requestAnimationFrame(() => commandInput.focus());
-}
-document.querySelector("#openCommand").addEventListener("click", openCommand);
-document.addEventListener("keydown", (event) => {
-  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-    event.preventDefault();
-    openCommand();
+const messageStorageKey = "liuwanzheng-portfolio-messages";
+const defaultMessages = [
+  {
+    name: "Yilin",
+    message: "这个树枝发芽的首页很有记忆点，像是把技术作品集做成了一个可触摸的隐喻。",
+    createdAt: "2026-07-05T10:20:00.000Z"
+  },
+  {
+    name: "Chen",
+    message: "喜欢你把模型评测写成产品语言的方式，信息结构比普通简历更容易理解。",
+    createdAt: "2026-07-04T15:42:00.000Z"
+  },
+  {
+    name: "Mia",
+    message: "水泡入口很适合继续扩展成文章索引，期待后面看到更多 AI 产品复盘。",
+    createdAt: "2026-07-03T08:16:00.000Z"
   }
+];
+const messageList = document.querySelector("#messageList");
+const messageDialog = document.querySelector("#messageDialog");
+const messageForm = document.querySelector("#messageForm");
+const openMessageDialog = document.querySelector("#openMessageDialog");
+const closeMessageDialog = document.querySelector("#closeMessageDialog");
+const messageName = document.querySelector("#messageName");
+const messageText = document.querySelector("#messageText");
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[char]);
+}
+
+function loadMessages() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(messageStorageKey));
+    return Array.isArray(stored) && stored.length ? stored : defaultMessages;
+  } catch {
+    return defaultMessages;
+  }
+}
+
+function saveMessages(messages) {
+  try {
+    localStorage.setItem(messageStorageKey, JSON.stringify(messages));
+  } catch {
+    // Some privacy modes block storage; keep rendering the in-memory state for this session.
+  }
+}
+
+let messageState = loadMessages();
+
+function renderMessages() {
+  if (!messageList) return;
+  messageList.innerHTML = messageState
+    .map((item) => {
+      const date = new Date(item.createdAt).toLocaleDateString("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+      });
+      return `
+        <article class="message-card">
+          <header>
+            <strong>${escapeHtml(item.name)}</strong>
+            <time>${date}</time>
+          </header>
+          <p>${escapeHtml(item.message)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+openMessageDialog?.addEventListener("click", () => {
+  messageDialog.showModal();
+  syncDialogState();
+  requestAnimationFrame(() => messageName.focus());
+});
+closeMessageDialog?.addEventListener("click", () => messageDialog.close());
+messageDialog?.addEventListener("click", (event) => {
+  if (event.target === messageDialog) messageDialog.close();
+});
+messageDialog?.addEventListener("close", syncDialogState);
+messageForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = messageName.value.trim();
+  const message = messageText.value.trim();
+  if (!name || !message) return;
+  messageState = [{
+    name,
+    message,
+    createdAt: new Date().toISOString(),
+  }, ...messageState].slice(0, 24);
+  saveMessages(messageState);
+  renderMessages();
+  messageForm.reset();
+  messageDialog.close();
+});
+renderMessages();
+
+document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (experienceModal.open) closeExperienceModal();
-    if (command.open) command.close();
+    if (messageDialog?.open) messageDialog.close();
   }
-});
-command.addEventListener("click", (event) => {
-  if (event.target === command || event.target.tagName === "A") command.close();
-});
-commandInput.addEventListener("input", () => {
-  const query = commandInput.value.trim().toLowerCase();
-  document.querySelectorAll(".command a").forEach((link) => {
-    link.hidden = query && !link.textContent.toLowerCase().includes(query);
-  });
 });
 
 function tickClock() {

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
     <header class="header">
       <a class="logo" href="#index" aria-label="回到首页">
         <span class="logo-grid" aria-hidden="true">
@@ -19,12 +18,10 @@
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="#index">展示</a>
-        <a href="#about">介绍</a>
-        <a href="#work">经历</a>
-        <a href="#projects">项目</a>
-        <a href="#message">留言</a>
-        <button id="openCommand" type="button">Cmd</button>
+        <a href="#about">about me</a>
+        <a href="#portal">经历</a>
+        <a href="#message">留言板</a>
+        <a href="#contact">联系我</a>
       </nav>
     </header>
 
@@ -38,7 +35,7 @@
         <div class="hero-copy">
           <p>AI Product / Agent UX / Model Evaluation</p>
           <h1>刘万正</h1>
-          <span>把复杂 AI 能力，做成可理解、可验证、可复盘的产品体验。</span>
+          <span>AI 无法替代对生命力的理解</span>
         </div>
         <div class="scene-caption">
           <span>Agent</span>
@@ -64,97 +61,43 @@
         </p>
       </section>
 
-      <section class="articles" id="work" aria-label="Internship and work experience">
-        <div class="section-kicker">Internship / Work</div>
-        <div class="year-group" data-year-group>
-          <button class="year-label" type="button">2026</button>
-          <button class="article-link experience-trigger" type="button" data-experience="xiaomi">
-            <span class="article-title" data-scramble>AI 创新产品经理 · 小米</span>
-            <span class="article-subtitle">智能硬件与 AI 生态 | AI Agent 多任务执行体验与 Codex 宠物生态方向验证</span>
-            <time>2026/4 - 2026/7</time>
+      <section class="portal" id="portal" aria-label="Explore sub pages">
+        <div class="experience-tabs" id="experienceTabs" aria-label="经历分类">
+          <button class="bubble-button" type="button" data-panel="work">
+            <span>Agent</span>
+          </button>
+          <button class="bubble-button" type="button" data-panel="projects">
+            <span>Evaluation</span>
+          </button>
+          <button class="bubble-button" type="button" data-panel="thinking">
+            <span>AIGC</span>
+          </button>
+          <button class="bubble-button" type="button" data-panel="early">
+            <span>Prototype</span>
           </button>
         </div>
-
-        <div class="year-group" data-year-group>
-          <button class="year-label" type="button">2025</button>
-          <button class="article-link experience-trigger" type="button" data-experience="baidu">
-            <span class="article-title" data-scramble>大模型策略产品经理 · 百度</span>
-            <span class="article-subtitle">文心一言 | 聊天扮演理想态调研、模型评测与端功能设计</span>
-            <time>2025/5 - 2025/9</time>
-          </button>
-        </div>
-
-        <div class="year-group" data-year-group>
-          <button class="year-label" type="button">2024</button>
-          <button class="article-link experience-trigger" type="button" data-experience="buding">
-            <span class="article-title" data-scramble>AIGC 产品经理 · 扩散未来</span>
-            <span class="article-subtitle">AIGC 创业公司 | 动态表情包小程序“布叮 AI”0-1 上线</span>
-            <time>2024/12 - 2025/3</time>
-          </button>
-        </div>
+        <article class="portal-panel" id="portalPanel" aria-live="polite"></article>
       </section>
 
-      <section class="project-board" id="projects">
-        <div class="section-kicker">Projects</div>
-        <a class="project-card" href="#agent-feedback">
-          <span>01</span>
-          <h3>AI Agent 多任务执行体验</h3>
-          <p>低打扰、可感知、可恢复的任务反馈系统。</p>
-        </a>
-        <a class="project-card" href="#agent-feedback">
-          <span>02</span>
-          <h3>《我不是股神》AI 股票派对游戏</h3>
-          <p>清华黑客松最佳创意奖，游戏化学习 + 熟人社交 + AI 复盘。</p>
-        </a>
-        <a class="project-card" href="#agent-feedback">
-          <span>03</span>
-          <h3>TeleStudio 实时交互数字人模块</h3>
-          <p>数字人设置、实时交互、状态流转、合规与 corner case。</p>
-        </a>
-      </section>
-
-      <section class="post-preview" id="agent-feedback">
-        <div class="preview-copy">
-          <span class="eyebrow">Interactive playground</span>
-          <h2>Agent feedback tuner</h2>
-          <p>
-            用三个参数重现 Agent 执行中的关键体验判断：打扰度、可感知度、恢复感。
-            这不是单纯的 loading，而是用户和系统之间的信任协议。
-          </p>
-        </div>
-        <div class="playground">
-          <div class="agent-orb">
-            <span></span>
-            <strong id="score">82</strong>
-            <small id="mood">Calm, visible, recoverable</small>
+      <section class="message-board" id="message">
+        <div class="message-head">
+          <div>
+            <span class="eyebrow">Message board</span>
+            <h2>留言板</h2>
           </div>
-          <label>
-            <span>Interrupt</span>
-            <input type="range" min="0" max="100" value="28" data-control="interrupt" />
-          </label>
-          <label>
-            <span>Visibility</span>
-            <input type="range" min="0" max="100" value="74" data-control="visibility" />
-          </label>
-          <label>
-            <span>Recovery</span>
-            <input type="range" min="0" max="100" value="82" data-control="recovery" />
-          </label>
+          <button class="write-button" id="openMessageDialog" type="button" aria-label="写留言">
+            <span aria-hidden="true">✎</span>
+          </button>
         </div>
+        <div class="message-list" id="messageList" aria-live="polite"></div>
       </section>
 
-      <section class="message" id="message">
+      <section class="contact-strip" id="contact">
         <div>
           <span class="eyebrow">Message board</span>
-          <h2>留言板</h2>
-          <p>这里先做成静态留言入口：后续可以接表单服务、飞书多维表格或 GitHub Issues。</p>
+          <h2>保持联系</h2>
+          <p>留言会保存在当前浏览器；上线后如需所有访客共享留言，可接入 Supabase / Firebase / 飞书多维表格。</p>
         </div>
-        <form class="message-form">
-          <input type="text" placeholder="你的名字" />
-          <input type="email" placeholder="邮箱 / 联系方式" />
-          <textarea placeholder="想聊的问题、合作方向或反馈"></textarea>
-          <a href="mailto:1584365828@qq.com">发送邮件</a>
-        </form>
       </section>
 
       <footer class="footer">
@@ -188,17 +131,21 @@
       </article>
     </dialog>
 
-    <dialog class="command" id="command">
-      <div class="command-box">
-        <input id="commandInput" type="search" placeholder="Search pages and experiments..." />
-        <a href="#index">Index</a>
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#projects">Projects</a>
-        <a href="#message">Message</a>
-        <a href="#agent-feedback">Agent feedback tuner</a>
-        <a href="mailto:1584365828@qq.com">Ask by email</a>
-      </div>
+    <dialog class="message-dialog" id="messageDialog">
+      <form class="message-compose" id="messageForm" method="dialog">
+        <button class="modal-close" id="closeMessageDialog" type="button" aria-label="关闭留言">×</button>
+        <span class="modal-kicker">Leave a message</span>
+        <h2>写一条留言</h2>
+        <label>
+          <span>名字</span>
+          <input id="messageName" name="name" type="text" maxlength="24" placeholder="你的名字" required />
+        </label>
+        <label>
+          <span>留言</span>
+          <textarea id="messageText" name="message" maxlength="180" placeholder="想说的话、反馈或合作方向" required></textarea>
+        </label>
+        <button class="submit-message" type="submit">发布留言</button>
+      </form>
     </dialog>
 
     <script src="./app.js"></script>
