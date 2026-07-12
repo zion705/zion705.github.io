@@ -7,21 +7,23 @@
       name="description"
       content="刘万正的 AI 产品作品集，聚焦 Agent、多轮对话、模型评测与 AIGC 产品。"
     />
+    <meta name="theme-color" content="#f4f6f2" />
     <title>刘万正 - AI Product Portfolio</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260712" />
   </head>
   <body>
+    <a class="skip-link" href="#about">跳到主要内容</a>
     <header class="header">
       <a class="logo" href="#index" aria-label="回到首页">
         <span class="logo-grid" aria-hidden="true">
           <i></i><i></i><i></i><i></i>
         </span>
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#about">about me</a>
-        <a href="#portal">经历</a>
-        <a href="#message">留言板</a>
-        <a href="#contact">联系我</a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#about" data-section-link>about me</a>
+        <a href="#work" data-section-link>经历</a>
+        <a href="#message" data-section-link>留言板</a>
+        <a href="#contact" data-section-link>联系我</a>
       </nav>
     </header>
 
@@ -37,46 +39,178 @@
           <h1>刘万正</h1>
           <span>AI 无法替代对生命力的理解</span>
         </div>
-        <div class="scene-caption">
-          <span>Agent</span>
-          <span>Evaluation</span>
-          <span>AIGC</span>
-          <span>Prototype</span>
+        <div class="scene-caption" aria-label="核心能力关键词">
+          <span><strong>Product Strategy</strong><small>定位与功能取舍</small></span>
+          <span><strong>Agent UX</strong><small>状态与反馈设计</small></span>
+          <span><strong>AI Evaluation</strong><small>评测与 Bad Case</small></span>
+          <span><strong>Rapid Prototype</strong><small>从假设到可交互 Demo</small></span>
         </div>
       </section>
 
       <section class="intro glass-section" id="about">
-        <div>
-          <h2>总体介绍</h2>
-          <p>
-            Hi 我是 <strong>刘万正</strong>，北京理工大学产品设计硕士，AI 产品经理。
-            这里整理我在 Agent、多轮对话、模型评测、AIGC 消费产品里做过的项目，
-            以及我希望写给自己的交互式文章。
-          </p>
-        </div>
-        <p>
-          每个项目都尝试把复杂问题拆成可以被理解的链路：用户动机、模型能力目标、
-          评测口径、原型验证和反馈闭环。我希望这个站点像一个小型实验笔记本：
-          有清晰的文字，也有能拖动、能观察、能复盘的 playground。
-        </p>
+        <header class="intro-identity" data-reveal>
+          <span class="section-kicker">ABOUT ME / PRODUCT PROFILE</span>
+          <div>
+            <strong>刘万正</strong>
+            <span>AI 产品经理</span>
+            <span>北京理工大学 · 产品设计硕士</span>
+          </div>
+        </header>
+        <ul class="intro-capabilities" aria-label="核心能力" data-reveal>
+          <li><span>01</span><strong>产品策略</strong><small>定位 · 取舍 · 指标</small></li>
+          <li><span>02</span><strong>Agent UX</strong><small>状态 · 反馈 · 异常</small></li>
+          <li><span>03</span><strong>模型评测</strong><small>标准 · Bad Case · 迭代</small></li>
+          <li><span>04</span><strong>快速原型</strong><small>假设 · Demo · 验证</small></li>
+        </ul>
+        <dl class="signal-metrics" data-reveal>
+          <div><dd>300+</dd><dt>单轮评测 Query</dt></div>
+          <div><dd>500+</dd><dt>SFT 场景数据</dt></div>
+          <div><dd>8%→1.2%</dd><dt>P0 缺陷率</dt></div>
+        </dl>
       </section>
 
-      <section class="portal" id="portal" aria-label="Explore sub pages">
-        <div class="experience-tabs" id="experienceTabs" aria-label="经历分类">
-          <button class="bubble-button" type="button" data-panel="work">
-            <span>Agent</span>
+      <section class="work-showcase" id="work" aria-labelledby="workTitle">
+        <div class="work-water-field" aria-hidden="true">
+          <canvas class="ambient-canvas" id="ambientScene"></canvas>
+        </div>
+        <header class="work-head" data-reveal>
+          <div>
+            <span class="eyebrow">Experience / Evidence</span>
+            <h2 id="workTitle">工作经历</h2>
+          </div>
+          <p>
+            四段经历覆盖 AI 硬件、数字人平台、基础模型策略与 C 端 AIGC 0→1。
+            卡片直接呈现完整职责、关键取舍与交付证据，不再拆分摘要和详情。
+          </p>
+        </header>
+
+        <div class="work-grid">
+          <article class="work-card work-card--xiaomi" data-tilt-card data-reveal>
+            <span class="work-card-index">01 / XIAOMI</span>
+            <div class="work-card-title">
+              <span>2026.04 — 2026.07</span>
+              <h3>AI 创新产品经理</h3>
+              <p>智能硬件与 AI 生态</p>
+            </div>
+            <dl class="work-card-metrics">
+              <div><dd>5k+</dd><dt>小红书点赞</dt></div>
+              <div><dd>50+</dd><dt>GitHub Stars</dt></div>
+              <div><dd>8k+</dd><dt>开源平台浏览</dt></div>
+            </dl>
+            <ol class="work-card-points" data-work-points="xiaomi"></ol>
+          </article>
+
+          <article class="work-card work-card--telestudio" data-tilt-card data-reveal>
+            <span class="work-card-index">02 / CHINA TELECOM AI</span>
+            <div class="work-card-title">
+              <span>2026.03</span>
+              <h3>Tele AI 产品经理</h3>
+              <p>中国电信人工智能研究院 · TeleStudio</p>
+            </div>
+            <dl class="work-card-metrics">
+              <div><dd>3 类</dd><dt>核心页面</dt></div>
+              <div><dd>2 档</dd><dt>使用路径</dt></div>
+              <div><dd>4 维</dd><dt>数字人配置</dt></div>
+            </dl>
+            <ol class="work-card-points" data-work-points="telestudio"></ol>
+            <button class="work-card-action" type="button" data-experience="telestudio">
+              <span>查看完整 PRD</span>
+              <b aria-hidden="true">↗</b>
+            </button>
+          </article>
+
+          <article class="work-card work-card--baidu" data-tilt-card data-reveal>
+            <span class="work-card-index">03 / BAIDU</span>
+            <div class="work-card-title">
+              <span>2025.05 — 2025.09</span>
+              <h3>大模型策略产品经理</h3>
+              <p>文心一言 · 对话策略与评测</p>
+            </div>
+            <dl class="work-card-metrics">
+              <div><dd>300+</dd><dt>单轮评测</dt></div>
+              <div><dd>80+</dd><dt>多轮 Session</dt></div>
+              <div><dd>500+</dd><dt>SFT Query</dt></div>
+            </dl>
+            <ol class="work-card-points" data-work-points="baidu"></ol>
+          </article>
+
+          <article class="work-card work-card--buding" data-tilt-card data-reveal>
+            <span class="work-card-index">04 / BUDING AI</span>
+            <div class="work-card-title">
+              <span>2024.12 — 2025.03</span>
+              <h3>AIGC 产品经理</h3>
+              <p>布叮 AI · C 端产品 0→1</p>
+            </div>
+            <dl class="work-card-metrics">
+              <div><dd>1 个月</dd><dt>完成 0→1 上线</dt></div>
+              <div><dd>97%</dd><dt>用户激活率</dt></div>
+              <div><dd>8→1.2%</dd><dt>P0 缺陷率</dt></div>
+            </dl>
+            <ol class="work-card-points" data-work-points="buding"></ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="method-section" id="method" aria-labelledby="methodTitle" data-reveal>
+        <header class="method-head">
+          <div>
+            <span class="eyebrow">Product Methodology</span>
+            <h2 id="methodTitle">把 AI 能力变成可验证的产品</h2>
+          </div>
+          <p>不是从功能清单出发，而是从场景成本、能力边界和验证证据出发。</p>
+        </header>
+        <ol class="method-steps">
+          <li>
+            <span>01</span>
+            <h3>定义场景</h3>
+            <p>还原用户动机、现有路径与真实成本，明确值得解决的决策节点。</p>
+            <small>USER / CONTEXT / COST</small>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>拆解能力与边界</h3>
+            <p>把模型能力翻译为产品策略、状态反馈、异常处理和可评测标准。</p>
+            <small>CAPABILITY / UX / EVAL</small>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>用原型验证</h3>
+            <p>压缩 MVP 范围，用可交互 Demo 验证理解成本、使用意愿与关键假设。</p>
+            <small>MVP / PROTOTYPE / SIGNAL</small>
+          </li>
+          <li>
+            <span>04</span>
+            <h3>建立迭代闭环</h3>
+            <p>用行为数据、评测集和 Bad Case 归因决定优先级，并持续回到用户价值。</p>
+            <small>DATA / BAD CASE / ITERATE</small>
+          </li>
+        </ol>
+      </section>
+
+      <section class="portal" id="portal" aria-labelledby="experienceTitle">
+        <h2 class="sr-only" id="experienceTitle">更多内容</h2>
+        <div class="portal-intro" data-reveal>
+          <span class="eyebrow">Explore / More</span>
+          <p>继续选择一个入口，查看项目、思考与更早的产品训练。</p>
+        </div>
+        <div class="experience-tabs" id="experienceTabs" aria-label="更多内容入口">
+          <button class="experience-tab" type="button" data-panel="projects" aria-controls="portalPanel" aria-expanded="false">
+            <span class="experience-index">01</span>
+            <strong>项目</strong>
+            <small>Selected Projects</small>
           </button>
-          <button class="bubble-button" type="button" data-panel="projects">
-            <span>Evaluation</span>
+          <button class="experience-tab" type="button" data-panel="thinking" aria-controls="portalPanel" aria-expanded="false">
+            <span class="experience-index">02</span>
+            <strong>个人思考</strong>
+            <small>Notes &amp; Thinking</small>
           </button>
-          <button class="bubble-button" type="button" data-panel="thinking">
-            <span>AIGC</span>
-          </button>
-          <button class="bubble-button" type="button" data-panel="early">
-            <span>Prototype</span>
+          <button class="experience-tab" type="button" data-panel="early" aria-controls="portalPanel" aria-expanded="false">
+            <span class="experience-index">03</span>
+            <strong>早期经历</strong>
+            <small>Early Path</small>
           </button>
         </div>
-        <article class="portal-panel" id="portalPanel" aria-live="polite"></article>
+        <article class="portal-panel" id="portalPanel" aria-live="polite" tabindex="-1" hidden></article>
       </section>
 
       <section class="message-board" id="message">
@@ -84,19 +218,27 @@
           <div>
             <span class="eyebrow">Message board</span>
             <h2>留言板</h2>
+            <span class="message-sync" id="messageSyncStatus" role="status">
+              <i aria-hidden="true"></i>
+              <span>正在同步</span>
+            </span>
           </div>
-          <button class="write-button" id="openMessageDialog" type="button" aria-label="写留言">
-            <span aria-hidden="true">✎</span>
-          </button>
         </div>
         <div class="message-list" id="messageList" aria-live="polite"></div>
+        <button class="write-button" id="openMessageDialog" type="button" aria-label="写留言" title="写留言">
+          <span aria-hidden="true">✎</span>
+        </button>
       </section>
 
       <section class="contact-strip" id="contact">
         <div>
-          <span class="eyebrow">Message board</span>
+          <span class="eyebrow">Contact</span>
           <h2>保持联系</h2>
-          <p>留言会保存在当前浏览器；上线后如需所有访客共享留言，可接入 Supabase / Firebase / 飞书多维表格。</p>
+          <p>如果你也在关注 AI 产品、Agent 体验或模型评测，欢迎直接联系我。</p>
+        </div>
+        <div class="contact-actions" aria-label="联系方式">
+          <a href="mailto:1584365828@qq.com">发邮件 <span aria-hidden="true">↗</span></a>
+          <a href="tel:15762977259">打电话 <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -121,7 +263,409 @@
       </footer>
     </main>
 
-    <dialog class="experience-modal" id="experienceModal">
+    <section
+      class="product-case"
+      id="stockPartyCase"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="stockPartyTitle"
+      hidden
+    >
+      <div class="case-progress" aria-hidden="true"><i></i></div>
+      <header class="case-nav">
+        <button class="case-back" type="button" data-case-close aria-label="返回项目列表">
+          <span aria-hidden="true">←</span>
+          <span>项目</span>
+        </button>
+        <nav class="case-nav-links" aria-label="项目案例章节">
+          <button type="button" data-case-target="case-insight">洞察</button>
+          <button type="button" data-case-target="case-loop">机制</button>
+          <button type="button" data-case-target="case-agent">Agent</button>
+          <button type="button" data-case-target="case-demo">Demo</button>
+          <button type="button" data-case-target="case-result">复盘</button>
+        </nav>
+        <a
+          class="case-github"
+          href="https://github.com/pekingdoncic/Hackathon-Stock"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+
+      <main class="case-content">
+        <section class="case-hero">
+          <img
+            class="case-hero-media"
+            src="./assets/stock-party/01-home.png"
+            alt="《我不是股神》熟人股票派对游戏首页"
+          />
+          <div class="case-hero-shade" aria-hidden="true"></div>
+          <div class="case-hero-copy">
+            <p class="case-overline">Tsinghua Hackathon · Best Creative Award · 2026</p>
+            <h1 id="stockPartyTitle">我不是股神</h1>
+            <p class="case-hero-thesis">
+              把模拟炒股从“单机收益率工具”，重构为熟人关系驱动的判断训练游戏。
+            </p>
+            <p class="case-hero-intro">
+              5–8 位朋友进入五日模拟投资局。卧底制造信息噪声，交易暴露真实判断，
+              AI 战报把输赢转化为可讨论、可复盘的学习反馈。
+            </p>
+            <div class="case-hero-actions">
+              <button class="case-primary" type="button" data-case-target="case-demo">
+                体验可交互 Demo <span aria-hidden="true">↓</span>
+              </button>
+              <button class="case-secondary" type="button" data-case-target="case-loop">
+                查看产品机制
+              </button>
+            </div>
+          </div>
+          <div class="case-ownership-brief">
+            <span>我主导</span>
+            <strong>产品定位 · 功能取舍 · 信息架构 · 核心链路 · 交互视觉</strong>
+            <span>共同参与</span>
+            <strong>游戏机制 · Agent 设计</strong>
+          </div>
+        </section>
+
+        <dl class="case-facts" aria-label="项目概览">
+          <div>
+            <dt>角色</dt>
+            <dd>产品负责人 / AI 产品经理</dd>
+          </div>
+          <div>
+            <dt>周期</dt>
+            <dd>2026.05 · 黑客松原型</dd>
+          </div>
+          <div>
+            <dt>产品形态</dt>
+            <dd>5 日熟人投资派对</dd>
+          </div>
+          <div>
+            <dt>结果</dt>
+            <dd>最佳创意奖</dd>
+          </div>
+        </dl>
+
+        <section class="case-section case-insight" id="case-insight">
+          <header class="case-section-head">
+            <span class="case-index">01 / PRODUCT INSIGHT</span>
+            <h2>问题不是缺少行情工具，<br />而是判断很难被持续练习。</h2>
+          </header>
+          <div class="insight-layout">
+            <blockquote>
+              “没人会关心陌生人的收益率排行榜，<br />但所有人都会关心朋友今天又亏了多少。”
+            </blockquote>
+            <div class="insight-points">
+              <article>
+                <span>持续动力</span>
+                <h3>传统模拟盘像一份作业</h3>
+                <p>没有熟人关系和局内悬念，新手很难跨过一次性体验，形成连续练习。</p>
+              </article>
+              <article>
+                <span>即时反馈</span>
+                <h3>盈亏数字不能解释判断</h3>
+                <p>用户知道自己赚或亏，却不知道是信息、时机、风险偏好还是从众造成结果。</p>
+              </article>
+              <article>
+                <span>经验沉淀</span>
+                <h3>交易结束，经验也随之消失</h3>
+                <p>缺少被组织的复盘语言，用户很难把一次输赢迁移到下一次决策。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section case-loop" id="case-loop">
+          <header class="case-section-head case-section-head-inline">
+            <div>
+              <span class="case-index">02 / CORE LOOP</span>
+              <h2>让每一次交易，进入下一轮判断。</h2>
+            </div>
+            <p>
+              我将分散的投资、社交和 AI 能力组织为一个可重复闭环。
+              点击图中的节点，查看每一步承担的产品任务。
+            </p>
+          </header>
+          <figure class="loop-visual">
+            <img src="./assets/stock-party/product-loop.png" alt="信息、判断、交易、社交与 AI 复盘构成的产品闭环" />
+            <button class="loop-step loop-step-input is-active" type="button" data-loop-step="input">信息输入</button>
+            <button class="loop-step loop-step-judge" type="button" data-loop-step="judge">独立判断</button>
+            <button class="loop-step loop-step-trade" type="button" data-loop-step="trade">模拟交易</button>
+            <button class="loop-step loop-step-social" type="button" data-loop-step="social">熟人讨论</button>
+            <button class="loop-step loop-step-review" type="button" data-loop-step="review">AI 复盘</button>
+            <figcaption id="loopDetail">
+              <strong>信息输入</strong>
+              <span>真实新闻、市场传闻和卧底消息共同形成不完全信息环境。</span>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="case-section case-boundary" id="case-boundary">
+          <header class="case-section-head">
+            <span class="case-index">03 / PRODUCT SCOPE</span>
+            <h2>功能取舍不是做少，<br />而是保护核心体验。</h2>
+          </header>
+          <div class="boundary-list">
+            <article>
+              <span class="boundary-number">A</span>
+              <div>
+                <p class="boundary-choice">熟人房间，而不是陌生人排行榜</p>
+                <p>把竞争建立在已有关系上，让亏损、质疑和反转天然具备传播与讨论价值。</p>
+              </div>
+              <strong>关系张力 &gt; 排名刺激</strong>
+            </article>
+            <article>
+              <span class="boundary-number">B</span>
+              <div>
+                <p class="boundary-choice">干扰信息，而不是操纵股价</p>
+                <p>卧底只能影响信息环境，不能改变价格，保留用户判断与真实市场逻辑之间的联系。</p>
+              </div>
+              <strong>信息博弈 &gt; 数值作弊</strong>
+            </article>
+            <article>
+              <span class="boundary-number">C</span>
+              <div>
+                <p class="boundary-choice">AI 教练，而不是自动投顾</p>
+                <p>AI 提供判断依据、行为归因与复盘，不替用户做决定，也不包装为真实投资建议。</p>
+              </div>
+              <strong>能力增强 &gt; 决策替代</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="case-section case-architecture" id="case-architecture">
+          <header class="case-section-head case-section-head-inline">
+            <div>
+              <span class="case-index">04 / INFORMATION ARCHITECTURE</span>
+              <h2>白天做判断，晚上解释判断。</h2>
+            </div>
+            <p>
+              信息架构按用户心智切成两个场域：交易所承接数据与行动，
+              小酒馆承接表达、质疑、战报和投票。
+            </p>
+          </header>
+          <div class="case-shot-grid">
+            <figure>
+              <button
+                class="case-shot"
+                type="button"
+                data-case-image="./assets/stock-party/03-trade.png"
+                data-case-caption="交易所：从行情、风险和基本面进入真实交易动作"
+                aria-label="放大查看交易所界面"
+              >
+                <img src="./assets/stock-party/03-trade.png" alt="英伟达股票详情、风险指标和买卖操作界面" />
+              </button>
+              <figcaption>
+                <span>DAY / DECIDE &amp; TRADE</span>
+                <strong>交易所：判断进入行动</strong>
+                <p>行情、风险、持仓与交易动作被组织在同一条决策路径中。</p>
+              </figcaption>
+            </figure>
+            <figure>
+              <button
+                class="case-shot"
+                type="button"
+                data-case-image="./assets/stock-party/04-tavern.png"
+                data-case-caption="小酒馆：发言、操作痕迹、AI 战报与嫌疑投票"
+                aria-label="放大查看小酒馆界面"
+              >
+                <img src="./assets/stock-party/04-tavern.png" alt="小酒馆中的玩家发言、AI 战报与嫌疑投票界面" />
+              </button>
+              <figcaption>
+                <span>NIGHT / EXPLAIN &amp; REVIEW</span>
+                <strong>小酒馆：行动变成讨论</strong>
+                <p>系统把交易痕迹转译成社交话题，再通过投票推动下一轮判断。</p>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="case-section case-agent" id="case-agent">
+          <header class="case-section-head case-section-head-inline">
+            <div>
+              <span class="case-index">05 / AGENT DESIGN</span>
+              <h2>AI 不只回答问题，<br />它要读懂这一局。</h2>
+            </div>
+            <p>
+              我和团队共同参与 Agent 方案设计，我重点推动能力进入具体链路：
+              何时出现、读取什么上下文、输出什么，以及如何守住风险边界。
+            </p>
+          </header>
+          <div class="agent-system" aria-label="Agent 产品能力结构">
+            <div class="agent-column">
+              <span>CONTEXT</span>
+              <strong>当前股票</strong>
+              <strong>持仓与交易</strong>
+              <strong>新闻事件</strong>
+              <strong>玩家言论</strong>
+            </div>
+            <div class="agent-connector" aria-hidden="true">→</div>
+            <div class="agent-column agent-roles">
+              <span>AGENT ROLES</span>
+              <strong>投资导师<small>解释标的与风险</small></strong>
+              <strong>行为分析师<small>识别节奏与异常</small></strong>
+              <strong>复盘官<small>组织证据与战报</small></strong>
+            </div>
+            <div class="agent-connector" aria-hidden="true">→</div>
+            <div class="agent-column">
+              <span>OUTPUT</span>
+              <strong>判断依据</strong>
+              <strong>行动建议</strong>
+              <strong>行为归因</strong>
+              <strong>AI 战报</strong>
+            </div>
+          </div>
+          <div class="agent-proof">
+            <button
+              class="case-shot case-shot-wide"
+              type="button"
+              data-case-image="./assets/stock-party/05-agent.png"
+              data-case-caption="智囊团读取当前标的、风险偏好与局内线索后，输出判断依据和建议"
+              aria-label="放大查看 AI 智囊团界面"
+            >
+              <img src="./assets/stock-party/05-agent.png" alt="AI 智囊团在英伟达股票页面提供判断依据与行动建议" />
+            </button>
+            <div class="evaluation-list">
+              <span>评测关注</span>
+              <article>
+                <strong>问答相关性</strong>
+                <p>回答是否使用当前标的、持仓和新闻，而不是输出通用话术。</p>
+              </article>
+              <article>
+                <strong>行为归因</strong>
+                <p>能否把异常交易与时点、信息链和玩家表达建立可解释联系。</p>
+              </article>
+              <article>
+                <strong>风险边界</strong>
+                <p>明确这是游戏模拟，不伪装为可靠的真实投资建议。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section case-demo" id="case-demo">
+          <header class="case-section-head case-section-head-inline">
+            <div>
+              <span class="case-index">06 / PLAYABLE PROTOTYPE</span>
+              <h2>不要只看截图，<br />亲手完成一轮判断。</h2>
+            </div>
+            <p>
+              这是仓库中的可运行原型。作品集版本已移除私有模型凭据，
+              AI 问答使用本地兜底逻辑，不会向外部服务发送输入。
+            </p>
+          </header>
+          <div class="demo-lab">
+            <aside class="demo-guide">
+              <span>90 秒体验路径</span>
+              <ol>
+                <li><i>01</i><strong>开启熟人房间</strong></li>
+                <li><i>02</i><strong>进入交易所选股</strong></li>
+                <li><i>03</i><strong>查看风险并买入</strong></li>
+                <li><i>04</i><strong>咨询 AI 智囊团</strong></li>
+                <li><i>05</i><strong>回到小酒馆看战报</strong></li>
+              </ol>
+              <p>建议在桌面端体验完整操作，移动端可使用下方“全屏打开”。</p>
+            </aside>
+            <div class="demo-stage">
+              <div class="demo-toolbar">
+                <span><i aria-hidden="true"></i> Interactive prototype</span>
+                <div>
+                  <button id="resetStockDemo" type="button" title="重置 Demo" aria-label="重置 Demo">↻</button>
+                  <a href="./demos/stock-party/index.html" target="_blank" rel="noreferrer">
+                    全屏打开 <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+              <iframe
+                id="stockPartyDemo"
+                title="《我不是股神》可交互产品原型"
+                data-src="./demos/stock-party/index.html"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin"
+              ></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section case-result" id="case-result">
+          <header class="case-section-head">
+            <span class="case-index">07 / RESULT &amp; NEXT</span>
+            <h2>奖励验证了创意吸引力，<br />但不是用户价值的终点。</h2>
+          </header>
+          <div class="result-layout">
+            <div class="result-status">
+              <article>
+                <span>已验证</span>
+                <strong>核心闭环可运行</strong>
+                <p>从选股、交易、AI 咨询，到战报、投票和终局均可在原型中完成。</p>
+              </article>
+              <article>
+                <span>外部信号</span>
+                <strong>清华黑客松最佳创意奖</strong>
+                <p>证明概念在短时间内具备可理解性和差异化，但不替代长期用户验证。</p>
+              </article>
+              <article>
+                <span>仍待验证</span>
+                <strong>是否真的改善判断学习</strong>
+                <p>需要观察五日留存、战报阅读、投票参与，以及复盘后决策是否发生变化。</p>
+              </article>
+            </div>
+            <button
+              class="case-shot case-shot-finale"
+              type="button"
+              data-case-image="./assets/stock-party/06-finale.png"
+              data-case-caption="终局把收益结果、卧底揭晓和本局名场面组织成可分享反馈"
+              aria-label="放大查看终局界面"
+            >
+              <img src="./assets/stock-party/06-finale.png" alt="游戏终局收益排行、卧底揭晓与分享结果" />
+            </button>
+          </div>
+          <div class="metric-strip" aria-label="下一步验证指标">
+            <span>邀请接受率</span>
+            <span>首轮交易完成率</span>
+            <span>战报阅读率</span>
+            <span>投票参与率</span>
+            <span>次日回流率</span>
+            <span>战报分享率</span>
+          </div>
+          <div class="ownership-detail">
+            <div>
+              <span>LEAD</span>
+              <strong>我主导</strong>
+              <p>产品定位、功能取舍、信息架构、端到端功能链路、交互与视觉原型。</p>
+            </div>
+            <div>
+              <span>CO-CREATE</span>
+              <strong>共同参与</strong>
+              <p>五日熟人局、卧底信息机制，以及 Agent 能力和风险边界设计。</p>
+            </div>
+            <div>
+              <span>TEAM</span>
+              <strong>团队协作</strong>
+              <p>工程实现、模型接入与黑客松现场演示，共同完成从概念到可运行原型。</p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="case-footer">
+          <div>
+            <span>END OF CASE</span>
+            <strong>让产品判断经得起一次真实操作。</strong>
+          </div>
+          <button type="button" data-case-close>返回项目列表 <span aria-hidden="true">↑</span></button>
+        </footer>
+      </main>
+    </section>
+
+    <dialog class="case-lightbox" id="caseLightbox" aria-labelledby="caseLightboxCaption">
+      <button class="case-lightbox-close" id="closeCaseLightbox" type="button" aria-label="关闭大图">×</button>
+      <img id="caseLightboxImage" src="" alt="" />
+      <p id="caseLightboxCaption"></p>
+    </dialog>
+
+    <dialog class="experience-modal" id="experienceModal" aria-labelledby="modalTitle" aria-describedby="modalMeta">
       <article class="experience-sheet">
         <button class="modal-close" id="closeExperience" type="button" aria-label="关闭详情">×</button>
         <p class="modal-kicker" id="modalKicker">Experience</p>
@@ -131,23 +675,34 @@
       </article>
     </dialog>
 
-    <dialog class="message-dialog" id="messageDialog">
+    <dialog class="message-dialog" id="messageDialog" aria-labelledby="messageDialogTitle">
       <form class="message-compose" id="messageForm" method="dialog">
         <button class="modal-close" id="closeMessageDialog" type="button" aria-label="关闭留言">×</button>
         <span class="modal-kicker">Leave a message</span>
-        <h2>写一条留言</h2>
+        <h2 id="messageDialogTitle">写一条留言</h2>
         <label>
           <span>名字</span>
           <input id="messageName" name="name" type="text" maxlength="24" placeholder="你的名字" required />
         </label>
-        <label>
-          <span>留言</span>
-          <textarea id="messageText" name="message" maxlength="180" placeholder="想说的话、反馈或合作方向" required></textarea>
+        <label class="website-field" aria-hidden="true">
+          <span>Website</span>
+          <input id="messageWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
         </label>
+        <label>
+          <span class="field-meta">
+            <span>留言</span>
+            <output id="messageCount" for="messageText">0 / 180</output>
+          </span>
+          <textarea id="messageText" name="message" maxlength="180" aria-describedby="messageCount" placeholder="想说的话、反馈或合作方向" required></textarea>
+        </label>
+        <p class="form-error" id="messageError" role="alert" hidden></p>
         <button class="submit-message" type="submit">发布留言</button>
       </form>
     </dialog>
 
-    <script src="./app.js"></script>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./config.js?v=20260712"></script>
+    <script src="./app.js?v=20260712"></script>
   </body>
 </html>
