@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="./styles.css?v=20260712" />
   </head>
   <body>
+    <div class="page-water-field" aria-hidden="true">
+      <canvas class="ambient-canvas" id="ambientScene"></canvas>
+    </div>
     <a class="skip-link" href="#about">跳到主要内容</a>
     <header class="header">
       <a class="logo" href="#index" aria-label="回到首页">
@@ -39,15 +42,23 @@
           <h1>刘万正</h1>
           <span>AI 无法替代对生命力的理解</span>
         </div>
-        <div class="scene-caption" aria-label="核心能力关键词">
-          <span><strong>Product Strategy</strong><small>定位与功能取舍</small></span>
-          <span><strong>Agent UX</strong><small>状态与反馈设计</small></span>
-          <span><strong>AI Evaluation</strong><small>评测与 Bad Case</small></span>
-          <span><strong>Rapid Prototype</strong><small>从假设到可交互 Demo</small></span>
+        <div class="hero-actions" aria-label="快捷联系与简历">
+          <button class="hero-water-action" type="button" data-copy-contact="邮箱" data-copy-value="1584365828@qq.com" aria-label="复制邮箱：1584365828@qq.com">
+            <span class="hero-action-icon" aria-hidden="true">@</span>
+            <strong>复制邮箱</strong>
+          </button>
+          <a class="hero-water-action resume-download" href="./assets/documents/liuwanzheng-resume.pdf" download="刘万正-AI产品经理-简历.pdf">
+            <span class="hero-action-icon" aria-hidden="true">↓</span>
+            <strong>下载简历</strong>
+          </a>
+          <button class="hero-water-action" type="button" data-copy-contact="微信" data-copy-value="15762977259" data-copy-note="电话同号" aria-label="复制微信：15762977259，电话同号">
+            <span class="hero-action-icon hero-action-icon--chat" aria-hidden="true">••</span>
+            <strong>复制微信</strong>
+          </button>
         </div>
       </section>
 
-      <section class="intro glass-section" id="about">
+      <section class="intro" id="about">
         <header class="intro-identity" data-reveal>
           <span class="section-kicker">ABOUT ME / PRODUCT PROFILE</span>
           <div>
@@ -62,17 +73,9 @@
           <li><span>03</span><strong>模型评测</strong><small>标准 · Bad Case · 迭代</small></li>
           <li><span>04</span><strong>快速原型</strong><small>假设 · Demo · 验证</small></li>
         </ul>
-        <dl class="signal-metrics" data-reveal>
-          <div><dd>300+</dd><dt>单轮评测 Query</dt></div>
-          <div><dd>500+</dd><dt>SFT 场景数据</dt></div>
-          <div><dd>8%→1.2%</dd><dt>P0 缺陷率</dt></div>
-        </dl>
       </section>
 
       <section class="work-showcase" id="work" aria-labelledby="workTitle">
-        <div class="work-water-field" aria-hidden="true">
-          <canvas class="ambient-canvas" id="ambientScene"></canvas>
-        </div>
         <header class="work-head" data-reveal>
           <div>
             <span class="eyebrow">Experience / Evidence</span>
@@ -273,7 +276,7 @@
     >
       <div class="case-progress" aria-hidden="true"><i></i></div>
       <header class="case-nav">
-        <button class="case-back" type="button" data-case-close aria-label="返回项目列表">
+        <button class="case-back ui-back" type="button" data-case-close aria-label="返回项目列表">
           <span aria-hidden="true">←</span>
           <span>项目</span>
         </button>
@@ -667,7 +670,10 @@
 
     <dialog class="experience-modal" id="experienceModal" aria-labelledby="modalTitle" aria-describedby="modalMeta">
       <article class="experience-sheet">
-        <button class="modal-close" id="closeExperience" type="button" aria-label="关闭详情">×</button>
+        <button class="modal-back ui-back" id="closeExperience" type="button" aria-label="返回上一层">
+          <span aria-hidden="true">←</span>
+          <span id="experienceBackLabel">返回上一层</span>
+        </button>
         <p class="modal-kicker" id="modalKicker">Experience</p>
         <h2 id="modalTitle">经历详情</h2>
         <p class="modal-meta" id="modalMeta"></p>

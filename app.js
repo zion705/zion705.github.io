@@ -226,7 +226,7 @@ if (ambientCanvas && ambientCtx) {
         pixels[index] = Math.round(104 + warmth * 42 + light * 18);
         pixels[index + 1] = Math.round(132 + (1 - warmth) * 28 + light * 25);
         pixels[index + 2] = Math.round(91 + (1 - warmth) * 30 + light * 20);
-        pixels[index + 3] = Math.round(18 + Math.max(0, light) * 38);
+        pixels[index + 3] = Math.round(42 + Math.max(0, light) * 72);
       }
     }
     ambientCtx.putImageData(ambientPixels, 0, 0);
@@ -756,9 +756,9 @@ function renderPortalPanel(key, { focus = false, scroll = false } = {}) {
   activePortalKey = key;
   portalPanel.innerHTML = `
     <header class="portal-panel-head">
-      <button class="portal-back" type="button" data-portal-back>
+      <button class="portal-back ui-back" type="button" data-portal-back>
         <span aria-hidden="true">←</span>
-        <span>返回探索入口</span>
+        <span>返回水滴入口</span>
       </button>
       <div class="portal-panel-copy">
         <span class="eyebrow">${page.kicker}</span>
@@ -941,7 +941,15 @@ function showProjectCase({ focus = false } = {}) {
   siteHeader.inert = true;
   portfolioMain.inert = true;
   requestAnimationFrame(() => {
-    if (wasHidden) stockPartyCase.scrollTop = 0;
+    if (wasHidden) {
+      stockPartyCase.scrollTop = 0;
+      const defaultLoopButton = loopButtons.find((button) => button.dataset.loopStep === "input");
+      loopButtons.forEach((button) => button.classList.toggle("is-active", button === defaultLoopButton));
+      if (loopDetail) {
+        loopDetail.querySelector("strong").textContent = loopCopy.input.title;
+        loopDetail.querySelector("span").textContent = loopCopy.input.detail;
+      }
+    }
     updateCaseProgress();
     if (focus) stockPartyCase.querySelector("[data-case-close]")?.focus({ preventScroll: true });
   });
@@ -964,6 +972,9 @@ function openProjectCase(key, trigger) {
   if (key !== "stock-party") return;
   lastProjectCaseTrigger = trigger || lastProjectCaseTrigger;
   const portalKey = activePortalKey || history.state?.portalKey || "projects";
+  if (window.location.hash !== "#experience-projects") {
+    history.replaceState({ portalKey: "projects" }, "", "#experience-projects");
+  }
   history.pushState({ portalKey, projectCase: key }, "", `#project-${key}`);
   showProjectCase({ focus: true });
 }
@@ -1060,6 +1071,7 @@ const modalKicker = document.querySelector("#modalKicker");
 const modalTitle = document.querySelector("#modalTitle");
 const modalMeta = document.querySelector("#modalMeta");
 const modalBody = document.querySelector("#modalBody");
+const experienceBackLabel = document.querySelector("#experienceBackLabel");
 let lastExperienceTrigger = null;
 let pdfJsPromise = null;
 let pdfPreviewVersion = 0;
@@ -1161,6 +1173,11 @@ function showExperience(key) {
   modalKicker.textContent = data.kicker;
   modalTitle.textContent = data.title;
   modalMeta.textContent = data.meta;
+  const parentKey = ["nearu", "wakeargue"].includes(key) ? "projects" : key === "design" ? "early" : "work";
+  const backLabels = { work: "返回工作经历", projects: "返回项目", early: "返回早期经历" };
+  const backLabel = backLabels[parentKey] || "返回上一层";
+  if (experienceBackLabel) experienceBackLabel.textContent = backLabel;
+  closeExperience?.setAttribute("aria-label", backLabel);
   const intro = data.intro ? `<p class="modal-lead">${data.intro}</p>` : "";
   const tags = data.tags?.length
     ? `<div class="modal-tags" aria-label="能力标签">${data.tags.map((tag) => `<span>${tag}</span>`).join("")}</div>`
@@ -1219,6 +1236,8 @@ function showExperience(key) {
     : "";
   modalBody.innerHTML = `${intro}${tags}${highlights}${links}${points}${documentViewer}${gallery}`;
   if (!experienceModal.open) experienceModal.showModal();
+  const sheet = experienceModal.querySelector(".experience-sheet");
+  if (sheet) sheet.scrollTop = 0;
   const pdfReader = modalBody.querySelector("[data-pdf-reader]");
   if (pdfReader) renderPdfPreview(pdfReader);
   syncDialogState();
@@ -1229,6 +1248,10 @@ function openExperience(key, trigger) {
   lastExperienceTrigger = trigger || lastExperienceTrigger;
   const fallbackPortalKey = ["nearu", "wakeargue"].includes(key) ? "projects" : key === "design" ? "early" : "work";
   const portalKey = activePortalKey || history.state?.portalKey || fallbackPortalKey;
+  const parentHash = fallbackPortalKey === "work" ? "#work" : `#experience-${portalKey}`;
+  if (window.location.hash !== parentHash) {
+    history.replaceState(fallbackPortalKey === "work" ? null : { portalKey }, "", parentHash);
+  }
   history.pushState({ portalKey, experienceKey: key }, "", `#detail-${key}`);
   showExperience(key);
 }
@@ -1736,8 +1759,17 @@ function syncUiAfterNavigation() {
   }
 }
 
-window.addEventListener("popstate", syncUiAfterNavigation);
-window.addEventListener("hashchange", syncUiAfterNavigation);
+let navigationSyncFrame = 0;
+function scheduleNavigationSync() {
+  if (navigationSyncFrame) return;
+  navigationSyncFrame = requestAnimationFrame(() => {
+    navigationSyncFrame = 0;
+    syncUiAfterNavigation();
+  });
+}
+
+window.addEventListener("popstate", scheduleNavigationSync);
+window.addEventListener("hashchange", scheduleNavigationSync);
 syncHistoryDrivenUi();
 
 const sectionLinks = [...document.querySelectorAll("[data-section-link]")];
