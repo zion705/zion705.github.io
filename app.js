@@ -629,25 +629,6 @@ const portalPages = {
       }
     ]
   },
-  thinking: {
-    kicker: "Writing / Notes",
-    title: "个人思考",
-    summary: "这里会放一些关于 AI 产品、交互实验、模型评测和个人成长的短文。先把它作为一个可继续扩展的子页面入口。",
-    items: [
-      {
-        title: "AI 产品不是把模型能力翻译成按钮",
-        meta: "真正重要的是让用户知道系统在做什么、为什么这样做，以及失败后如何恢复。"
-      },
-      {
-        title: "评测是一种产品语言",
-        meta: "评测不是只服务算法迭代，也是在定义用户体验里的边界、优先级和信任感。"
-      },
-      {
-        title: "个人品牌应该像实验笔记本",
-        meta: "比起罗列结论，更有价值的是展示问题、假设、试错和方法。"
-      }
-    ]
-  },
   early: {
     kicker: "Early path",
     title: "早期经历",
@@ -1825,11 +1806,3 @@ function scheduleActiveNavigation() {
 window.addEventListener("scroll", scheduleActiveNavigation, { passive: true });
 window.addEventListener("resize", scheduleActiveNavigation);
 updateActiveNavigation();
-
-function tickClock() {
-  document.querySelector("#clock").textContent = new Date().toLocaleTimeString("zh-CN", {
-    hour12: false,
-  });
-}
-tickClock();
-setInterval(tickClock, 1000);
