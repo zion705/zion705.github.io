@@ -204,7 +204,7 @@ if (ambientCanvas && ambientCtx) {
     ambientPointer.y += (ambientPointer.targetY - ambientPointer.y) * 0.04;
     ambientPointer.strength += (0.18 - ambientPointer.strength) * 0.022;
 
-    const phase = time * 0.00028;
+    const phase = time * 0.00072;
     const pixels = ambientPixels.data;
     for (let y = 0; y < ambientHeight; y += 1) {
       const v = y / Math.max(ambientHeight - 1, 1);
@@ -220,13 +220,15 @@ if (ambientCanvas && ambientCtx) {
           Math.cos(waterV * 8.6 - phase * 0.82) * 0.31 +
           Math.sin((waterU + waterV) * 6.8 + phase * 0.55) * 0.23 +
           Math.cos((waterU - waterV) * 5.4 - phase * 0.7) * 0.12;
-        const light = 0.5 + swell * 0.5;
+        const ripple = Math.sin(waterU * 18 + phase * 2.1) * Math.cos(waterV * 15 - phase * 1.65);
+        const caustic = Math.pow(Math.max(0, 1 - Math.abs(ripple)), 3);
+        const light = Math.min(1, Math.max(0, 0.48 + swell * 0.48 + caustic * 0.42));
         const warmth = 0.5 + 0.5 * Math.sin(waterU * 4.2 - waterV * 3.1 + phase * 0.35);
         const index = (y * ambientWidth + x) * 4;
-        pixels[index] = Math.round(104 + warmth * 42 + light * 18);
-        pixels[index + 1] = Math.round(132 + (1 - warmth) * 28 + light * 25);
-        pixels[index + 2] = Math.round(91 + (1 - warmth) * 30 + light * 20);
-        pixels[index + 3] = Math.round(42 + Math.max(0, light) * 72);
+        pixels[index] = Math.round(93 + warmth * 43 + light * 34 + caustic * 30);
+        pixels[index + 1] = Math.round(128 + (1 - warmth) * 30 + light * 42 + caustic * 26);
+        pixels[index + 2] = Math.round(83 + (1 - warmth) * 34 + light * 28 + caustic * 18);
+        pixels[index + 3] = Math.round(68 + light * 94 + caustic * 52);
       }
     }
     ambientCtx.putImageData(ambientPixels, 0, 0);
@@ -267,6 +269,7 @@ if (ambientCanvas && ambientCtx) {
 const heroScene = document.querySelector(".scene-section");
 const heroCopy = document.querySelector(".hero-copy");
 const viewfinder = document.querySelector(".viewfinder");
+const pageWaterField = document.querySelector(".page-water-field");
 function updateHeroFade() {
   const progress = Math.min(window.scrollY / (window.innerHeight * 0.72), 1);
   const opacity = Math.max(0, 1 - progress * 1.25);
@@ -282,11 +285,14 @@ function updateHeroFade() {
     viewfinder.style.opacity = String(Math.max(0.05, 0.34 - progress * 0.28));
     viewfinder.style.transform = `translate(-50%, -50%) scale(${1 + progress * 0.16})`;
   }
-  if (heroScene) {
-    heroScene.style.opacity = String(Math.max(0.72, 1 - progress * 0.28));
+  if (pageWaterField) {
+    const travel = Math.min(window.scrollY, window.innerHeight * 0.82);
+    const shift = Math.max(0, window.innerHeight * 0.58 - travel);
+    pageWaterField.style.setProperty("--water-shift", `${shift.toFixed(1)}px`);
   }
 }
 window.addEventListener("scroll", updateHeroFade, { passive: true });
+window.addEventListener("resize", updateHeroFade);
 updateHeroFade();
 
 const articles = document.querySelector(".articles");
