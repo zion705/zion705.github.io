@@ -1,5 +1,6 @@
 const canvas = document.querySelector("#scene");
 const ctx = canvas.getContext("2d");
+const sceneSection = document.querySelector(".scene-section");
 const pointer = { x: 0.5, y: 0.52, targetX: 0.5, targetY: 0.52, active: false };
 const revealTrail = [];
 let width = 0;
@@ -7,8 +8,27 @@ let height = 0;
 let dpr = 1;
 const maskCanvas = document.createElement("canvas");
 const maskCtx = maskCanvas.getContext("2d");
+const scrollMaskCanvas = document.createElement("canvas");
+const scrollMaskCtx = scrollMaskCanvas.getContext("2d");
 const revealCanvas = document.createElement("canvas");
 const revealCtx = revealCanvas.getContext("2d");
+// Motion is part of the portfolio's signature experience. Use ?motion=reduce for a quiet fallback.
+const requestedMotion = new URLSearchParams(window.location.search).get("motion");
+const forceFullMotion = requestedMotion !== "reduce";
+if (forceFullMotion) {
+  document.documentElement.dataset.motion = "full";
+} else {
+  delete document.documentElement.dataset.motion;
+}
+const systemReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const heroReducedMotion = { matches: systemReducedMotion.matches && !forceFullMotion };
+const scrollReveal = {
+  target: 0,
+  current: 0,
+  initialized: false,
+  heroExited: false,
+  lastTime: 0,
+};
 const dryWood = new Image();
 const sproutWood = new Image();
 dryWood.src = "./assets/wood-dry.png";
@@ -23,11 +43,15 @@ function resize() {
   canvas.height = Math.floor(height * dpr);
   maskCanvas.width = canvas.width;
   maskCanvas.height = canvas.height;
+  scrollMaskCanvas.width = canvas.width;
+  scrollMaskCanvas.height = canvas.height;
   revealCanvas.width = canvas.width;
   revealCanvas.height = canvas.height;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   maskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  scrollMaskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
   revealCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  initializeScrollReveal();
 }
 
 function coverRect(img) {
@@ -122,6 +146,123 @@ function paintRevealMask(time) {
   maskCtx.restore();
 }
 
+function clampRevealProgress(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function isScrollRevealComplete() {
+  return scrollReveal.target >= 0.9995 && scrollReveal.current >= 0.9995;
+}
+
+function publishScrollRevealState() {
+  const progress = scrollReveal.current.toFixed(3);
+  if (sceneSection.dataset.treeRevealProgress !== progress) {
+    sceneSection.dataset.treeRevealProgress = progress;
+  }
+  sceneSection.toggleAttribute("data-tree-locked", window.scrollY <= 1 && !isScrollRevealComplete());
+}
+
+function initializeScrollReveal() {
+  if (scrollReveal.initialized) return;
+  const deepLink = window.location.hash && !["#", "#index"].includes(window.location.hash);
+  const startComplete = heroReducedMotion.matches || window.scrollY > 1 || deepLink;
+  scrollReveal.target = startComplete ? 1 : 0;
+  scrollReveal.current = scrollReveal.target;
+  scrollReveal.heroExited = window.scrollY > 1;
+  scrollReveal.initialized = true;
+  publishScrollRevealState();
+}
+
+function syncScrollRevealWithPage() {
+  initializeScrollReveal();
+  scrollReveal.heroExited = window.scrollY > 1;
+  if (scrollReveal.heroExited) {
+    scrollReveal.target = 1;
+    scrollReveal.current = 1;
+  }
+  publishScrollRevealState();
+}
+
+function scrollRevealDistance() {
+  return Math.max(760, window.innerHeight * 1.15);
+}
+
+function consumeScrollRevealDelta(delta) {
+  if (heroReducedMotion.matches || Math.abs(delta) < 0.5 || window.scrollY > 1) return false;
+
+  if (delta > 0 && isScrollRevealComplete()) return false;
+  if (delta < 0 && scrollReveal.target <= 0.0005 && scrollReveal.current <= 0.0005) return false;
+
+  scrollReveal.target = clampRevealProgress(scrollReveal.target + delta / scrollRevealDistance());
+  scrollReveal.heroExited = false;
+  publishScrollRevealState();
+  return true;
+}
+
+function advanceScrollReveal(time) {
+  if (scrollReveal.heroExited) {
+    scrollReveal.current = 1;
+    scrollReveal.lastTime = time;
+    publishScrollRevealState();
+    return;
+  }
+
+  if (heroReducedMotion.matches) {
+    scrollReveal.current = scrollReveal.target;
+    scrollReveal.lastTime = time;
+    publishScrollRevealState();
+    return;
+  }
+
+  const elapsed = scrollReveal.lastTime ? time - scrollReveal.lastTime : 1000 / 60;
+  const frameScale = Math.min(2, Math.max(0.25, elapsed / (1000 / 60)));
+  const difference = scrollReveal.target - scrollReveal.current;
+  const response = difference >= 0 ? 0.13 : 0.08;
+  const frameResponse = 1 - Math.pow(1 - response, frameScale);
+  scrollReveal.current += difference * frameResponse;
+
+  if (Math.abs(difference) < 0.0005) {
+    scrollReveal.current = scrollReveal.target;
+  }
+  scrollReveal.lastTime = time;
+  publishScrollRevealState();
+}
+
+function paintScrollRevealMask(time) {
+  advanceScrollReveal(time);
+  scrollMaskCtx.clearRect(0, 0, width, height);
+
+  const progress = Math.min(1, Math.max(0, scrollReveal.current));
+  if (progress <= 0.0001) return;
+
+  if (progress >= 0.9995) {
+    scrollMaskCtx.fillStyle = "#fff";
+    scrollMaskCtx.fillRect(0, 0, width, height);
+    return;
+  }
+
+  const centerX = width * 0.5;
+  const outerSpan = Math.max(1, progress * width * 0.58);
+  const feather = Math.min(130, Math.max(28, width * 0.08));
+  const ramp = Math.min(0.48, feather / (outerSpan * 2));
+  const gradient = scrollMaskCtx.createLinearGradient(centerX - outerSpan, 0, centerX + outerSpan, 0);
+  gradient.addColorStop(0, "rgba(255,255,255,0)");
+  gradient.addColorStop(ramp * 0.55, "rgba(255,255,255,0.48)");
+  gradient.addColorStop(ramp, "rgba(255,255,255,1)");
+  gradient.addColorStop(1 - ramp, "rgba(255,255,255,1)");
+  gradient.addColorStop(1 - ramp * 0.55, "rgba(255,255,255,0.48)");
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  scrollMaskCtx.fillStyle = gradient;
+  scrollMaskCtx.fillRect(centerX - outerSpan, 0, outerSpan * 2, height);
+}
+
+function combineRevealMasks() {
+  scrollMaskCtx.save();
+  scrollMaskCtx.globalCompositeOperation = "source-over";
+  scrollMaskCtx.drawImage(maskCanvas, 0, 0, width, height);
+  scrollMaskCtx.restore();
+}
+
 function drawScene(time) {
   ctx.clearRect(0, 0, width, height);
 
@@ -136,12 +277,14 @@ function drawScene(time) {
   ctx.restore();
 
   paintRevealMask(time);
+  paintScrollRevealMask(time);
+  combineRevealMasks();
 
   revealCtx.clearRect(0, 0, width, height);
   drawImageCover(revealCtx, sproutWood);
   revealCtx.save();
   revealCtx.globalCompositeOperation = "destination-in";
-  revealCtx.drawImage(maskCanvas, 0, 0, width, height);
+  revealCtx.drawImage(scrollMaskCanvas, 0, 0, width, height);
   revealCtx.restore();
 
   ctx.drawImage(revealCanvas, 0, 0, width, height);
@@ -150,7 +293,56 @@ function drawScene(time) {
 }
 
 window.addEventListener("resize", resize);
-const sceneSection = document.querySelector(".scene-section");
+window.addEventListener("scroll", syncScrollRevealWithPage, { passive: true });
+window.addEventListener(
+  "wheel",
+  (event) => {
+    if (event.ctrlKey) return;
+    let delta = event.deltaY;
+    if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) delta *= 16;
+    if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) delta *= window.innerHeight;
+    if (consumeScrollRevealDelta(delta)) event.preventDefault();
+  },
+  { passive: false }
+);
+
+let lastRevealTouchY = null;
+window.addEventListener(
+  "touchstart",
+  (event) => {
+    lastRevealTouchY = event.touches[0]?.clientY ?? null;
+  },
+  { passive: true }
+);
+window.addEventListener(
+  "touchmove",
+  (event) => {
+    const nextY = event.touches[0]?.clientY;
+    if (lastRevealTouchY === null || nextY === undefined) return;
+    const delta = lastRevealTouchY - nextY;
+    lastRevealTouchY = nextY;
+    if (consumeScrollRevealDelta(delta)) event.preventDefault();
+  },
+  { passive: false }
+);
+window.addEventListener("touchend", () => {
+  lastRevealTouchY = null;
+});
+window.addEventListener("touchcancel", () => {
+  lastRevealTouchY = null;
+});
+window.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (event.target instanceof HTMLElement && event.target.closest("input, textarea, select, button, a, [contenteditable='true']")) return;
+
+  let delta = 0;
+  if (event.key === "ArrowDown") delta = 56;
+  if (event.key === "PageDown") delta = window.innerHeight * 0.42;
+  if (event.key === " ") delta = (event.shiftKey ? -1 : 1) * window.innerHeight * 0.42;
+  if (event.key === "ArrowUp") delta = -56;
+  if (event.key === "PageUp") delta = -window.innerHeight * 0.42;
+  if (delta && consumeScrollRevealDelta(delta)) event.preventDefault();
+});
 sceneSection.addEventListener("pointermove", (event) => {
   const rect = sceneSection.getBoundingClientRect();
   pointer.targetX = (event.clientX - rect.left) / rect.width;
@@ -172,8 +364,8 @@ Promise.all([
 const ambientCanvas = document.querySelector("#ambientScene");
 const ambientCtx = ambientCanvas?.getContext("2d");
 if (ambientCanvas && ambientCtx) {
-  const ambientMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const ambientPointer = { x: 0.5, y: 0.42, targetX: 0.5, targetY: 0.42, strength: 0.18 };
+  const ambientMotion = { matches: systemReducedMotion.matches && !forceFullMotion };
+  const ambientPointer = { x: 0.5, y: 0.42, targetX: 0.5, targetY: 0.42, strength: 0.28 };
   let ambientWidth = 0;
   let ambientHeight = 0;
   let ambientPixels = null;
@@ -195,16 +387,16 @@ if (ambientCanvas && ambientCtx) {
       if (!ambientMotion.matches) requestAnimationFrame(drawAmbient);
       return;
     }
-    if (!ambientMotion.matches && time - lastAmbientFrame < 34) {
+    if (!ambientMotion.matches && time - lastAmbientFrame < 30) {
       requestAnimationFrame(drawAmbient);
       return;
     }
     lastAmbientFrame = time;
-    ambientPointer.x += (ambientPointer.targetX - ambientPointer.x) * 0.04;
-    ambientPointer.y += (ambientPointer.targetY - ambientPointer.y) * 0.04;
-    ambientPointer.strength += (0.18 - ambientPointer.strength) * 0.022;
+    ambientPointer.x += (ambientPointer.targetX - ambientPointer.x) * 0.055;
+    ambientPointer.y += (ambientPointer.targetY - ambientPointer.y) * 0.055;
+    ambientPointer.strength += (0.28 - ambientPointer.strength) * 0.028;
 
-    const phase = time * 0.00072;
+    const phase = time * 0.00102;
     const pixels = ambientPixels.data;
     for (let y = 0; y < ambientHeight; y += 1) {
       const v = y / Math.max(ambientHeight - 1, 1);
@@ -212,15 +404,18 @@ if (ambientCanvas && ambientCtx) {
         const u = x / Math.max(ambientWidth - 1, 1);
         const dx = u - ambientPointer.x;
         const dy = v - ambientPointer.y;
-        const pointerShift = Math.exp(-(dx * dx + dy * dy) * 15) * ambientPointer.strength;
-        const waterU = u + Math.sin(v * 8.2 + phase * 1.3) * 0.055 + dx * pointerShift * 0.07;
-        const waterV = v + Math.cos(u * 7.4 - phase) * 0.05 + dy * pointerShift * 0.07;
+        const distance = Math.hypot(dx, dy);
+        const pointerShift = Math.exp(-(dx * dx + dy * dy) * 12) * ambientPointer.strength;
+        const pointerWake = Math.sin(distance * 42 - phase * 9.2) * Math.exp(-distance * 6.8) * ambientPointer.strength;
+        const waterU = u + Math.sin(v * 8.2 + phase * 1.3) * 0.068 + dx * pointerShift * 0.12;
+        const waterV = v + Math.cos(u * 7.4 - phase) * 0.062 + dy * pointerShift * 0.12;
         const swell =
           Math.sin(waterU * 9.5 + phase * 1.2) * 0.34 +
           Math.cos(waterV * 8.6 - phase * 0.82) * 0.31 +
           Math.sin((waterU + waterV) * 6.8 + phase * 0.55) * 0.23 +
-          Math.cos((waterU - waterV) * 5.4 - phase * 0.7) * 0.12;
-        const ripple = Math.sin(waterU * 18 + phase * 2.1) * Math.cos(waterV * 15 - phase * 1.65);
+          Math.cos((waterU - waterV) * 5.4 - phase * 0.7) * 0.12 +
+          pointerWake * 0.56;
+        const ripple = Math.sin(waterU * 19 + phase * 2.3) * Math.cos(waterV * 16 - phase * 1.85) + pointerWake * 0.42;
         const caustic = Math.pow(Math.max(0, 1 - Math.abs(ripple)), 3);
         const light = Math.min(1, Math.max(0, 0.48 + swell * 0.48 + caustic * 0.42));
         const warmth = 0.5 + 0.5 * Math.sin(waterU * 4.2 - waterV * 3.1 + phase * 0.35);
@@ -228,7 +423,7 @@ if (ambientCanvas && ambientCtx) {
         pixels[index] = Math.round(93 + warmth * 43 + light * 34 + caustic * 30);
         pixels[index + 1] = Math.round(128 + (1 - warmth) * 30 + light * 42 + caustic * 26);
         pixels[index + 2] = Math.round(83 + (1 - warmth) * 34 + light * 28 + caustic * 18);
-        pixels[index + 3] = Math.round(68 + light * 94 + caustic * 52);
+        pixels[index + 3] = Math.round(76 + light * 104 + caustic * 58);
       }
     }
     ambientCtx.putImageData(ambientPixels, 0, 0);
@@ -251,9 +446,12 @@ if (ambientCanvas && ambientCtx) {
       const rect = ambientCanvas.getBoundingClientRect();
       const x = (event.clientX - rect.left) / Math.max(rect.width, 1);
       const y = (event.clientY - rect.top) / Math.max(rect.height, 1);
+      const velocity = Math.hypot(x - ambientPointer.targetX, y - ambientPointer.targetY);
       ambientPointer.targetX = Math.min(1, Math.max(0, x));
       ambientPointer.targetY = Math.min(1, Math.max(0, y));
-      if (x >= 0 && x <= 1 && y >= 0 && y <= 1) ambientPointer.strength = 0.9;
+      if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+        ambientPointer.strength = Math.min(1.55, Math.max(0.82, 0.72 + velocity * 9));
+      }
     },
     { passive: true }
   );
@@ -287,7 +485,7 @@ function updateHeroFade() {
   }
   if (pageWaterField) {
     const travel = Math.min(window.scrollY, window.innerHeight * 0.82);
-    const shift = Math.max(0, window.innerHeight * 0.58 - travel);
+    const shift = Math.max(0, window.innerHeight * 0.18 - travel * 0.42);
     pageWaterField.style.setProperty("--water-shift", `${shift.toFixed(1)}px`);
   }
 }
@@ -492,6 +690,7 @@ const experiences = {
         url: "https://www.xiaohongshu.com/discovery/item/695ce8e9000000000d00b66b"
       }
     ],
+    galleryStyle: "phone",
     gallery: [
       {
         src: "./assets/lazywake/morning-dialogue.webp",
@@ -655,7 +854,7 @@ const portalPanel = document.querySelector("#portalPanel");
 const experienceTabs = document.querySelector("#experienceTabs");
 const experienceButtons = [...document.querySelectorAll(".experience-tab[data-panel]")];
 const portalSection = document.querySelector("#portal");
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotion = { matches: systemReducedMotion.matches && !forceFullMotion };
 let activePortalKey = null;
 let lastPortalTrigger = null;
 
@@ -680,6 +879,7 @@ if (reducedMotion.matches || !("IntersectionObserver" in window)) {
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const tiltCards = [...document.querySelectorAll("[data-tilt-card]")];
 const heroWaterActions = [...document.querySelectorAll(".hero-water-action")];
+const liquidBubbles = [...document.querySelectorAll(".experience-tab")];
 if (finePointer.matches && !reducedMotion.matches) {
   tiltCards.forEach((card) => {
     let tiltFrame = 0;
@@ -689,8 +889,9 @@ if (finePointer.matches && !reducedMotion.matches) {
         const rect = card.getBoundingClientRect();
         const x = Math.min(rect.width, Math.max(0, event.clientX - rect.left));
         const y = Math.min(rect.height, Math.max(0, event.clientY - rect.top));
-        const tiltX = -((y / rect.height - 0.5) * 5.5);
-        const tiltY = (x / rect.width - 0.5) * 7;
+        const tiltX = -((y / rect.height - 0.5) * 10);
+        const tiltY = (x / rect.width - 0.5) * 13;
+        card.classList.add("is-pointer-active");
         card.style.setProperty("--mx", `${x}px`);
         card.style.setProperty("--my", `${y}px`);
         card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
@@ -701,6 +902,7 @@ if (finePointer.matches && !reducedMotion.matches) {
     card.addEventListener("pointerleave", () => {
       if (tiltFrame) cancelAnimationFrame(tiltFrame);
       tiltFrame = 0;
+      card.classList.remove("is-pointer-active");
       card.style.setProperty("--mx", "50%");
       card.style.setProperty("--my", "50%");
       card.style.setProperty("--tilt-x", "0deg");
@@ -733,6 +935,50 @@ if (finePointer.matches && !reducedMotion.matches) {
       action.style.setProperty("--bubble-tilt-x", "0deg");
       action.style.setProperty("--bubble-tilt-y", "0deg");
     });
+  });
+
+  let liquidBubbleFrame = 0;
+  const resetLiquidBubbles = () => {
+    liquidBubbles.forEach((bubble) => {
+      bubble.classList.remove("is-pointer-active");
+      bubble.style.setProperty("--bubble-follow-x", "0px");
+      bubble.style.setProperty("--bubble-follow-y", "0px");
+      bubble.style.setProperty("--bubble-follow-rotate", "0deg");
+      bubble.style.setProperty("--bubble-light-x", "38%");
+      bubble.style.setProperty("--bubble-light-y", "28%");
+    });
+  };
+
+  experienceTabs?.addEventListener("pointermove", (event) => {
+    if (liquidBubbleFrame) cancelAnimationFrame(liquidBubbleFrame);
+    liquidBubbleFrame = requestAnimationFrame(() => {
+      liquidBubbles.forEach((bubble) => {
+        const rect = bubble.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = event.clientX - centerX;
+        const dy = event.clientY - centerY;
+        const distance = Math.hypot(dx, dy);
+        const influence = Math.max(0, 1 - distance / Math.max(360, rect.width * 2.2));
+        const followX = Math.max(-22, Math.min(22, dx * 0.085 * influence));
+        const followY = Math.max(-18, Math.min(18, dy * 0.075 * influence));
+        const followRotate = Math.max(-4.5, Math.min(4.5, dx * 0.016 * influence));
+        const lightX = Math.max(12, Math.min(88, ((event.clientX - rect.left) / rect.width) * 100));
+        const lightY = Math.max(10, Math.min(90, ((event.clientY - rect.top) / rect.height) * 100));
+        bubble.classList.add("is-pointer-active");
+        bubble.style.setProperty("--bubble-follow-x", `${followX.toFixed(2)}px`);
+        bubble.style.setProperty("--bubble-follow-y", `${followY.toFixed(2)}px`);
+        bubble.style.setProperty("--bubble-follow-rotate", `${followRotate.toFixed(2)}deg`);
+        bubble.style.setProperty("--bubble-light-x", `${lightX.toFixed(1)}%`);
+        bubble.style.setProperty("--bubble-light-y", `${lightY.toFixed(1)}%`);
+      });
+      liquidBubbleFrame = 0;
+    });
+  });
+  experienceTabs?.addEventListener("pointerleave", () => {
+    if (liquidBubbleFrame) cancelAnimationFrame(liquidBubbleFrame);
+    liquidBubbleFrame = 0;
+    resetLiquidBubbles();
   });
 
 }
@@ -923,6 +1169,7 @@ function showProjectCase({ focus = false } = {}) {
   if (!stockPartyCase) return;
   const wasHidden = stockPartyCase.hidden;
   stockPartyCase.hidden = false;
+  ensureStockPartyDemo();
   document.documentElement.classList.add("case-open");
   document.body.classList.add("case-open");
   siteHeader.inert = true;
@@ -1063,7 +1310,8 @@ let lastExperienceTrigger = null;
 let pdfJsPromise = null;
 let pdfPreviewVersion = 0;
 let activePdfLoadingTask = null;
-let activePdfRenderTask = null;
+let activePdfObserver = null;
+const activePdfRenderTasks = new Set();
 
 function syncDialogState() {
   const hasOpenDialog = [...document.querySelectorAll("dialog")].some((dialog) => dialog.open);
@@ -1086,8 +1334,10 @@ function getPdfJs() {
 
 function stopPdfPreview() {
   pdfPreviewVersion += 1;
-  activePdfRenderTask?.cancel();
-  activePdfRenderTask = null;
+  activePdfObserver?.disconnect();
+  activePdfObserver = null;
+  activePdfRenderTasks.forEach((task) => task.cancel());
+  activePdfRenderTasks.clear();
   activePdfLoadingTask?.destroy().catch(() => undefined);
   activePdfLoadingTask = null;
 }
@@ -1110,38 +1360,95 @@ async function renderPdfPreview(reader) {
       loadingTask.destroy().catch(() => undefined);
       return;
     }
-    loading?.remove();
-    if (status) status.textContent = `0 / ${pdf.numPages} 页`;
+    const firstPage = await pdf.getPage(1);
+    const firstViewport = firstPage.getViewport({ scale: 1 });
+    const pageRatio = `${firstViewport.width} / ${firstViewport.height}`;
+    firstPage.cleanup();
 
-    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-      if (renderVersion !== pdfPreviewVersion) return;
-      const page = await pdf.getPage(pageNumber);
-      const baseViewport = page.getViewport({ scale: 1 });
-      const targetWidth = Math.min(1100, Math.max(720, reader.clientWidth || 720));
-      const outputScale = Math.min(window.devicePixelRatio || 1, 1.5);
-      const viewport = page.getViewport({ scale: (targetWidth / baseViewport.width) * outputScale });
+    const figures = Array.from({ length: pdf.numPages }, (_, index) => {
+      const pageNumber = index + 1;
       const figure = document.createElement("figure");
-      const canvas = document.createElement("canvas");
+      const placeholder = document.createElement("div");
       const caption = document.createElement("figcaption");
-      const context = canvas.getContext("2d", { alpha: false });
-
-      canvas.width = Math.floor(viewport.width);
-      canvas.height = Math.floor(viewport.height);
-      canvas.setAttribute("aria-label", `第 ${pageNumber} 页，共 ${pdf.numPages} 页`);
+      figure.dataset.pdfPage = String(pageNumber);
+      figure.dataset.pdfState = "waiting";
+      figure.style.aspectRatio = pageRatio;
+      placeholder.className = "pdf-page-placeholder";
+      placeholder.innerHTML = `<i aria-hidden="true"></i><span>第 ${pageNumber} 页</span>`;
       caption.textContent = `${String(pageNumber).padStart(2, "0")} / ${String(pdf.numPages).padStart(2, "0")}`;
-      figure.append(canvas, caption);
+      figure.append(placeholder, caption);
       pages.append(figure);
+      return figure;
+    });
 
-      activePdfRenderTask = page.render({ canvasContext: context, viewport });
-      await activePdfRenderTask.promise;
-      activePdfRenderTask = null;
-      canvas.classList.add("is-rendered");
-      page.cleanup();
-      if (status) status.textContent = `${pageNumber} / ${pdf.numPages} 页`;
-      await new Promise((resolve) => requestAnimationFrame(resolve));
+    loading?.remove();
+    if (status) status.textContent = `已识别 ${pdf.numPages} 页 · 正在载入当前页面`;
+    let renderedPages = 0;
+
+    const renderPage = async (figure) => {
+      if (!figure || renderVersion !== pdfPreviewVersion || figure.dataset.pdfState === "loading" || figure.dataset.pdfState === "ready") return;
+      const pageNumber = Number(figure.dataset.pdfPage);
+      figure.dataset.pdfState = "loading";
+      let page = null;
+      let canvas = null;
+      try {
+        page = await pdf.getPage(pageNumber);
+        if (renderVersion !== pdfPreviewVersion) return;
+        const baseViewport = page.getViewport({ scale: 1 });
+        const availableWidth = Math.max(520, (reader.clientWidth || 720) - 36);
+        const targetWidth = Math.min(960, availableWidth);
+        const outputScale = Math.min(window.devicePixelRatio || 1, 1.25);
+        const viewport = page.getViewport({ scale: (targetWidth / baseViewport.width) * outputScale });
+        canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d", { alpha: false });
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        canvas.setAttribute("aria-label", `第 ${pageNumber} 页，共 ${pdf.numPages} 页`);
+        figure.insertBefore(canvas, figure.lastElementChild);
+
+        const renderTask = page.render({ canvasContext: context, viewport });
+        activePdfRenderTasks.add(renderTask);
+        try {
+          await renderTask.promise;
+        } finally {
+          activePdfRenderTasks.delete(renderTask);
+        }
+        if (renderVersion !== pdfPreviewVersion) return;
+        figure.querySelector(".pdf-page-placeholder")?.remove();
+        figure.style.aspectRatio = "auto";
+        figure.dataset.pdfState = "ready";
+        canvas.classList.add("is-rendered");
+        page.cleanup();
+        renderedPages += 1;
+        activePdfObserver?.unobserve(figure);
+        if (status) {
+          status.textContent = renderedPages === pdf.numPages
+            ? `共 ${pdf.numPages} 页 · 已全部载入`
+            : `${renderedPages} / ${pdf.numPages} 页已就绪 · 继续滚动加载`;
+        }
+      } catch (error) {
+        if (renderVersion !== pdfPreviewVersion || error?.name === "RenderingCancelledException") return;
+        canvas?.remove();
+        page?.cleanup();
+        figure.dataset.pdfState = "error";
+        const placeholder = figure.querySelector(".pdf-page-placeholder");
+        if (placeholder) placeholder.innerHTML = `<strong>第 ${pageNumber} 页暂未载入</strong><span>点击重试，或打开原 PDF</span>`;
+        figure.addEventListener("click", () => renderPage(figure), { once: true });
+        if (status) status.textContent = "部分页面载入失败 · 可打开原 PDF";
+        console.warn(`PDF page ${pageNumber} failed`, error);
+      }
+    };
+
+    if ("IntersectionObserver" in window) {
+      activePdfObserver = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.isIntersecting && renderPage(entry.target)),
+        { root: reader.closest(".experience-sheet"), rootMargin: "900px 0px", threshold: 0.01 }
+      );
+      figures.forEach((figure) => activePdfObserver.observe(figure));
+      renderPage(figures[0]);
+    } else {
+      for (const figure of figures) await renderPage(figure);
     }
-
-    if (status) status.textContent = `共 ${pdf.numPages} 页 · 向下滚动阅读`;
   } catch (error) {
     if (renderVersion !== pdfPreviewVersion || error?.name === "RenderingCancelledException") return;
     loading?.classList.add("is-error");
@@ -1182,7 +1489,7 @@ function showExperience(key) {
     : "";
   const points = data.points?.length ? `<ul>${data.points.map((point) => `<li>${point}</li>`).join("")}</ul>` : "";
   const gallery = data.gallery?.length
-    ? `<div class="modal-gallery">${data.gallery
+    ? `<div class="modal-gallery${data.galleryStyle === "phone" ? " is-phone-gallery" : ""}" aria-label="${data.galleryStyle === "phone" ? "完整产品界面预览" : "项目界面预览"}">${data.gallery
         .map(
           (item) => `<figure>
             <button
@@ -1205,7 +1512,10 @@ function showExperience(key) {
             <span>Full document</span>
             <strong>${data.document.title}</strong>
           </div>
-          <span class="pdf-status" data-pdf-status role="status">准备文档…</span>
+          <div class="pdf-actions">
+            <span class="pdf-status" data-pdf-status role="status">准备文档…</span>
+            <a href="${data.document.src}" target="_blank" rel="noreferrer">打开原 PDF <span aria-hidden="true">↗</span></a>
+          </div>
         </header>
         <div class="pdf-reader" data-pdf-reader data-pdf-src="${data.document.src}">
           <div class="pdf-reader-state" data-pdf-loading>
