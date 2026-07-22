@@ -316,6 +316,7 @@ textarea {
   width: 100%;
   height: 100%;
   opacity: 1;
+  transition: opacity 0.28s ease-out 0.08s;
 }
 
 .tree-roll-video {
@@ -333,7 +334,7 @@ textarea {
   pointer-events: none;
   transform: translate3d(0, var(--tree-roll-y), 0) rotateX(180deg) scale(1.002);
   transform-origin: 50% 50%;
-  transition: opacity 0.32s ease;
+  transition: opacity 0.12s ease-out;
   will-change: opacity, transform;
 }
 
@@ -342,8 +343,8 @@ textarea {
 }
 
 .scene-section.is-video-ready.is-tree-rolling #scene {
-  /* Keep the rendered fallback below the video while a newly sought frame decodes. */
-  opacity: 1;
+  /* Let the rolling video settle first, then retire the static fallback. */
+  opacity: 0;
 }
 
 .scene-background-bridge {
