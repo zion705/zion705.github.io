@@ -262,6 +262,9 @@ textarea {
 }
 
 .scene-section {
+  --tree-roll-end-blend: 0;
+  --tree-roll-y: clamp(50px, 7.4vh, 72px);
+  --tree-action-y: clamp(12px, 2.2vh, 20px);
   position: relative;
   grid-column: 1 / -1;
   width: 100%;
@@ -275,6 +278,25 @@ textarea {
     linear-gradient(180deg, #fffdf8 0%, #f8f2e7 72%, #efe8dc 100%);
 }
 
+.scene-section::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 2;
+  height: clamp(26px, 4.2vh, 46px);
+  content: "";
+  background: linear-gradient(
+    to bottom,
+    rgba(239, 246, 240, 0),
+    rgba(239, 246, 240, 0.4) 44%,
+    rgba(238, 245, 239, 0.96) 100%
+  );
+  opacity: var(--tree-roll-end-blend);
+  pointer-events: none;
+  transition: opacity 0.18s linear;
+}
+
 .scene-section[data-tree-locked] {
   overscroll-behavior-y: contain;
   touch-action: pan-x pinch-zoom;
@@ -283,13 +305,83 @@ textarea {
 #scene {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
+  opacity: 1;
+  transition: opacity 0.42s ease;
+  will-change: opacity;
+}
+
+.tree-roll-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fffdf8;
+  object-fit: cover;
+  object-position: 50% 50%;
+  opacity: 0;
+  filter: saturate(1.04) contrast(1.025);
+  pointer-events: none;
+  transform: translate3d(0, var(--tree-roll-y), 0) rotateX(180deg) scale(1.002);
+  transform-origin: 50% 50%;
+  transition: opacity 0.32s ease;
+  will-change: opacity, transform;
+}
+
+.scene-section.is-video-ready.is-tree-rolling .tree-roll-video {
+  opacity: 1;
+}
+
+.scene-section.is-video-ready.is-tree-rolling #scene {
+  opacity: 0;
+}
+
+.scene-background-bridge {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  width: 100%;
+  height: clamp(148px, 20vh, 210px);
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    rgba(238, 245, 239, 1) 0%,
+    rgba(238, 245, 239, 0.985) 10%,
+    rgba(238, 245, 239, 0.94) 22%,
+    rgba(238, 245, 239, 0.82) 38%,
+    rgba(238, 245, 239, 0.62) 56%,
+    rgba(238, 245, 239, 0.38) 72%,
+    rgba(238, 245, 239, 0.16) 86%,
+    rgba(238, 245, 239, 0) 100%
+  );
+  backdrop-filter: blur(12px) saturate(1.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.08);
+  pointer-events: none;
+}
+
+.scene-background-bridge::before {
+  position: absolute;
+  inset: -60%;
+  content: "";
+  background:
+    radial-gradient(ellipse at 24% 44%, transparent 0 18%, rgba(255, 255, 255, 0.2) 21%, transparent 27%),
+    radial-gradient(ellipse at 74% 58%, transparent 0 20%, rgba(211, 235, 211, 0.22) 23%, transparent 29%);
+  background-size: 42% 70%, 48% 76%;
+  filter: blur(7px);
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(to bottom, transparent 8%, black 48%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 8%, black 48%, transparent 92%);
+  animation: pageWaterCaustics 12s ease-in-out infinite alternate;
 }
 
 .scene-vignette {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   background:
     linear-gradient(to bottom, rgba(255, 253, 248, 0.72) 0%, rgba(255, 253, 248, 0.14) 24%, transparent 56% 92%, rgba(255, 253, 248, 0.08) 100%),
@@ -300,6 +392,7 @@ textarea {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 2;
   width: min(540px, 76vw);
   aspect-ratio: 1.46;
   opacity: 0.34;
@@ -343,7 +436,7 @@ textarea {
   position: absolute;
   top: clamp(140px, 20vh, 188px);
   left: 50%;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   width: min(1180px, calc(100vw - 280px));
   grid-template-columns: minmax(260px, max-content) minmax(160px, 1fr) minmax(320px, 0.62fr);
@@ -419,7 +512,7 @@ textarea {
 
 .hero-actions {
   position: absolute;
-  top: 53%;
+  top: calc(53% + var(--tree-action-y));
   left: 50%;
   z-index: 4;
   display: grid;
@@ -614,7 +707,7 @@ textarea {
   gap: 34px 52px;
   align-items: start;
   margin-top: 0;
-  padding: 88px 0 76px;
+  padding: 46px 0 76px;
 }
 
 .intro::before {
@@ -4770,8 +4863,14 @@ body.case-open {
   }
 
   .scene-section {
+    --tree-roll-y: clamp(30px, 5vh, 46px);
+    --tree-action-y: clamp(8px, 1.8vh, 14px);
     min-height: 100vh;
     min-height: 100svh;
+  }
+
+  .scene-background-bridge {
+    height: clamp(112px, 16vh, 154px);
   }
 
   .hero-copy {
@@ -4816,7 +4915,7 @@ body.case-open {
   }
 
   .hero-actions {
-    top: 44%;
+    top: calc(44% + var(--tree-action-y));
     width: calc(100vw - 20px);
     gap: 6px;
   }
@@ -5058,7 +5157,7 @@ body.case-open {
   }
 
   .intro {
-    padding-top: 96px;
+    padding-top: 52px;
   }
 
   h2 {

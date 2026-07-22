@@ -1,6 +1,7 @@
 const canvas = document.querySelector("#scene");
 const ctx = canvas.getContext("2d");
 const sceneSection = document.querySelector(".scene-section");
+const treeRollVideo = document.querySelector("#treeRollVideo");
 const pointer = { x: 0.5, y: 0.52, targetX: 0.5, targetY: 0.52, active: false };
 const revealTrail = [];
 let width = 0;
@@ -28,6 +29,11 @@ const scrollReveal = {
   initialized: false,
   heroExited: false,
   lastTime: 0,
+};
+const treeRollPlayback = {
+  duration: 0,
+  metadataReady: false,
+  pendingProgress: 0,
 };
 const dryWood = new Image();
 const sproutWood = new Image();
@@ -64,10 +70,9 @@ function coverRect(img) {
   } else {
     drawWidth = height * imageRatio;
   }
-  const verticalOffset = width > 840 ? height * 0.075 : 0;
   return {
     x: (width - drawWidth) / 2,
-    y: (height - drawHeight) / 2 + verticalOffset,
+    y: (height - drawHeight) / 2,
     width: drawWidth,
     height: drawHeight,
   };
@@ -77,6 +82,22 @@ function drawImageCover(context, img) {
   if (!img.complete || !img.naturalWidth) return;
   const rect = coverRect(img);
   context.drawImage(img, rect.x, rect.y, rect.width, rect.height);
+}
+
+function drawRollingImage(context, img, progress) {
+  if (!img.complete || !img.naturalWidth) return;
+  const rect = coverRect(img);
+  const rollArc = Math.sin(progress * Math.PI);
+  const lift = rollArc * height * -0.018;
+  const squash = 1 - rollArc * 0.048;
+  const verticalOffset = width <= 840
+    ? Math.min(46, Math.max(30, height * 0.05))
+    : Math.min(72, Math.max(50, height * 0.074));
+  context.save();
+  context.translate(width * 0.5, height * 0.5 + verticalOffset + lift);
+  context.scale(1.002, -squash * 1.002);
+  context.drawImage(img, rect.x - width * 0.5, rect.y - height * 0.5, rect.width, rect.height);
+  context.restore();
 }
 
 function paintRevealMask(time) {
@@ -154,11 +175,65 @@ function isScrollRevealComplete() {
   return scrollReveal.target >= 0.9995 && scrollReveal.current >= 0.9995;
 }
 
+function treeRollEndTime() {
+  const duration = treeRollPlayback.duration;
+  if (!Number.isFinite(duration) || duration <= 0) return 0;
+  return Math.max(0, duration - Math.min(0.08, duration * 0.008));
+}
+
+function syncTreeRollVideo(progress, force = false) {
+  if (!treeRollVideo) return;
+  const normalized = clampRevealProgress(progress);
+  treeRollPlayback.pendingProgress = normalized;
+  if (!treeRollPlayback.metadataReady) return;
+
+  const targetTime = normalized * treeRollEndTime();
+  const tolerance = Math.max(1 / 60, treeRollPlayback.duration / 600);
+  if (Math.abs(treeRollVideo.currentTime - targetTime) <= tolerance) return;
+  if (!force && treeRollVideo.seeking) return;
+
+  try {
+    treeRollVideo.currentTime = targetTime;
+  } catch {
+    // The two-image canvas remains visible until the browser can seek the video.
+  }
+}
+
+function prepareTreeRollVideo() {
+  if (!treeRollVideo) return;
+  treeRollVideo.muted = true;
+  treeRollVideo.pause();
+  treeRollPlayback.duration = treeRollVideo.duration;
+  treeRollPlayback.metadataReady = Number.isFinite(treeRollVideo.duration) && treeRollVideo.duration > 0;
+  syncTreeRollVideo(treeRollPlayback.pendingProgress, true);
+}
+
+treeRollVideo?.addEventListener("loadedmetadata", prepareTreeRollVideo);
+treeRollVideo?.addEventListener("loadeddata", () => {
+  prepareTreeRollVideo();
+  sceneSection.classList.add("is-video-ready");
+});
+treeRollVideo?.addEventListener("seeked", () => {
+  sceneSection.classList.add("is-video-ready");
+  syncTreeRollVideo(treeRollPlayback.pendingProgress, true);
+});
+treeRollVideo?.addEventListener("error", () => {
+  sceneSection.classList.remove("is-video-ready");
+  treeRollPlayback.metadataReady = false;
+});
+
 function publishScrollRevealState() {
   const progress = scrollReveal.current.toFixed(3);
   if (sceneSection.dataset.treeRevealProgress !== progress) {
     sceneSection.dataset.treeRevealProgress = progress;
   }
+  sceneSection.style.setProperty("--tree-roll-progress", progress);
+  sceneSection.style.setProperty(
+    "--tree-roll-end-blend",
+    clampRevealProgress((scrollReveal.current - 0.86) / 0.14).toFixed(3)
+  );
+  sceneSection.classList.toggle("is-tree-rolling", scrollReveal.current > 0.012);
+  syncTreeRollVideo(scrollReveal.current);
   sceneSection.toggleAttribute("data-tree-locked", window.scrollY <= 1 && !isScrollRevealComplete());
 }
 
@@ -184,7 +259,7 @@ function syncScrollRevealWithPage() {
 }
 
 function scrollRevealDistance() {
-  return Math.max(760, window.innerHeight * 1.15);
+  return Math.max(1080, window.innerHeight * 1.45);
 }
 
 function consumeScrollRevealDelta(delta) {
@@ -193,7 +268,9 @@ function consumeScrollRevealDelta(delta) {
   if (delta > 0 && isScrollRevealComplete()) return false;
   if (delta < 0 && scrollReveal.target <= 0.0005 && scrollReveal.current <= 0.0005) return false;
 
-  scrollReveal.target = clampRevealProgress(scrollReveal.target + delta / scrollRevealDistance());
+  const directionalDelta = delta < 0 ? delta * 2.25 : delta;
+  const nextTarget = scrollReveal.target + directionalDelta / scrollRevealDistance();
+  scrollReveal.target = clampRevealProgress(delta < 0 && nextTarget < 0.055 ? 0 : nextTarget);
   scrollReveal.heroExited = false;
   publishScrollRevealState();
   return true;
@@ -217,7 +294,7 @@ function advanceScrollReveal(time) {
   const elapsed = scrollReveal.lastTime ? time - scrollReveal.lastTime : 1000 / 60;
   const frameScale = Math.min(2, Math.max(0.25, elapsed / (1000 / 60)));
   const difference = scrollReveal.target - scrollReveal.current;
-  const response = difference >= 0 ? 0.13 : 0.08;
+  const response = difference >= 0 ? 0.13 : 0.22;
   const frameResponse = 1 - Math.pow(1 - response, frameScale);
   scrollReveal.current += difference * frameResponse;
 
@@ -241,19 +318,15 @@ function paintScrollRevealMask(time) {
     return;
   }
 
-  const centerX = width * 0.5;
-  const outerSpan = Math.max(1, progress * width * 0.58);
-  const feather = Math.min(130, Math.max(28, width * 0.08));
-  const ramp = Math.min(0.48, feather / (outerSpan * 2));
-  const gradient = scrollMaskCtx.createLinearGradient(centerX - outerSpan, 0, centerX + outerSpan, 0);
+  const frontier = height * (1.12 - progress * 1.24);
+  const feather = Math.min(150, Math.max(44, height * 0.12));
+  const gradient = scrollMaskCtx.createLinearGradient(0, frontier - feather, 0, frontier + feather);
   gradient.addColorStop(0, "rgba(255,255,255,0)");
-  gradient.addColorStop(ramp * 0.55, "rgba(255,255,255,0.48)");
-  gradient.addColorStop(ramp, "rgba(255,255,255,1)");
-  gradient.addColorStop(1 - ramp, "rgba(255,255,255,1)");
-  gradient.addColorStop(1 - ramp * 0.55, "rgba(255,255,255,0.48)");
-  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  gradient.addColorStop(0.42, "rgba(255,255,255,0.16)");
+  gradient.addColorStop(0.66, "rgba(255,255,255,0.82)");
+  gradient.addColorStop(1, "rgba(255,255,255,1)");
   scrollMaskCtx.fillStyle = gradient;
-  scrollMaskCtx.fillRect(centerX - outerSpan, 0, outerSpan * 2, height);
+  scrollMaskCtx.fillRect(0, frontier - feather, width, height - frontier + feather);
 }
 
 function combineRevealMasks() {
@@ -266,7 +339,12 @@ function combineRevealMasks() {
 function drawScene(time) {
   ctx.clearRect(0, 0, width, height);
 
-  drawImageCover(ctx, dryWood);
+  paintRevealMask(time);
+  paintScrollRevealMask(time);
+  combineRevealMasks();
+
+  const progress = clampRevealProgress(scrollReveal.current);
+  drawRollingImage(ctx, dryWood, progress);
   ctx.save();
   ctx.globalCompositeOperation = "multiply";
   const shade = ctx.createRadialGradient(width * 0.5, height * 0.5, height * 0.1, width * 0.5, height * 0.52, height * 0.72);
@@ -276,12 +354,8 @@ function drawScene(time) {
   ctx.fillRect(0, 0, width, height);
   ctx.restore();
 
-  paintRevealMask(time);
-  paintScrollRevealMask(time);
-  combineRevealMasks();
-
   revealCtx.clearRect(0, 0, width, height);
-  drawImageCover(revealCtx, sproutWood);
+  drawRollingImage(revealCtx, sproutWood, progress);
   revealCtx.save();
   revealCtx.globalCompositeOperation = "destination-in";
   revealCtx.drawImage(scrollMaskCanvas, 0, 0, width, height);
