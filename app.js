@@ -725,6 +725,11 @@ const experiences = {
     document: {
       src: "./assets/documents/telestudio-digital-human-prd.pdf",
       title: "TeleStudio 数字人完整产品需求文档"
+    },
+    demo: {
+      src: "./demos/telestudio/index.html",
+      title: "体验实时交互数字人 Demo",
+      description: "选择数字人、配置人格与音色，并完成一次实时对话。"
     }
   },
   wakeargue: {
@@ -1600,12 +1605,24 @@ function showExperience(key) {
         </div>
       </section>`
     : "";
+  const demoEntry = data.demo
+    ? `<section class="modal-demo-entry" aria-label="${data.demo.title}">
+        <div>
+          <span>Interactive prototype</span>
+          <strong>${data.demo.title}</strong>
+          <p>${data.demo.description}</p>
+        </div>
+        <a href="${data.demo.src}" target="_blank" rel="noreferrer">
+          打开 Demo <span aria-hidden="true">↗</span>
+        </a>
+      </section>`
+    : "";
   const links = data.links?.length
     ? `<div class="modal-links">${data.links
         .map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer">${link.label}</a>`)
         .join("")}</div>`
     : "";
-  modalBody.innerHTML = `${intro}${tags}${highlights}${links}${points}${documentViewer}${gallery}`;
+  modalBody.innerHTML = `${intro}${tags}${highlights}${links}${points}${demoEntry}${documentViewer}${gallery}`;
   if (!experienceModal.open) experienceModal.showModal();
   const sheet = experienceModal.querySelector(".experience-sheet");
   if (sheet) sheet.scrollTop = 0;

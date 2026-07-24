@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#04091a" />
+    <meta
+      name="description"
+      content="TeleStudio 实时交互数字人脱敏演示：选择形象、配置人格并开始实时对话。"
+    />
+    <title>TeleStudio 数字人 · 交互 Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true">
+      <i></i><i></i><i></i><i></i>
+    </div>
+
+    <header class="topbar">
+      <button class="brand" type="button" data-go="home" aria-label="返回数字人首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <strong>TeleStudio</strong>
+        <small>创作平台</small>
+      </button>
+      <nav aria-label="主导航">
+        <button type="button">首页</button>
+        <button type="button">创作中心</button>
+        <button type="button">演示中心</button>
+        <button class="is-active" type="button">数字人</button>
+        <button type="button">创意工坊</button>
+      </nav>
+      <div class="top-actions">
+        <span class="prototype-badge">脱敏原型</span>
+        <button class="avatar-button" type="button" aria-label="账户菜单">LW</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="screen is-active" id="homeScreen" data-screen="home" aria-labelledby="homeTitle">
+        <div class="stage-shell">
+          <div class="stage-heading">
+            <p>REAL-TIME DIGITAL HUMAN</p>
+            <h1 id="homeTitle">准备好开启你的实时沉浸式体验</h1>
+            <span>选择一个数字人，或从自定义配置开始</span>
+          </div>
+
+          <div class="mode-tabs" role="tablist" aria-label="创作模式">
+            <button type="button" role="tab" aria-selected="true">数字人</button>
+            <button type="button" role="tab" aria-selected="false">世界模型</button>
+            <button type="button" role="tab" aria-selected="false">宣传动画</button>
+          </div>
+
+          <div class="avatar-hero" id="avatarHero">
+            <div class="avatar-frame">
+              <img src="../../assets/telestudio/avatar-lingxi.png" alt="数字人灵犀形象预览" />
+              <div class="avatar-scan" aria-hidden="true"></div>
+              <span class="avatar-status"><i></i> 形象已就绪</span>
+            </div>
+            <div class="avatar-copy">
+              <span>推荐数字人</span>
+              <strong id="selectedAvatarName">灵犀</strong>
+              <p id="selectedAvatarMeta">科技展厅讲解员 · 温和专业</p>
+            </div>
+          </div>
+
+          <div class="preset-row" role="listbox" aria-label="选择数字人形象">
+            <button class="preset is-selected" type="button" data-avatar="灵犀" data-meta="科技展厅讲解员 · 温和专业" aria-selected="true">
+              <img src="../../assets/telestudio/avatar-lingxi.png" alt="" />
+              <span>灵犀</span>
+            </button>
+            <button class="preset preset--violet" type="button" data-avatar="星澜" data-meta="品牌主理人 · 明快自信" aria-selected="false">
+              <span class="portrait">澜</span><span>星澜</span>
+            </button>
+            <button class="preset preset--blue" type="button" data-avatar="沐光" data-meta="知识讲师 · 清晰沉稳" aria-selected="false">
+              <span class="portrait">沐</span><span>沐光</span>
+            </button>
+            <button class="preset preset--pink" type="button" data-avatar="遥音" data-meta="直播主持 · 轻松亲和" aria-selected="false">
+              <span class="portrait">遥</span><span>遥音</span>
+            </button>
+            <button class="preset preset--custom" type="button" data-go="settings">
+              <span class="portrait">＋</span><span>自定义</span>
+            </button>
+          </div>
+
+          <div class="home-actions">
+            <button class="secondary-action" type="button" data-go="settings">编辑配置</button>
+            <button class="primary-action" type="button" data-go="live">开始体验 <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="settingsScreen" data-screen="settings" aria-labelledby="settingsTitle" hidden>
+        <div class="panel-shell settings-panel">
+          <header class="panel-heading">
+            <button class="back-button" type="button" data-go="home">← 返回</button>
+            <div>
+              <p>DIGITAL HUMAN PROFILE</p>
+              <h1 id="settingsTitle">配置数字人的形象与表达</h1>
+              <span>所有配置会在进入实时互动前进行预览</span>
+            </div>
+            <span class="step-mark">02 / 03</span>
+          </header>
+
+          <div class="settings-grid">
+            <aside class="settings-preview">
+              <div class="preview-figure">
+                <img src="../../assets/telestudio/avatar-lingxi.png" alt="当前数字人形象" />
+                <span>灵犀 · PREVIEW</span>
+              </div>
+              <button type="button" id="replaceAvatar">更换形象</button>
+              <small>支持预设形象与自有素材</small>
+            </aside>
+
+            <form class="profile-form" id="profileForm">
+              <fieldset>
+                <legend>基础信息</legend>
+                <label>
+                  <span>数字人名称</span>
+                  <input id="profileName" type="text" value="灵犀" maxlength="12" />
+                </label>
+                <div class="form-row">
+                  <label>
+                    <span>身份定位</span>
+                    <select id="profileRole">
+                      <option>科技展厅讲解员</option>
+                      <option>品牌主理人</option>
+                      <option>知识讲师</option>
+                      <option>直播主持</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>表达语言</span>
+                    <select>
+                      <option>普通话</option>
+                      <option>English</option>
+                      <option>粤语</option>
+                    </select>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>声音与语气</legend>
+                <div class="voice-options" role="radiogroup" aria-label="选择音色">
+                  <button class="is-selected" type="button" role="radio" aria-checked="true">知性女声 <i>▶</i></button>
+                  <button type="button" role="radio" aria-checked="false">温柔女声 <i>▶</i></button>
+                  <button type="button" role="radio" aria-checked="false">沉稳男声 <i>▶</i></button>
+                  <button type="button" role="radio" aria-checked="false">清朗男声 <i>▶</i></button>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>人格与行为边界</legend>
+                <label>
+                  <span>System prompt</span>
+                  <textarea id="profilePrompt" maxlength="500">你是 TeleStudio 科技展厅的数字讲解员灵犀。回答要准确、简洁、友好；优先用日常语言解释技术概念。对不确定的信息要明确说明，不虚构数据。</textarea>
+                  <small><output id="promptCount">86</output> / 500</small>
+                </label>
+                <div class="trait-row" aria-label="人格标签">
+                  <button class="is-selected" type="button">专业</button>
+                  <button class="is-selected" type="button">亲和</button>
+                  <button type="button">幽默</button>
+                  <button type="button">克制</button>
+                  <button type="button">好奇</button>
+                </div>
+              </fieldset>
+
+              <div class="form-actions">
+                <span id="saveStatus" role="status">配置自动保存</span>
+                <button class="primary-action" type="submit">保存并进入实时互动 <span>→</span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="liveScreen" data-screen="live" aria-labelledby="liveTitle" hidden>
+        <div class="panel-shell live-panel">
+          <header class="live-heading">
+            <button class="back-button" type="button" data-go="home">← 返回</button>
+            <div class="live-person">
+              <i></i>
+              <div><strong id="liveTitle">灵犀</strong><span>实时互动中</span></div>
+            </div>
+            <div class="latency"><span>延迟</span><strong>680 ms</strong></div>
+          </header>
+
+          <div class="live-grid">
+            <div class="live-avatar">
+              <img src="../../assets/telestudio/avatar-lingxi.png" alt="正在对话的数字人灵犀" />
+              <div class="voice-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="subtitle" id="liveSubtitle">你好，我是灵犀。想先了解数字人的哪一项能力？</div>
+            </div>
+
+            <section class="conversation" aria-label="实时对话">
+              <div class="messages" id="messages" aria-live="polite">
+                <article class="message message--ai">
+                  <span>灵犀</span>
+                  <p>你好，我是灵犀。可以为你介绍实时数字人的形象、音色与互动能力。想从哪里开始？</p>
+                </article>
+              </div>
+
+              <div class="quick-queries" aria-label="快捷提问">
+                <button type="button">介绍一下实时互动</button>
+                <button type="button">你能做什么？</button>
+                <button type="button">如何保持低延迟？</button>
+              </div>
+
+              <form class="chat-form" id="chatForm">
+                <textarea id="chatInput" rows="2" maxlength="200" placeholder="输入文字与数字人交流…" aria-label="输入消息"></textarea>
+                <button class="voice-button" id="voiceButton" type="button" aria-pressed="false" aria-label="模拟语音输入">⌁</button>
+                <button class="send-button" type="submit">发送</button>
+              </form>
+              <p class="chat-note">演示中的回复为预设内容，不会上传或保存数据。</p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
