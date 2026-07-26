@@ -257,60 +257,31 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-
 }
 .demo-toast.is-visible { opacity: 1; transform: none; }
 
-body.is-embedded { overflow: hidden; background: #020714; }
+body.is-embedded {
+  min-height: 0;
+  overflow: hidden;
+  background: #020714;
+}
 body.is-embedded .demo-app { min-height: 0; }
-body.is-embedded .demo-topbar {
-  position: static;
-  min-height: 38px;
-  grid-template-columns: 1fr auto;
-  padding: 0 10px;
+body.is-embedded .demo-topbar,
+body.is-embedded .state-console,
+body.is-embedded .state-map,
+body.is-embedded .canvas-hint {
+  display: none;
 }
-body.is-embedded .demo-brand { gap: 7px; }
-body.is-embedded .demo-brand > span {
-  border-top-width: 6px;
-  border-bottom-width: 6px;
-  border-left-width: 10px;
+body.is-embedded .demo-main {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
-body.is-embedded .demo-brand strong { font-size: 10px; }
-body.is-embedded .demo-brand small,
-body.is-embedded .topbar-status,
-body.is-embedded .topbar-actions a { display: none; }
-body.is-embedded .topbar-actions button { padding: 4px 7px; font-size: 8px; }
-body.is-embedded .demo-main { display: block; width: 100%; padding: 0; }
-body.is-embedded .prd-canvas { border: 0; border-radius: 0; box-shadow: none; }
-body.is-embedded .canvas-hint, body.is-embedded .state-map { display: none; }
-body.is-embedded .state-console {
-  grid-template-columns: 1fr;
-  gap: 8px;
-  min-height: 104px;
-  padding: 9px 10px 10px;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 0;
+body.is-embedded .prd-canvas {
+  width: 100%;
+  border: 0;
   border-radius: 0;
+  box-shadow: none;
 }
-body.is-embedded .state-copy > span { font-size: 7px; }
-body.is-embedded .state-copy h1 { margin: 2px 0 3px; font-size: 12px; }
-body.is-embedded .state-copy p {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: 8px;
-  line-height: 1.45;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-body.is-embedded .state-actions { justify-content: stretch; flex-wrap: nowrap; }
-body.is-embedded .console-button {
-  flex: 1;
-  min-width: 0;
-  min-height: 27px;
-  padding: 0 6px;
-  overflow: hidden;
-  font-size: 8px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-body.is-embedded .console-button--quiet { display: none; }
+body.is-embedded .prd-canvas::after { display: none; }
 
 @media (max-width: 980px) {
   .demo-main { grid-template-columns: 1fr; }
