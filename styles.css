@@ -1339,7 +1339,7 @@ h2 {
 
 .work-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.52fr);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
   gap: 24px;
   perspective: 1200px;
 }
@@ -1349,105 +1349,22 @@ h2 {
 }
 
 .tele-demo-dock {
-  position: sticky;
-  top: 92px;
-  grid-column: 2;
-  grid-row: 1 / span 4;
-  align-self: start;
-  overflow: hidden;
-  border: 1px solid rgba(95, 128, 190, 0.24);
-  border-radius: 22px;
-  color: #edf4ff;
-  background:
-    radial-gradient(circle at 82% 0%, rgba(121, 63, 216, 0.2), transparent 32%),
-    linear-gradient(160deg, #09142c, #040a19);
-  box-shadow: 0 28px 72px rgba(26, 44, 76, 0.2);
-}
-
-.tele-demo-dock > header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 16px 16px 13px;
-  border-bottom: 1px solid rgba(129, 157, 219, 0.16);
-}
-
-.tele-demo-dock > header div {
-  min-width: 0;
-}
-
-.tele-demo-dock > header span {
-  color: #68e8ff;
-  font: 700 0.58rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
-  letter-spacing: 0.12em;
-}
-
-.tele-demo-dock > header h3 {
-  margin: 4px 0 0;
-  color: #f4f7ff;
-  font-size: 1rem;
-}
-
-.tele-demo-dock > header a {
-  flex: 0 0 auto;
-  padding: 7px 9px;
-  color: #dce8ff;
-  border: 1px solid rgba(119, 178, 255, 0.32);
-  border-radius: 999px;
-  background: rgba(31, 62, 122, 0.28);
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.tele-demo-frame {
   position: relative;
-  aspect-ratio: 1 / 1.04;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #020714;
+  box-shadow: 0 24px 60px rgba(26, 44, 76, 0.18);
 }
 
-.tele-demo-frame iframe {
+.tele-demo-dock iframe {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
   background: #020714;
-}
-
-.tele-demo-dock > footer {
-  display: grid;
-  gap: 9px;
-  padding: 12px 14px 14px;
-  border-top: 1px solid rgba(129, 157, 219, 0.16);
-}
-
-.tele-demo-dock > footer p {
-  margin: 0;
-  color: #9eadd0;
-  font-size: 0.7rem;
-}
-
-.tele-demo-dock > footer div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.tele-demo-dock > footer button {
-  min-height: 34px;
-  color: #eef5ff;
-  border: 1px solid rgba(110, 168, 255, 0.3);
-  border-radius: 8px;
-  background: rgba(28, 57, 111, 0.38);
-  font-size: 0.7rem;
-  font-weight: 800;
-}
-
-.tele-demo-dock > footer button:first-child {
-  border-color: rgba(158, 96, 255, 0.4);
-  background: linear-gradient(110deg, rgba(105, 43, 202, 0.56), rgba(40, 70, 166, 0.48));
 }
 
 @media (max-width: 1120px) {
@@ -1460,11 +1377,9 @@ h2 {
   }
 
   .tele-demo-dock {
-    position: relative;
-    top: auto;
     grid-column: 1;
     grid-row: auto;
-    width: min(520px, 100%);
+    width: min(720px, 100%);
     justify-self: center;
   }
 }
