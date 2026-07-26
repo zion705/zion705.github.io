@@ -1,164 +1,314 @@
-const screens = [...document.querySelectorAll("[data-screen]")];
-const presetButtons = [...document.querySelectorAll(".preset[data-avatar]")];
-const nameOutput = document.querySelector("#selectedAvatarName");
-const metaOutput = document.querySelector("#selectedAvatarMeta");
-const profileName = document.querySelector("#profileName");
-const profileRole = document.querySelector("#profileRole");
-const profilePrompt = document.querySelector("#profilePrompt");
-const promptCount = document.querySelector("#promptCount");
-const profileForm = document.querySelector("#profileForm");
-const saveStatus = document.querySelector("#saveStatus");
-const liveTitle = document.querySelector("#liveTitle");
-const messages = document.querySelector("#messages");
-const chatForm = document.querySelector("#chatForm");
-const chatInput = document.querySelector("#chatInput");
-const liveSubtitle = document.querySelector("#liveSubtitle");
-const voiceButton = document.querySelector("#voiceButton");
-const toast = document.querySelector("#toast");
-let toastTimer = 0;
-let replyTimer = 0;
-
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("is-visible");
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
-}
-
-function showScreen(name) {
-  screens.forEach((screen) => {
-    const active = screen.dataset.screen === name;
-    screen.hidden = !active;
-    screen.classList.toggle("is-active", active);
-  });
-  window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  if (name === "live") {
-    liveTitle.textContent = profileName.value.trim() || nameOutput.textContent;
-    window.setTimeout(() => chatInput.focus(), 280);
-  }
-}
-
-document.addEventListener("click", (event) => {
-  const target = event.target.closest("[data-go]");
-  if (!target) return;
-  showScreen(target.dataset.go);
-});
-
-presetButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    presetButtons.forEach((item) => {
-      const selected = item === button;
-      item.classList.toggle("is-selected", selected);
-      item.setAttribute("aria-selected", String(selected));
-    });
-    nameOutput.textContent = button.dataset.avatar;
-    metaOutput.textContent = button.dataset.meta;
-    profileName.value = button.dataset.avatar;
-    profileRole.value = button.dataset.meta.split(" · ")[0];
-    showToast(`已选择数字人：${button.dataset.avatar}`);
-  });
-});
-
-document.querySelectorAll(".mode-tabs button").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (button.getAttribute("aria-selected") === "true") return;
-    showToast(`${button.textContent}能力不在本次演示范围内`);
-  });
-});
-
-document.querySelectorAll(".voice-options button").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".voice-options button").forEach((item) => {
-      const selected = item === button;
-      item.classList.toggle("is-selected", selected);
-      item.setAttribute("aria-checked", String(selected));
-    });
-    showToast(`正在试听：${button.textContent.replace("▶", "").trim()}`);
-  });
-});
-
-document.querySelectorAll(".trait-row button").forEach((button) => {
-  button.addEventListener("click", () => button.classList.toggle("is-selected"));
-});
-
-profilePrompt.addEventListener("input", () => {
-  promptCount.textContent = profilePrompt.value.length;
-  saveStatus.textContent = "有未保存修改";
-});
-promptCount.textContent = profilePrompt.value.length;
-
-document.querySelector("#replaceAvatar").addEventListener("click", () => showScreen("home"));
-
-profileForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const name = profileName.value.trim() || "灵犀";
-  profileName.value = name;
-  nameOutput.textContent = name;
-  liveTitle.textContent = name;
-  saveStatus.textContent = "配置已保存";
-  showToast("配置已保存，正在进入实时互动");
-  window.setTimeout(() => showScreen("live"), 320);
-});
-
-const responses = [
-  "实时互动数字人会同步处理语音识别、对话生成、语音合成与口型驱动。这个演示重点呈现用户能直接感知的形象、音色、人格和响应状态。",
-  "我可以承担展厅讲解、知识介绍和品牌接待等任务。遇到不确定的信息时，我会明确说明边界，而不是编造答案。",
-  "低延迟来自整条链路的协同：边听边识别、流式生成回答、提前合成首段语音，并持续同步口型和字幕。网络波动时也要给出明确反馈。",
-  "配置人格时，除了写一段介绍，还要同时约束语气、知识范围、行为边界和异常处理，这样多轮对话才会保持一致。"
+const assetRoot = "../../assets/telestudio/states/";
+const stateOrder = [
+  "home-default",
+  "home-normal",
+  "home-hover",
+  "settings-new",
+  "generate-prompt",
+  "generate-loading",
+  "generate-results",
+  "generate-complete",
+  "settings-existing",
+  "identity-open",
+  "identity-ready",
+  "live-loading",
+  "live-ready",
 ];
 
-function appendMessage(role, text, typing = false) {
-  const article = document.createElement("article");
-  article.className = `message message--${role}${typing ? " message--typing" : ""}`;
-  article.innerHTML = `<span>${role === "user" ? "你" : liveTitle.textContent}</span><p>${typing ? "" : text}</p>`;
-  messages.append(article);
-  messages.scrollTop = messages.scrollHeight;
-  return article;
+const states = {
+  "home-default": {
+    image: "home-default.jpg",
+    alt: "TeleStudio 首页预设数字人状态",
+    group: "首页 / 预设直达路径",
+    title: "选择预设数字人",
+    cause: "用户从前沿探索进入数字人模块。默认展示预设形象；单击缩略图切换形象，选中项高亮并同步上方预览。",
+    primary: ["新建数字人 →", "settings-new"],
+    secondary: ["编辑已有数字人", "home-hover"],
+    hotspots: [
+      ["上传 / 新建", 32.5, 70.5, 8.5, 9, "settings-new"],
+      ["编辑已有数字人", 41, 69, 28, 11, "home-hover"],
+      ["开始对话", 41, 83.5, 18, 7.5, "live-loading"],
+    ],
+  },
+  "home-normal": {
+    image: "home-normal.jpg",
+    alt: "TeleStudio 首页选择数字人状态",
+    group: "首页 / 切换数字人",
+    title: "切换并选中数字人",
+    cause: "用户单击某个缩略图后，该形象进入选中态；形象、音色与人设作为一套 showcase 配置同时切换。",
+    primary: ["开始对话 →", "live-loading"],
+    secondary: ["悬停查看设置", "home-hover"],
+    hotspots: [
+      ["悬停设置", 42, 69, 12, 11, "home-hover"],
+      ["开始对话", 41, 83.5, 18, 7.5, "live-loading"],
+    ],
+  },
+  "home-hover": {
+    image: "home-hover.jpg",
+    alt: "TeleStudio 首页数字人缩略图悬停状态",
+    group: "首页 / 缩略图悬停",
+    title: "进入已有数字人设置",
+    cause: "鼠标悬停在已有数字人缩略图上时出现设置入口。已有数字人只能调整音色和身份，不能重新生成形象。",
+    primary: ["打开设置 →", "settings-existing"],
+    secondary: ["返回首页", "home-normal"],
+    hotspots: [
+      ["设置已有数字人", 43, 68, 10, 13, "settings-existing"],
+      ["新建数字人", 32.5, 70, 8.5, 9, "settings-new"],
+    ],
+  },
+  "settings-new": {
+    image: "settings-new.jpg",
+    alt: "TeleStudio 新建数字人设置空态",
+    group: "设置 / 新建数字人",
+    title: "填写新数字人的初始设置",
+    cause: "从首页固定的上传入口进入。新建状态开放形象、音色、身份三部分；左侧形象区尚未产生候选图。",
+    primary: ["填写形象 Prompt →", "generate-prompt"],
+    secondary: ["返回首页", "home-default"],
+    hotspots: [
+      ["形象生成区", 29, 37, 16, 28, "generate-prompt"],
+      ["形象 Prompt", 50, 28, 33, 22, "generate-prompt"],
+    ],
+  },
+  "generate-prompt": {
+    image: "generate-prompt.jpg",
+    alt: "TeleStudio 自定义形象 Prompt 编辑状态",
+    group: "设置 / 自定义形象",
+    title: "选择性别与推荐项，生成 Prompt",
+    cause: "常见操作是“选性别 → 选推荐项 → 修改 → 生成”。大模型根据性别和随机推荐项返回文本框内的形象 Prompt。",
+    primary: ["生成四张候选图 →", "generate-loading"],
+    secondary: ["返回空态", "settings-new"],
+    hotspots: [
+      ["性别选择", 53, 26, 31, 6, "generate-prompt"],
+      ["生成形象", 78, 43, 7, 7, "generate-loading"],
+    ],
+  },
+  "generate-loading": {
+    image: "generate-loading.jpg",
+    alt: "TeleStudio 自定义形象等待生成状态",
+    group: "设置 / 自定义形象",
+    title: "等待生成四张候选图",
+    cause: "点击生成后进入等待态：左侧出现四个模糊图片框，保存按钮置灰。再次点击生成会终止当前流程并重新发起。",
+    primary: ["查看生成结果 →", "generate-results"],
+    secondary: ["重新填写 Prompt", "generate-prompt"],
+    auto: ["generate-results", 1500],
+    hotspots: [["生成中的候选图", 29, 39, 19, 35, "generate-results"]],
+  },
+  "generate-results": {
+    image: "generate-results.jpg",
+    alt: "TeleStudio 自定义形象四张候选图状态",
+    group: "设置 / 自定义形象",
+    title: "从四张候选图中单选",
+    cause: "四张图片生成完成后进入选择态。用户必须单选一张作为数字人形象，未选择前不能完成设置。",
+    primary: ["选中第一张 →", "generate-complete"],
+    secondary: ["重新生成", "generate-loading"],
+    hotspots: [["选择候选图", 29, 37, 20, 35, "generate-complete"]],
+  },
+  "generate-complete": {
+    image: "generate-complete.jpg",
+    alt: "TeleStudio 自定义形象完成选择状态",
+    group: "设置 / 自定义形象",
+    title: "确认选中形象",
+    cause: "选中图放大展示，下方保留三张落选方案。点击落选方案会回到图片选择状态，确保用户仍可反悔。",
+    primary: ["继续设置身份 →", "identity-open"],
+    secondary: ["改选其他方案", "generate-results"],
+    hotspots: [
+      ["改选方案", 32, 70, 18, 11, "generate-results"],
+      ["身份设置", 54, 55, 31, 7, "identity-open"],
+    ],
+  },
+  "settings-existing": {
+    image: "settings-existing.jpg",
+    alt: "TeleStudio 已有数字人设置状态",
+    group: "设置 / 已有数字人",
+    title: "编辑已有数字人的音色与身份",
+    cause: "从首页缩略图的设置入口进入。已有数字人的形象锁定，只允许切换音色、编辑身份；同时提供删除数字人入口。",
+    primary: ["编辑身份 →", "identity-open"],
+    secondary: ["保存并返回", "home-normal"],
+    hotspots: [
+      ["试听 / 切换音色", 50, 38, 35, 8, "settings-existing"],
+      ["打开身份列表", 50, 50, 35, 8, "identity-open"],
+      ["删除数字人", 78, 82, 9, 8, "home-default"],
+    ],
+  },
+  "identity-open": {
+    image: "identity-open.jpg",
+    alt: "TeleStudio 身份下拉列表展开状态",
+    group: "设置 / 身份设定",
+    title: "选择、新建或删除身份",
+    cause: "点击身份下拉按钮后显示 4 个预设身份与自定义身份。列表支持新建、删除；双击身份名称可进入重命名。",
+    primary: ["选中“讲解员” →", "identity-ready"],
+    secondary: ["关闭下拉", "settings-existing"],
+    hotspots: [["选择身份", 51, 46, 34, 27, "identity-ready"]],
+  },
+  "identity-ready": {
+    image: "identity-ready.jpg",
+    alt: "TeleStudio 身份详细设定状态",
+    group: "设置 / 身份设定",
+    title: "编辑开场白与详细设定",
+    cause: "开场白为不超过 50 字的单行输入；详细设定不超过 2000 字，并以“语言风格、任务情景”提示用户补全约束。",
+    primary: ["保存设置 →", "home-normal"],
+    secondary: ["重新选择身份", "identity-open"],
+    hotspots: [
+      ["开场白", 51, 53, 34, 7, "identity-ready"],
+      ["详细设定", 51, 61, 34, 22, "identity-ready"],
+      ["保存设置", 42, 84, 24, 8, "home-normal"],
+    ],
+  },
+  "live-loading": {
+    image: "live-loading.jpg",
+    alt: "TeleStudio 数字人实时交互加载状态",
+    group: "实时交互 / 加载",
+    title: "识别角色并初始化实时渲染",
+    cause: "进入交互页后先加载数字人。成功时触发开场白；加载失败展示默认占位并提示重试，网络卡顿则定格画面并提示稍候。",
+    primary: ["加载完成 →", "live-ready"],
+    secondary: ["返回首页", "home-normal"],
+    auto: ["live-ready", 1800],
+    hotspots: [["加载完成", 24, 20, 31, 66, "live-ready"]],
+  },
+  "live-ready": {
+    image: "live-ready.jpg",
+    alt: "TeleStudio 数字人实时对话完成状态",
+    group: "实时交互 / 对话",
+    title: "开始实时对话",
+    cause: "用户气泡居右、数字人气泡居左；回复逐字渲染并匹配语音进度。输入支持 500 字、回车发送、Shift+回车换行，刷新后清空临时记录。",
+    primary: ["清空并重新加载", "live-loading"],
+    secondary: ["返回首页", "home-normal"],
+    hotspots: [
+      ["预设话题", 58, 80, 24, 6, "live-ready"],
+      ["发送消息", 79, 86, 8, 7, "live-ready"],
+      ["返回", 8, 12, 8, 8, "home-normal"],
+    ],
+  },
+};
+
+const params = new URLSearchParams(window.location.search);
+const embedded = params.get("embed") === "1";
+const requestedState = params.get("state");
+document.body.classList.toggle("is-embedded", embedded);
+
+const stateImage = document.querySelector("#stateImage");
+const hotspotLayer = document.querySelector("#hotspotLayer");
+const stateGroup = document.querySelector("#stateGroup");
+const stateTitle = document.querySelector("#stateTitle");
+const stateCause = document.querySelector("#stateCause");
+const topbarState = document.querySelector("#topbarState");
+const stateCounter = document.querySelector("#stateCounter");
+const primaryButton = document.querySelector("#primaryButton");
+const secondaryButton = document.querySelector("#secondaryButton");
+const previousButton = document.querySelector("#previousButton");
+const fullscreenButton = document.querySelector("#fullscreenButton");
+const stateRail = document.querySelector("#stateRail");
+const demoToast = document.querySelector("#demoToast");
+let activeState = states[requestedState] ? requestedState : "home-default";
+let autoTimer = 0;
+let toastTimer = 0;
+const stateHistory = [];
+
+function showToast(message) {
+  demoToast.textContent = message;
+  demoToast.classList.add("is-visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => demoToast.classList.remove("is-visible"), 1600);
 }
 
-function sendMessage(text) {
-  const clean = text.trim();
-  if (!clean) return;
-  window.clearTimeout(replyTimer);
-  appendMessage("user", clean);
-  chatInput.value = "";
-  const typing = appendMessage("ai", "", true);
-  const reply = responses[Math.min(responses.length - 1, messages.querySelectorAll(".message--user").length - 1)];
-  liveSubtitle.textContent = "正在思考并组织回答…";
-  replyTimer = window.setTimeout(() => {
-    typing.classList.remove("message--typing");
-    typing.querySelector("p").textContent = reply;
-    messages.scrollTop = messages.scrollHeight;
-    liveSubtitle.textContent = reply;
-  }, 720);
+function renderHotspots(hotspots = []) {
+  hotspotLayer.innerHTML = "";
+  hotspots.forEach(([label, x, y, width, height, target]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "hotspot";
+    button.style.left = `${x}%`;
+    button.style.top = `${y}%`;
+    button.style.width = `${width}%`;
+    button.style.height = `${height}%`;
+    button.setAttribute("aria-label", label);
+    button.innerHTML = `<span>${label}</span>`;
+    button.addEventListener("click", () => goToState(target));
+    hotspotLayer.append(button);
+  });
 }
 
-chatForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  sendMessage(chatInput.value);
-});
+function renderRail() {
+  stateRail.innerHTML = stateOrder
+    .map((key, index) => `<li>
+      <button type="button" data-state="${key}" class="${key === activeState ? "is-active" : ""}">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <strong>${states[key].title}</strong>
+      </button>
+    </li>`)
+    .join("");
+}
 
-chatInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    chatForm.requestSubmit();
+function updateUrl(key) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("state", key);
+  if (embedded) url.searchParams.set("embed", "1");
+  history.replaceState(null, "", url);
+}
+
+function goToState(key, { remember = true } = {}) {
+  if (!states[key]) return;
+  window.clearTimeout(autoTimer);
+  if (remember && key !== activeState) stateHistory.push(activeState);
+  activeState = key;
+  const state = states[key];
+  const index = stateOrder.indexOf(key);
+
+  stateImage.classList.add("is-changing");
+  const preload = new Image();
+  preload.onload = () => {
+    stateImage.src = `${assetRoot}${state.image}`;
+    stateImage.alt = state.alt;
+    requestAnimationFrame(() => stateImage.classList.remove("is-changing"));
+  };
+  preload.src = `${assetRoot}${state.image}`;
+
+  stateGroup.textContent = state.group;
+  stateTitle.textContent = state.title;
+  stateCause.textContent = state.cause;
+  topbarState.textContent = state.title;
+  stateCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(stateOrder.length).padStart(2, "0")}`;
+  primaryButton.textContent = state.primary[0];
+  primaryButton.dataset.target = state.primary[1];
+  secondaryButton.textContent = state.secondary[0];
+  secondaryButton.dataset.target = state.secondary[1];
+  previousButton.disabled = stateHistory.length === 0;
+  renderHotspots(state.hotspots);
+  renderRail();
+  updateUrl(key);
+  window.parent?.postMessage({ type: "telestudio-state", state: key, title: state.title }, "*");
+
+  if (state.auto) {
+    autoTimer = window.setTimeout(() => {
+      showToast("状态条件满足，进入下一页面");
+      goToState(state.auto[0]);
+    }, state.auto[1]);
+  }
+}
+
+primaryButton.addEventListener("click", () => goToState(primaryButton.dataset.target));
+secondaryButton.addEventListener("click", () => goToState(secondaryButton.dataset.target));
+previousButton.addEventListener("click", () => {
+  const previous = stateHistory.pop();
+  if (previous) goToState(previous, { remember: false });
+});
+stateRail.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-state]");
+  if (button) goToState(button.dataset.state);
+});
+fullscreenButton.addEventListener("click", async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch {
+    showToast("浏览器未允许全屏，可点击“独立打开”");
   }
 });
-
-document.querySelectorAll(".quick-queries button").forEach((button) => {
-  button.addEventListener("click", () => sendMessage(button.textContent));
+document.addEventListener("fullscreenchange", () => {
+  fullscreenButton.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
+});
+window.addEventListener("message", (event) => {
+  if (event.data?.type === "telestudio-go" && states[event.data.state]) goToState(event.data.state);
 });
 
-voiceButton.addEventListener("click", () => {
-  const active = voiceButton.getAttribute("aria-pressed") !== "true";
-  voiceButton.setAttribute("aria-pressed", String(active));
-  showToast(active ? "正在模拟聆听，点击可停止" : "语音输入已停止");
-  if (active) {
-    window.setTimeout(() => {
-      if (voiceButton.getAttribute("aria-pressed") !== "true") return;
-      voiceButton.setAttribute("aria-pressed", "false");
-      chatInput.value = "请介绍一下你能做什么";
-      chatInput.focus();
-    }, 1400);
-  }
-});
+goToState(activeState, { remember: false });

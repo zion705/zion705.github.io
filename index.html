@@ -9,7 +9,7 @@
     />
     <meta name="theme-color" content="#f4f6f2" />
     <title>刘万正 - AI Product Portfolio</title>
-    <link rel="stylesheet" href="./styles.css?v=20260724-telestudio1" />
+    <link rel="stylesheet" href="./styles.css?v=20260726-telestudio2" />
   </head>
   <body>
     <div class="page-water-field" aria-hidden="true">
@@ -176,6 +176,34 @@
             </dl>
             <ol class="work-card-points" data-work-points="buding"></ol>
           </article>
+
+          <aside class="tele-demo-dock" data-reveal aria-labelledby="teleDemoDockTitle">
+            <header>
+              <div>
+                <span>LIVE PRODUCT PROTOTYPE</span>
+                <h3 id="teleDemoDockTitle">TeleStudio 数字人 Demo</h3>
+              </div>
+              <a href="./demos/telestudio/index.html" target="_blank" rel="noreferrer">
+                全屏体验 ↗
+              </a>
+            </header>
+            <div class="tele-demo-frame">
+              <iframe
+                id="teleStudioMiniDemo"
+                src="./demos/telestudio/index.html?embed=1"
+                title="TeleStudio 数字人缩略交互 Demo"
+                loading="lazy"
+                allow="fullscreen"
+              ></iframe>
+            </div>
+            <footer>
+              <p id="teleDemoDockStatus">选择预设数字人</p>
+              <div>
+                <button type="button" data-tele-state="settings-new">自定义形象</button>
+                <button type="button" data-tele-state="live-loading">实时对话</button>
+              </div>
+            </footer>
+          </aside>
         </div>
       </section>
 
@@ -716,6 +744,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="./config.js?v=20260712"></script>
-    <script src="./app.js?v=20260724-telestudio1"></script>
+    <script src="./app.js?v=20260726-telestudio2"></script>
   </body>
 </html>

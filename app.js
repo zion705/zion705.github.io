@@ -1715,6 +1715,22 @@ function updateTuner() {
 controls.forEach((control) => control.addEventListener("input", updateTuner));
 updateTuner();
 
+const teleStudioMiniDemo = document.querySelector("#teleStudioMiniDemo");
+const teleDemoDockStatus = document.querySelector("#teleDemoDockStatus");
+document.querySelectorAll("[data-tele-state]").forEach((button) => {
+  button.addEventListener("click", () => {
+    teleStudioMiniDemo?.contentWindow?.postMessage(
+      { type: "telestudio-go", state: button.dataset.teleState },
+      "*"
+    );
+  });
+});
+window.addEventListener("message", (event) => {
+  if (event.data?.type === "telestudio-state" && teleDemoDockStatus) {
+    teleDemoDockStatus.textContent = event.data.title;
+  }
+});
+
 const messageStorageKey = "liuwanzheng-portfolio-message-cache-v2";
 const portfolioConfig = window.PORTFOLIO_CONFIG || {};
 const supabaseUrl = String(portfolioConfig.supabaseUrl || "").replace(/\/+$/, "");
