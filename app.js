@@ -37,8 +37,8 @@ const treeRollPlayback = {
 };
 const dryWood = new Image();
 const sproutWood = new Image();
-dryWood.src = "./assets/wood-dry.png";
-sproutWood.src = "./assets/wood-sprout.png";
+dryWood.src = "./assets/wood-dry.png?v=20260724-treeframes1";
+sproutWood.src = "./assets/wood-sprout.png?v=20260724-treeframes1";
 
 function resize() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -178,7 +178,7 @@ function isScrollRevealComplete() {
 function treeRollEndTime() {
   const duration = treeRollPlayback.duration;
   if (!Number.isFinite(duration) || duration <= 0) return 0;
-  return Math.max(0, duration - Math.min(0.08, duration * 0.008));
+  return Math.max(0, duration - Math.min(1 / 60, duration * 0.0035));
 }
 
 function syncTreeRollVideo(progress, force = false) {
