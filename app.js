@@ -37,8 +37,8 @@ const treeRollPlayback = {
 };
 const dryWood = new Image();
 const sproutWood = new Image();
-dryWood.src = "./assets/wood-dry.png?v=20260724-treeframes1";
-sproutWood.src = "./assets/wood-sprout.png?v=20260724-treeframes1";
+dryWood.src = "./assets/wood-dry.png?v=20260727-tree-roll-cache1";
+sproutWood.src = "./assets/wood-sprout.png?v=20260727-tree-roll-cache1";
 
 function resize() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
