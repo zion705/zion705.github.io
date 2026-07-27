@@ -614,12 +614,11 @@ const experiences = {
   xiaomi: {
     kicker: "Xiaomi / AI Innovation",
     title: "AI 创新产品经理 · 小米",
-    meta: "Agent 状态终端 · AI-native 产品化 · 开源验证 | 2026/4 - 2026/7",
+    meta: "自定义宠物形象 · AI-native 工作流 · Agent Skill | 2026/4 - 2026/7",
     points: [
-      "【问题与定位】参与面向 AI Agent 用户的 0-1 开源桌面终端：将 Codex、Claude Code 等工具的长任务状态转化为低打扰、可感知的运行、完成、异常与待干预反馈。",
-      "【产品模型 · 原型验证】面对设备、Agent、Session 多层关系，制作两版可交互原型并组织任务测试，记录完成时间、操作步骤与错误点击；最终收敛为“Session 级采集、跨 Agent 聚合、一台设备统一一个形象”，并据此重构管理端信息架构与形象配置链路。",
-      "【AI-native 产品化】根据任务特征在 GUI、Agent 流程与 Skill 之间选择形态：动画生成保留可视化预览、由 Agent 批量生产；首次部署由 Agent 处理环境检测与异常分支；组件中心通过 Skill 完成自然语言描述、规范生成、校验预览与设备安装。产品经理的重点转向问题定义、模型边界、验收机制与人机分工。",
-      "【外部验证 · 2.0】项目开源后获得 10 万+曝光与约 4000 次点赞收藏；结合评论、社群、内部试用和 KOL 反馈，识别“Agent 效率 + IP 情绪价值”双层需求及复刻转化断点，推动 2.0 重新调整价值结构、功能优先级和软硬件方案，并完成 PRD 与可交互原型。"
+      "【资产生产效率】自定义宠物动画 · 动作资产清单 · Codex 自动化工作流 · 批量生成视频 · 资产整理与校验；替代逐个动作在网页端重复生成。",
+      "【团队协作方式】小团队角色融合 · AI 辅助研究与原型 · 产品经理直接交付可运行前端 · 补充关键逻辑与生成规则 · 与 RD 联调落地。",
+      "【产品形态 AI-native】从 App 内 GUI 自定义形象，延伸为 Agent 可调用的 Skill · 自然语言描述 · 宠物资产生成 · 规范校验 · 预览与安装。"
     ],
     links: [
       {
@@ -698,7 +697,7 @@ const experiences = {
     title: "Tele AI 产品经理 · 中国电信人工智能研究院",
     meta: "TeleStudio 实时交互数字人 | 2026/03",
     intro:
-      "负责 TeleStudio 实时交互数字人需求设计，把平台已有的图片、视频与音频生成能力延伸为可创建、可配置、可实时交流的数字人体验。",
+      "负责 TeleStudio 实时交互数字人的产品方案与核心 PRD。结合平台以内部演示、展示基础模型能力为主的阶段，优先让用户快捷进入实时体验，再补充数字人的创建与配置能力。",
     tags: ["数字人", "实时交互", "AIGC 平台", "信息架构", "合规策略"],
     highlights: [
       {
@@ -718,9 +717,8 @@ const experiences = {
       }
     ],
     points: [
-      "【需求链路拆解】拆解实时交互数字人的产品目标、用户路径、页面结构与优先级，设计“首页 - 设置 - 实时交互”三类页面和预设直达、自定义配置两档路径，输出 PRD、原型、状态流转与验收口径。",
-      "【AI 数字人设计】围绕形象、音色、人设与 system prompt 四维配置，定义候选生成、试听、编辑和留存规则；同步设计对话上下文、特定 query 触发与全链路合规校验。",
-      "【交互与异常治理】以低门槛、低延迟为体验目标，设计主动开场、音画同步、逐字回复与 500 字多行输入，并补齐加载失败、网络卡顿、任务重启、违规拦截和临时对话清空等 corner case。"
+      "【实时数字人方案与原型】内部演示 · 模型能力展示 · 预设数字人直达 · 编辑/新建二级入口 · 承接页缓冲 · 形象/音色/人设配置 · 核心 PRD 与交互原型。",
+      "【离线数字人横向评测】即梦 × 可灵 · 10 个高频/边界 Case · 基础可靠性 · 表演自然度 · 整体观感与可用性；为实时评测补充延迟、音画同步、长时稳定、弱网恢复与用户打断。"
     ],
     document: {
       src: "./assets/documents/telestudio-digital-human-prd.pdf",
@@ -860,9 +858,9 @@ const portalPages = {
     summary: "四段经历共同指向一个问题：怎样把 AI 能力做成用户能理解、能信任、能持续使用的产品系统。",
     items: [
       {
-        title: "AI 创新产品经理 · 小米",
-        meta: "Agent 状态终端 · Skill 设计 · 开源验证 | 2026/4 - 2026/7",
-        action: "xiaomi"
+        title: "AIGC 产品经理 · 扩散未来",
+        meta: "布叮 AI 0-1 | 2024/12 - 2025/3",
+        action: "buding"
       },
       {
         title: "Tele AI 产品经理 · 中国电信人工智能研究院",
@@ -870,14 +868,14 @@ const portalPages = {
         action: "telestudio"
       },
       {
+        title: "AI 创新产品经理 · 小米",
+        meta: "Agent 状态终端 · Skill 设计 · 开源验证 | 2026/4 - 2026/7",
+        action: "xiaomi"
+      },
+      {
         title: "大模型策略产品经理 · 百度",
         meta: "文心一言 | 2025/5 - 2025/9",
         action: "baidu"
-      },
-      {
-        title: "AIGC 产品经理 · 扩散未来",
-        meta: "布叮 AI 0-1 | 2024/12 - 2025/3",
-        action: "buding"
       }
     ]
   },
@@ -886,6 +884,11 @@ const portalPages = {
     title: "项目",
     summary: "更偏向可被试用和复盘的产品原型：Agent 反馈、AI 游戏、陪伴产品与行为干预实验。",
     items: [
+      {
+        title: "评论驱动 AIGC 商品视频工作流",
+        meta: "真实 LLM 脚本 · Seedance 开场 · 素材检索 · 离线混剪成片。",
+        href: "./demos/comment-video/"
+      },
       {
         title: "AI Agent 多任务执行体验",
         meta: "低打扰、可感知、可恢复的任务反馈系统。"
@@ -1092,7 +1095,9 @@ function renderPortalPanel(key, { focus = false, scroll = false } = {}) {
                   ? `<button type="button" data-experience="${item.action}">查看详情</button>`
                   : item.case
                     ? `<button type="button" data-project-case="${item.case}">查看案例</button>`
-                    : ""
+                    : item.href
+                      ? `<a class="portal-item-link" href="${item.href}">打开 Demo <span aria-hidden="true">↗</span></a>`
+                      : ""
               }
             </div>
           `

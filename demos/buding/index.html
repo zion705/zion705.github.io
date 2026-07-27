@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="基于布叮 AI 真实小程序界面截图制作的三屏可交互演示。"
+    />
+    <meta name="theme-color" content="#8f5bd1" />
+    <title>布叮 AI · 真实界面交互 Demo</title>
+    <link rel="stylesheet" href="./styles.css?v=20260727-buding2" />
+  </head>
+  <body>
+    <main class="demo-shell">
+      <header class="demo-topbar">
+        <div class="demo-brand">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <div>
+            <strong>布叮 AI</strong>
+            <small>真实产品界面 · 点击跳转原型</small>
+          </div>
+        </div>
+        <div class="demo-status" aria-live="polite">
+          <span id="screenCounter">01 / 03</span>
+          <strong id="screenName">定制表情包</strong>
+        </div>
+        <a class="open-demo" href="./index.html" target="_blank" rel="noreferrer">
+          独立打开 <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+
+      <section class="demo-main" aria-label="布叮 AI 三屏交互演示">
+        <nav class="screen-rail" aria-label="界面导航">
+          <button class="is-active" type="button" data-screen-target="home">
+            <span>01</span>
+            <strong>首页</strong>
+            <small>选择表情模板</small>
+          </button>
+          <button type="button" data-screen-target="custom">
+            <span>02</span>
+            <strong>做同款</strong>
+            <small>确认表情包</small>
+          </button>
+          <button type="button" data-screen-target="records">
+            <span>03</span>
+            <strong>制作记录</strong>
+            <small>查看历史结果</small>
+          </button>
+        </nav>
+
+        <div class="phone-stage">
+          <div class="phone-frame" id="phoneFrame">
+            <section
+              class="screen-panel screen-panel--home is-active"
+              data-screen-panel="home"
+              aria-label="布叮 AI 首页"
+            >
+              <img
+                src="../../assets/buding/buding-ai-screens.png"
+                alt="布叮 AI 定制表情包首页真实界面"
+                draggable="false"
+              />
+              <button
+                class="hotspot hotspot--home-card"
+                type="button"
+                data-screen-target="custom"
+                aria-label="选择表情模板并进入做同款"
+              >
+                <span>选择模板</span>
+              </button>
+              <button
+                class="hotspot hotspot--home-copy"
+                type="button"
+                data-screen-target="custom"
+                aria-label="进入做同款界面"
+              >
+                <span>做同款</span>
+              </button>
+              <button
+                class="hotspot hotspot--home-records"
+                type="button"
+                data-screen-target="records"
+                aria-label="进入制作记录"
+              >
+                <span>制作记录</span>
+              </button>
+            </section>
+
+            <section
+              class="screen-panel screen-panel--custom"
+              data-screen-panel="custom"
+              aria-label="布叮 AI 做同款页面"
+              hidden
+            >
+              <img
+                src="../../assets/buding/buding-ai-screens.png"
+                alt="布叮 AI 聊天日常表情包做同款真实界面"
+                draggable="false"
+              />
+              <button
+                class="hotspot hotspot--custom-back"
+                type="button"
+                data-screen-target="home"
+                aria-label="返回首页"
+              >
+                <span>返回首页</span>
+              </button>
+              <button
+                class="hotspot hotspot--custom-confirm"
+                type="button"
+                data-screen-target="records"
+                aria-label="立即做同款并查看制作记录"
+              >
+                <span>立即做同款</span>
+              </button>
+            </section>
+
+            <section
+              class="screen-panel screen-panel--records"
+              data-screen-panel="records"
+              aria-label="布叮 AI 制作记录页面"
+              hidden
+            >
+              <img
+                src="../../assets/buding/buding-ai-screens.png"
+                alt="布叮 AI 制作记录真实界面"
+                draggable="false"
+              />
+              <button
+                class="hotspot hotspot--records-back"
+                type="button"
+                data-screen-target="home"
+                aria-label="返回首页"
+              >
+                <span>返回首页</span>
+              </button>
+              <button
+                class="hotspot hotspot--records-item"
+                type="button"
+                data-screen-target="custom"
+                aria-label="选择记录并再次做同款"
+              >
+                <span>再次做同款</span>
+              </button>
+            </section>
+          </div>
+          <p class="phone-hint">
+            <span aria-hidden="true"></span>
+            鼠标移入界面可查看点击热区
+          </p>
+        </div>
+
+        <aside class="demo-note">
+          <span>SCREENSHOT PROTOTYPE</span>
+          <h1 id="screenTitle">从模板选择进入做同款</h1>
+          <p id="screenDescription">
+            首页保留了当时真实上线界面。点击模板卡片或“做同款”按钮进入确认页，也可从底部直接查看制作记录。
+          </p>
+          <div class="demo-actions">
+            <button id="previousButton" type="button">上一步</button>
+            <button id="nextButton" class="demo-actions__primary" type="button">下一步</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./app.js?v=20260727-buding1"></script>
+  </body>
+</html>

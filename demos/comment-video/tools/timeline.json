@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "caseId": "a-line-denim-skirt",
+  "title": "Comment reply product video: pear-shape fit question",
+  "brief": {
+    "product": "High-rise A-line denim skirt",
+    "comment": "Will this skirt emphasize my hips?\nThe model photos do not show the fit clearly.",
+    "commentAuthor": "@fit-check",
+    "commentBadge": "HIGH-INTENT COMMENT",
+    "merchantIntent": "Answer the fit concern with visible front, side, and fabric evidence. Avoid universal body-shape claims and end with a waist-based size-chart instruction.",
+    "audience": "Pear-shaped shoppers comparing fit and deciding whether to order",
+    "cta": "The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering."
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "transitionSeconds": 0.4,
+  "output": "assets/output/comment-reply-demo-en.mp4",
+  "planProvenance": {
+    "caseId": "a-line-denim-skirt",
+    "model": "doubao-seed-2-0-mini-260428",
+    "generatedAt": "2026-07-27T03:44:06.0000000Z",
+    "syncedAt": "2026-07-27T05:29:00.000Z"
+  },
+  "segments": [
+    {
+      "id": "read-comment",
+      "asset": "opener-generated.mp4",
+      "duration": 5.6,
+      "motion": "push-in",
+      "label": "HIGH-INTENT COMMENT",
+      "showComment": true,
+      "subtitle": "Pear-shaped and worried this skirt\nwill emphasize your hips? Let’s\ncheck the actual fit.",
+      "purpose": "Acknowledge the fit concern and promise visible evidence.",
+      "transitionToNext": "smoothleft"
+    },
+    {
+      "id": "front-fit",
+      "asset": "fit-front.png",
+      "duration": 5.6,
+      "motion": "drift-left",
+      "label": "PROOF 1 / FRONT",
+      "showComment": false,
+      "subtitle": "From the front, this sample has a\nhigh-rise A-line shape that opens\nbelow the hips.",
+      "purpose": "Show the sample's visible front silhouette.",
+      "transitionToNext": "slideleft"
+    },
+    {
+      "id": "side-fit",
+      "asset": "fit-side.png",
+      "duration": 5.6,
+      "motion": "drift-right",
+      "label": "PROOF 2 / SIDE",
+      "showComment": false,
+      "subtitle": "From the side, this sample leaves\nvisible room through the hip area.",
+      "purpose": "Show the visible room through the hip area.",
+      "transitionToNext": "smoothleft"
+    },
+    {
+      "id": "fabric-proof",
+      "asset": "fabric-detail.png",
+      "duration": 5.2,
+      "motion": "rise",
+      "label": "FABRIC + SIZE CHECK",
+      "showComment": false,
+      "subtitle": "The fabric holds its shape without\nfeeling stiff. Check the size chart\nby waist before ordering.",
+      "purpose": "Show fabric structure and close with a waist-based ordering action."
+    }
+  ]
+}

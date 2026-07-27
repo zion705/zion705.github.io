@@ -2183,6 +2183,33 @@ h2 {
   background: rgba(116, 158, 92, 0.18);
 }
 
+.portal-item-link {
+  display: inline-flex;
+  min-height: 38px;
+  padding: 0 14px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 999px;
+  color: var(--soft);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: none;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.portal-item-link:hover {
+  color: #1f4315;
+  background: rgba(116, 158, 92, 0.18);
+}
+
+.portal-item-link span {
+  color: currentColor;
+}
+
 .message-board {
   box-sizing: border-box;
   position: relative;
@@ -5972,4 +5999,626 @@ body.case-open {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+}
+
+/* Interview talk track: the page now follows the spoken introduction from top to bottom. */
+.intro-identity {
+  grid-column: 1;
+}
+
+.intro-talk-track {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.58), rgba(232, 242, 230, 0.2)),
+    rgba(245, 248, 242, 0.28);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 18px 48px rgba(57, 45, 35, 0.08);
+  backdrop-filter: blur(24px) saturate(1.42);
+  -webkit-backdrop-filter: blur(24px) saturate(1.42);
+}
+
+.intro-talk-track > span,
+.work-chapter-number {
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.intro-talk-track p {
+  margin: 0;
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1.78;
+}
+
+.intro-capabilities {
+  grid-column: 1 / -1;
+}
+
+.work-chapter {
+  position: relative;
+}
+
+.work-card {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
+  padding: 18px 24px 22px;
+}
+
+.work-card-title,
+.work-takeaway-tag,
+.work-card-points {
+  grid-column: 1;
+}
+
+.work-card-title {
+  grid-row: 2;
+  padding: 20px 0 14px;
+}
+
+.work-card-metrics {
+  display: none;
+}
+
+.work-takeaway-tag {
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-self: start;
+  gap: 7px;
+  min-height: 34px;
+  padding: 7px 9px 7px 14px;
+  border: 1px solid rgba(var(--card-accent), 0.2);
+  border-radius: 999px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.48), rgba(var(--card-accent), 0.08)),
+    rgba(245, 248, 242, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 7px 18px rgba(38, 54, 39, 0.06);
+  align-self: start;
+}
+
+.work-takeaway-tag span {
+  color: rgb(var(--card-accent));
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.work-takeaway-tag strong {
+  padding: 4px 9px;
+  border: 1px solid rgba(var(--card-accent), 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--text);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.work-card-points {
+  grid-row: 4;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin-top: 12px;
+  border-top: 1px solid rgba(73, 60, 48, 0.12);
+}
+
+.work-card-points li,
+.work-card-points li:nth-child(even),
+.work-card-points li:nth-child(n + 3),
+.work-card--buding .work-card-points li:last-child:nth-child(odd),
+.work-card--telestudio .work-card-points li:last-child:nth-child(odd) {
+  grid-column: 1;
+  padding: 14px 4px 14px 18px;
+  border-top: 1px solid rgba(73, 60, 48, 0.1);
+}
+
+.work-card-points li:first-child {
+  border-top: 0;
+}
+
+.work-card-points strong,
+.work-card-points p {
+  display: block;
+}
+
+.work-card-points strong {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.work-card-points p {
+  max-width: 96ch;
+  font-size: 13.5px;
+  line-height: 1.68;
+}
+
+.work-chapter + .work-chapter {
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.work-chapter-head {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.28fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin: 0 0 24px;
+}
+
+.work-chapter-head > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
+  gap: 28px;
+  align-items: end;
+}
+
+.work-chapter-head h3 {
+  max-width: 620px;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.work-chapter-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.72;
+}
+
+.work-chapter-number {
+  position: sticky;
+  top: 92px;
+  padding-top: 8px;
+}
+
+.work-grid--model {
+  grid-template-columns: 1fr;
+}
+
+.work-grid--model .work-card {
+  grid-column: 1;
+}
+
+.work-chapter--product .work-grid {
+  grid-template-columns: minmax(0, 2.1fr) minmax(300px, 1fr);
+}
+
+.work-chapter--product .work-card--buding {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.buding-demo-dock {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(243, 167, 207, 0.2), transparent 42%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(232, 220, 244, 0.42));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 24px 60px rgba(79, 50, 99, 0.14);
+  backdrop-filter: blur(24px) saturate(1.42);
+  -webkit-backdrop-filter: blur(24px) saturate(1.42);
+}
+
+.buding-demo-label {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(111, 63, 183, 0.12);
+  color: #4e3d59;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.buding-demo-label span {
+  flex: 0 0 auto;
+  color: #8f5bd1;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.buding-demo-label strong {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.buding-demo-dock iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  background: #f7f2fa;
+}
+
+.work-chapter--product .work-card--telestudio {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.work-chapter--product .work-card--xiaomi {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.xiaomi-visual-dock {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-column: 2;
+  grid-row: 3;
+  gap: 12px;
+  align-self: center;
+  padding: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: calc(var(--radius) + 8px);
+  background:
+    radial-gradient(circle at 90% 8%, rgba(173, 220, 255, 0.26), transparent 34%),
+    radial-gradient(circle at 8% 92%, rgba(132, 202, 229, 0.16), transparent 30%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(215, 237, 249, 0.18)),
+    rgba(241, 249, 252, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -1px 0 rgba(97, 168, 199, 0.12),
+    0 26px 70px rgba(39, 86, 113, 0.14);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+}
+
+.xiaomi-visual-dock::before,
+.xiaomi-visual-dock::after {
+  position: absolute;
+  z-index: 0;
+  width: 112px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  content: "";
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.9), transparent 18%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.26), rgba(112, 190, 224, 0.08));
+  box-shadow:
+    inset 8px 10px 22px rgba(255, 255, 255, 0.36),
+    inset -8px -10px 24px rgba(92, 160, 192, 0.12),
+    0 16px 36px rgba(71, 130, 158, 0.08);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.xiaomi-visual-dock::before {
+  top: -58px;
+  right: -32px;
+}
+
+.xiaomi-visual-dock::after {
+  bottom: -68px;
+  left: -44px;
+  width: 136px;
+}
+
+.xiaomi-visual-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  padding: 0 5px;
+}
+
+.xiaomi-visual-head span,
+.xiaomi-visual figcaption span {
+  color: #347895;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.xiaomi-visual-head strong {
+  color: #294250;
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.xiaomi-visual-stack {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+}
+
+.xiaomi-visual {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: calc(var(--radius) - 2px);
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 14px 34px rgba(36, 72, 94, 0.12);
+}
+
+.xiaomi-visual a {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+}
+
+.xiaomi-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition:
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s ease;
+}
+
+.xiaomi-visual a:hover img,
+.xiaomi-visual a:focus-visible img {
+  filter: saturate(1.05) contrast(1.015);
+  transform: scale(1.018);
+}
+
+.xiaomi-visual a:focus-visible {
+  outline: 2px solid rgba(52, 120, 149, 0.78);
+  outline-offset: -4px;
+}
+
+.xiaomi-visual figcaption {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  color: #233c49;
+  background: rgba(240, 249, 253, 0.54);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
+  pointer-events: none;
+}
+
+.xiaomi-visual figcaption strong {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.xiaomi-visual--states {
+  padding: 5px;
+}
+
+.xiaomi-visual--states img {
+  border-radius: calc(var(--radius) - 8px);
+}
+
+.xiaomi-visual--states figcaption {
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(8, 13, 18, 0.5);
+}
+
+.xiaomi-visual--states figcaption span {
+  color: #a5dff5;
+}
+
+.tele-demo-dock {
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius);
+  background: rgba(3, 10, 22, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 24px 60px rgba(26, 44, 76, 0.18);
+}
+
+.tele-demo-label {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(3, 10, 22, 0.42);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  pointer-events: none;
+}
+
+.tele-demo-label span {
+  color: #a8dc98;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.tele-demo-label strong {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.method-section,
+.portal {
+  scroll-margin-top: 76px;
+}
+
+.method-demo-note {
+  grid-column: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 22px 0 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius);
+  color: var(--soft);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.44), rgba(225, 239, 224, 0.16)),
+    rgba(245, 248, 242, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.66);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.method-demo-note span {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 1120px) {
+  .work-chapter--product .work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-chapter--product .work-card--buding,
+  .work-chapter--product .work-card--telestudio,
+  .work-chapter--product .work-card--xiaomi {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .buding-demo-dock {
+    grid-column: 1;
+    grid-row: auto;
+    width: min(720px, 100%);
+    justify-self: center;
+  }
+
+  .xiaomi-visual-dock {
+    grid-column: 1;
+    grid-row: auto;
+    width: min(720px, 100%);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 680px) {
+  .xiaomi-visual-dock {
+    padding: 10px;
+    border-radius: calc(var(--radius) + 4px);
+  }
+
+  .xiaomi-visual-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .xiaomi-visual figcaption {
+    right: 7px;
+    bottom: 7px;
+    left: 7px;
+  }
+
+  .xiaomi-visual--states figcaption {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-identity,
+  .intro-talk-track,
+  .intro-capabilities {
+    grid-column: 1;
+  }
+
+  .work-chapter-head,
+  .work-chapter-head > div {
+    grid-template-columns: 1fr;
+  }
+
+  .work-chapter-number {
+    position: static;
+  }
+
+  .method-demo-note {
+    grid-column: 2;
+  }
+
+}
+
+@media (max-width: 680px) {
+  .intro-talk-track {
+    grid-template-columns: 1fr;
+  }
+
+  .work-chapter + .work-chapter {
+    margin-top: 22px;
+    padding-top: 0;
+  }
+
+  .method-demo-note {
+    display: grid;
+    gap: 7px;
+  }
+
 }

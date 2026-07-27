@@ -1,0 +1,237 @@
+{
+  "schemaVersion": "1.0",
+  "caseId": "a-line-denim-skirt",
+  "model": "doubao-seed-2-0-mini-260428",
+  "generatedAt": "2026-07-27T03:44:06.0000000Z",
+  "adaptation": {
+    "language": "en-US",
+    "postEdited": true,
+    "note": "English narration and captions were adapted from the validated model run for this demo."
+  },
+  "commentAnalysis": {
+    "publishDecision": "Suitable for a public video reply",
+    "type": "Fit question / model-photo trust gap",
+    "primaryObjection": "The shopper cannot tell whether the skirt will emphasize the hips on a pear-shaped body.",
+    "intentStage": "High intent; needs fit evidence before ordering",
+    "emotion": "Cautious and evidence-seeking",
+    "responseStrategy": "Acknowledge concern → show front shape → show side room → show fabric structure and sizing action",
+    "proofMode": "Front sample + side sample + fabric detail + waist-based size-chart guidance",
+    "riskLevel": "medium",
+    "riskNotes": [
+      "Keep every fit observation scoped to this sample",
+      "Do not generalize the result to every pear-shaped body",
+      "Do not invent measurements"
+    ]
+  },
+  "script": {
+    "durationSec": 20.8,
+    "hook": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit.",
+    "spokenLines": [
+      {
+        "startSec": 0,
+        "endSec": 5.2,
+        "speaker": "Creator",
+        "text": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit.",
+        "purpose": "State the concern and promise visible evidence",
+        "factIds": []
+      },
+      {
+        "startSec": 5.2,
+        "endSec": 10.4,
+        "speaker": "Creator",
+        "text": "From the front, this sample has a high-rise A-line shape that opens below the hips.",
+        "purpose": "Show the front-view shape",
+        "factIds": [
+          "skirt-f1"
+        ]
+      },
+      {
+        "startSec": 10.4,
+        "endSec": 15.6,
+        "speaker": "Creator",
+        "text": "From the side, this sample leaves visible room through the hip area.",
+        "purpose": "Show the side-view room through the hips",
+        "factIds": [
+          "skirt-f2"
+        ]
+      },
+      {
+        "startSec": 15.6,
+        "endSec": 20.8,
+        "speaker": "Creator",
+        "text": "The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering.",
+        "purpose": "Show the fabric structure and close with a low-pressure sizing action",
+        "factIds": [
+          "skirt-f3",
+          "skirt-f4"
+        ]
+      }
+    ],
+    "fullVoiceover": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit. From the front, this sample has a high-rise A-line shape that opens below the hips. From the side, this sample leaves visible room through the hip area. The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering."
+  },
+  "storyboard": [
+    {
+      "id": "skirt-s1",
+      "startSec": 0,
+      "endSec": 5.2,
+      "visual": "A creator holds a phone with its screen turned away and lifts the black A-line skirt, then looks into camera.",
+      "audio": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit.",
+      "overlay": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit.",
+      "transition": "Smooth push into the front-view sample",
+      "assetIds": [
+        "skirt-a0"
+      ]
+    },
+    {
+      "id": "skirt-s2",
+      "startSec": 5.2,
+      "endSec": 10.4,
+      "visual": "The front-view sample drifts slowly while guides trace the high rise and A-line shape.",
+      "audio": "From the front, this sample has a high-rise A-line shape that opens below the hips.",
+      "overlay": "From the front, this sample has a high-rise A-line shape that opens below the hips.",
+      "transition": "Slide to the matching side-view sample",
+      "assetIds": [
+        "skirt-a1"
+      ]
+    },
+    {
+      "id": "skirt-s3",
+      "startSec": 10.4,
+      "endSec": 15.6,
+      "visual": "The side-view sample drifts slowly while a subtle guide marks the visible room through the hip area.",
+      "audio": "From the side, this sample leaves visible room through the hip area.",
+      "overlay": "From the side, this sample leaves visible room through the hip area.",
+      "transition": "Soft move into the fabric close-up",
+      "assetIds": [
+        "skirt-a2"
+      ]
+    },
+    {
+      "id": "skirt-s4",
+      "startSec": 15.6,
+      "endSec": 20.8,
+      "visual": "The fabric close-up rises slowly; the final beat adds a clean size-chart prompt over the same asset.",
+      "audio": "The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering.",
+      "overlay": "The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering.",
+      "transition": "Hold the final frame through 20.8 seconds",
+      "assetIds": [
+        "skirt-a3"
+      ]
+    }
+  ],
+  "openingVideoPrompt": {
+    "durationSec": 5,
+    "aspectRatio": "9:16",
+    "prompt": "Vertical 9:16 realistic UGC video, one continuous chest-up shot in a bright fitting room. A young adult creator holds a black high-rise A-line denim skirt and a phone with the screen turned away from camera and completely unreadable. She glances down, raises one eyebrow, looks into the lens, and lightly lifts the skirt as if ready to demonstrate the fit. Natural daylight, subtle handheld movement, no on-screen text, subtitles, logo, or watermark.",
+    "performanceDirection": "Start by glancing at the unreadable phone screen, then look up with a calm, evidence-first expression and lift the skirt slightly.",
+    "cameraDirection": "One continuous 9:16 chest-up shot with a gentle handheld push-in; no cuts.",
+    "spokenLine": "Pear-shaped and worried this skirt will emphasize your hips? Let’s check the actual fit.",
+    "commentOverlay": {
+      "renderInPost": true,
+      "text": "Does this skirt really not emphasize the hips on a pear-shaped body? The model photos don’t show it clearly.",
+      "position": "Upper-left safe area, 12% from the top",
+      "style": "White rounded comment card with an anonymous avatar and an orange highlight on “emphasize the hips”",
+      "inAnimation": "Pop in from the phone edge over 0.35 seconds",
+      "outAnimation": "Fade left during the transition to the front-view sample"
+    },
+    "negativePrompt": "No readable phone screen, text, subtitles, comment UI, logos, or watermarks. No malformed hands, extra phones, identity changes, exaggerated anger, hard studio light, heavy skin smoothing, trousers, garment color changes, silhouette changes, or camera cuts."
+  },
+  "assetQueries": [
+    {
+      "sceneId": "skirt-s1",
+      "query": "UGC creator holding an A-line skirt and an unreadable phone, skeptical-comment reaction",
+      "requiredFactIds": [],
+      "candidateAssetIds": [
+        "skirt-a0"
+      ],
+      "reason": "The generated opener provides the comment-reply performance without serving as product evidence."
+    },
+    {
+      "sceneId": "skirt-s2",
+      "query": "front-view high-rise A-line skirt sample fit opening below hips 9:16",
+      "requiredFactIds": [
+        "skirt-f1"
+      ],
+      "candidateAssetIds": [
+        "skirt-a1"
+      ],
+      "reason": "The asset visibly supports the front-shape statement."
+    },
+    {
+      "sceneId": "skirt-s3",
+      "query": "matching side-view A-line skirt sample visible room through hip area 9:16",
+      "requiredFactIds": [
+        "skirt-f2"
+      ],
+      "candidateAssetIds": [
+        "skirt-a2"
+      ],
+      "reason": "The side view provides the angle missing from the model photos."
+    },
+    {
+      "sceneId": "skirt-s4",
+      "query": "black skirt fabric close-up shape-holding soft structure natural drape",
+      "requiredFactIds": [
+        "skirt-f3"
+      ],
+      "candidateAssetIds": [
+        "skirt-a3"
+      ],
+      "reason": "The close-up supports the fabric statement and carries the integrated size-chart prompt."
+    }
+  ],
+  "cta": {
+    "spoken": "The fabric holds its shape without feeling stiff. Check the size chart by waist before ordering.",
+    "onScreen": "Check the size chart by waist before ordering",
+    "action": "open_size_guide",
+    "rationale": "The final line turns fit uncertainty into a low-pressure sizing action without adding a separate CTA scene."
+  },
+  "selfEvaluation": {
+    "total": 92,
+    "passed": true,
+    "scores": {
+      "relevance": {
+        "score": 92,
+        "note": "All four lines directly answer the fit concern."
+      },
+      "factuality": {
+        "score": 94,
+        "note": "Each claim is scoped to the sample and tied to the fact whitelist."
+      },
+      "naturalness": {
+        "score": 91,
+        "note": "Four concise lines fit the 20.8-second structure."
+      },
+      "evidence": {
+        "score": 92,
+        "note": "Front, side, and fabric statements each have a matching asset."
+      },
+      "hook": {
+        "score": 91,
+        "note": "The opening states the concern and immediately promises a fit check."
+      },
+      "conversion": {
+        "score": 89,
+        "note": "Sizing guidance is integrated into the evidence scene without a hard sell."
+      }
+    },
+    "vetoChecks": [
+      {
+        "id": "fabricated-fact",
+        "passed": true,
+        "note": "No measurements, composition, or model data were invented."
+      },
+      {
+        "id": "absolute-claim",
+        "passed": true,
+        "note": "The script does not promise the same result for every body."
+      },
+      {
+        "id": "evidence-mismatch",
+        "passed": true,
+        "note": "Four script sections map to four real assets."
+      }
+    ],
+    "improvement": "Add dynamic fit footage and size-labeled samples before using this as production evidence."
+  }
+}

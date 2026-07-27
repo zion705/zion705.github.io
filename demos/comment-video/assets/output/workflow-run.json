@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1.0",
+  "caseId": "a-line-denim-skirt",
+  "completedAt": "2026-07-27T04:39:31.386Z",
+  "executionMode": "local-orchestrated-artifacts",
+  "textPlan": {
+    "model": "doubao-seed-2-0-mini-260428",
+    "generatedAt": "2026-07-27T04:00:38.5561605Z",
+    "endpoint": "/v1/chat/completions",
+    "inputSha256": "7aa149b873dea8c927af34106dec286c3075fb0ec4892106fa54866008274b3f",
+    "systemPromptSha256": "8f7f3b4af2d9c1c3ecdfb7f4c842bccfc88170fa02606bff629f81685f7310e7",
+    "plan": {
+      "path": "assets/output/llm-plan.json",
+      "bytes": 17087,
+      "sha256": "21305e2428f95fd80c53a4fbf1392bce27eeb54a43150aa4adabc8e7cb59d509"
+    },
+    "validation": "passed",
+    "repairPolicy": "up to two structured-output repairs"
+  },
+  "openingVideo": {
+    "model": "doubao-seedance-2-0-fast-260128",
+    "artifact": {
+      "path": "assets/library/opener-generated.mp4",
+      "bytes": 2317045,
+      "sha256": "7b48d41f36ace51f5adbc4c51b6fa6b6b84fcf57b987d44b3db130d072b85475"
+    },
+    "durationSeconds": 5,
+    "aspectRatio": "9:16",
+    "resolution": "720p",
+    "role": "performance-only; not product evidence",
+    "finalRunReuse": "Real Seedance Fast artifact from the same case was reused after final text-plan tuning."
+  },
+  "voiceover": {
+    "engine": "Piper offline",
+    "voice": "zh_CN-huayan-medium",
+    "artifact": {
+      "path": "assets/library/voiceover.wav",
+      "bytes": 1996878,
+      "sha256": "4db54b77e05df31907432d9e4a8c535a6df7badaaa69b447c924cca3435b00c9"
+    },
+    "durationSeconds": 20.8,
+    "slots": [
+      {
+        "startSec": 0,
+        "endSec": 4.2
+      },
+      {
+        "startSec": 4.2,
+        "endSec": 8.2
+      },
+      {
+        "startSec": 8.2,
+        "endSec": 12.2
+      },
+      {
+        "startSec": 12.2,
+        "endSec": 16.2
+      },
+      {
+        "startSec": 16.2,
+        "endSec": 20.8
+      }
+    ],
+    "externalTextEgress": false
+  },
+  "finalVideo": {
+    "artifact": {
+      "path": "assets/output/comment-reply-demo.mp4",
+      "bytes": 3999300,
+      "sha256": "72a7dd3ca65e9654bc25410206d10e8f1976fc9e29400660a14176a465b2a34e"
+    },
+    "durationSeconds": 20.8,
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "videoCodec": "H.264",
+    "audioCodec": "AAC"
+  },
+  "security": {
+    "apiKeyPersisted": false,
+    "browserCallsUpstream": false,
+    "staticSiteLoadsSanitizedPlanOnly": true
+  }
+}

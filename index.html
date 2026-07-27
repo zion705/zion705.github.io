@@ -9,7 +9,7 @@
     />
     <meta name="theme-color" content="#f4f6f2" />
     <title>刘万正 - AI Product Portfolio</title>
-    <link rel="stylesheet" href="./styles.css?v=20260726-telestudio3" />
+    <link rel="stylesheet" href="./styles.css?v=20260727-work-ratio1" />
   </head>
   <body>
     <div class="page-water-field" aria-hidden="true">
@@ -23,10 +23,11 @@
         </span>
       </a>
       <nav class="nav" aria-label="主导航">
-        <a href="#about" data-section-link>about me</a>
+        <a href="#about" data-section-link>教育</a>
         <a href="#work" data-section-link>经历</a>
-        <a href="#message" data-section-link>留言板</a>
-        <a href="#contact" data-section-link>联系我</a>
+        <a href="#method" data-section-link>匹配</a>
+        <a href="#portal" data-section-link>项目</a>
+        <a href="#contact" data-section-link>联系</a>
       </nav>
     </header>
 
@@ -73,155 +74,225 @@
 
       <section class="intro" id="about">
         <header class="intro-identity" data-reveal>
-          <span class="section-kicker">ABOUT ME / PRODUCT PROFILE</span>
+          <span class="section-kicker">01 / EDUCATION &amp; FOUNDATION</span>
           <div>
-            <strong>刘万正</strong>
-            <span>AI 产品经理</span>
-            <span>北京理工大学 · 产品设计硕士</span>
+            <strong>从产品设计，走向产品经理</strong>
+            <span>北京理工大学 · 产品设计硕士在读</span>
+            <span>用户研究、产品定义、原型与方案验证构成了我的专业底座。</span>
           </div>
         </header>
-        <ul class="intro-capabilities" aria-label="核心能力" data-reveal>
-          <li><span>01</span><strong>产品策略</strong><small>定位 · 取舍 · 指标</small></li>
-          <li><span>02</span><strong>Agent UX</strong><small>状态 · 反馈 · 异常</small></li>
-          <li><span>03</span><strong>模型评测</strong><small>标准 · Bad Case · 迭代</small></li>
-          <li><span>04</span><strong>快速原型</strong><small>假设 · Demo · 验证</small></li>
+        <div class="intro-talk-track" data-reveal>
+          <span>讲述提示</span>
+          <p>用户研究 · 需求转译 · AIGC 实践 · 视觉判断</p>
+        </div>
+        <ul class="intro-capabilities" aria-label="专业背景形成的四项能力" data-reveal>
+          <li><span>01 / RESEARCH</span><strong>用户研究</strong><small>真实需求 · 用户视角</small></li>
+          <li><span>02 / DEFINITION</span><strong>产品定义</strong><small>需求转译 · 功能取舍</small></li>
+          <li><span>03 / PROTOTYPE</span><strong>原型验证</strong><small>交互流程 · 方案验证</small></li>
+          <li><span>04 / AIGC</span><strong>AIGC 与视觉判断</strong><small>生图 · 生视频 · 效果边界</small></li>
         </ul>
       </section>
 
       <section class="work-showcase" id="work" aria-labelledby="workTitle">
         <header class="work-head" data-reveal>
           <div>
-            <span class="eyebrow">Experience / Evidence</span>
+            <span class="eyebrow">02 / EXPERIENCE &amp; EVIDENCE</span>
             <h2 id="workTitle">工作经历</h2>
           </div>
-          <p>
-            四段经历覆盖 AI 硬件、数字人平台、基础模型策略与 C 端 AIGC 0→1。
-            卡片直接呈现完整职责、关键取舍与交付证据，不再拆分摘要和详情。
-          </p>
+          <p>C 端 0→1 · AIGC 平台 · AI 硬件 · 大模型评测</p>
         </header>
 
-        <div class="work-grid">
-          <article class="work-card work-card--xiaomi" data-tilt-card data-reveal>
-            <div class="work-card-tags"><span>Agent 产品模型 · 原型实验 · Skill 设计 · 外部验证</span></div>
-            <span class="work-card-index">01 / XIAOMI</span>
-            <div class="work-card-title">
-              <span>2026.04 — 2026.07</span>
-              <div class="work-role-line">
-                <strong class="work-company">小米</strong>
-                <h3>AI 创新产品经理</h3>
+        <section class="work-chapter work-chapter--product" aria-label="AIGC 产品经历">
+          <div class="work-grid">
+            <article class="work-card work-card--buding" data-tilt-card data-reveal>
+              <div class="work-card-tags"><span>AIGC 电商营销 · C 端产品 · 动态表情包 · 0→1 上线</span></div>
+              <span class="work-card-index">01 / BUDING AI</span>
+              <div class="work-card-title">
+                <span>2024.12 — 2025.03</span>
+                <div class="work-role-line">
+                  <strong class="work-company">扩散未来</strong>
+                  <h3>AIGC 产品经理</h3>
+                </div>
+                <p>照片生成动态表情包 · C 端小程序</p>
               </div>
-              <p>Agent 状态终端 · AI-native 产品化</p>
-            </div>
-            <dl class="work-card-metrics">
-              <div><dd>10万+</dd><dt>项目曝光</dt></div>
-              <div><dd>4k+</dd><dt>点赞收藏</dt></div>
-              <div><dd>50+</dd><dt>GitHub Stars</dt></div>
-            </dl>
-            <ol class="work-card-points" data-work-points="xiaomi"></ol>
-          </article>
-
-          <article class="work-card work-card--telestudio" data-tilt-card data-reveal>
-            <div class="work-card-tags"><span>数字人 · 实时交互 · System Prompt · 异常治理</span></div>
-            <span class="work-card-index">02 / CHINA TELECOM AI</span>
-            <div class="work-card-title">
-              <span>2026.03</span>
-              <div class="work-role-line">
-                <strong class="work-company">中国电信</strong>
-                <h3>Tele AI 产品经理</h3>
+              <div class="work-takeaway-tag">
+                <span>主要收获</span>
+                <strong>需求功能匹配</strong>
+                <strong>商业转化责任</strong>
               </div>
-              <p>中国电信人工智能研究院 · TeleStudio</p>
-            </div>
-            <dl class="work-card-metrics">
-              <div><dd>3 类</dd><dt>核心页面</dt></div>
-              <div><dd>2 档</dd><dt>使用路径</dt></div>
-              <div><dd>4 维</dd><dt>数字人配置</dt></div>
-            </dl>
-            <ol class="work-card-points" data-work-points="telestudio"></ol>
-          </article>
+              <ol class="work-card-points" data-work-points="buding"></ol>
+            </article>
 
-          <article class="work-card work-card--baidu" data-tilt-card data-reveal>
-            <div class="work-card-tags"><span>模型策略 · 评测集 · SFT 数据 · 多轮对话</span></div>
-            <span class="work-card-index">03 / BAIDU</span>
-            <div class="work-card-title">
-              <span>2025.05 — 2025.09</span>
-              <div class="work-role-line">
-                <strong class="work-company">百度</strong>
-                <h3>大模型策略产品经理</h3>
+            <aside class="buding-demo-dock" data-reveal aria-label="布叮 AI 小程序可交互 Demo">
+              <div class="buding-demo-label">
+                <span>LIVE PRODUCT PREVIEW</span>
+                <strong>点击真实界面，体验首页、做同款与制作记录</strong>
               </div>
-              <p>文心一言 · 对话策略与评测</p>
-            </div>
-            <dl class="work-card-metrics">
-              <div><dd>300+</dd><dt>单轮评测</dt></div>
-              <div><dd>80+</dd><dt>多轮 Session</dt></div>
-              <div><dd>500+</dd><dt>SFT Query</dt></div>
-            </dl>
-            <ol class="work-card-points" data-work-points="baidu"></ol>
-          </article>
+              <iframe
+                id="budingMiniDemo"
+                src="./demos/buding/index.html?embed=1"
+                title="布叮 AI 小程序可交互 Demo"
+                loading="lazy"
+              ></iframe>
+            </aside>
 
-          <article class="work-card work-card--buding" data-tilt-card data-reveal>
-            <div class="work-card-tags"><span>AIGC · C 端产品 · MVP 验证 · 0→1 上线</span></div>
-            <span class="work-card-index">04 / BUDING AI</span>
-            <div class="work-card-title">
-              <span>2024.12 — 2025.03</span>
-              <div class="work-role-line">
-                <strong class="work-company">布叮 AI</strong>
-                <h3>AIGC 产品经理</h3>
+            <article class="work-card work-card--telestudio" data-tilt-card data-reveal>
+              <div class="work-card-tags"><span>实时数字人 · 原型设计 · 横向评测 · 评测框架</span></div>
+              <span class="work-card-index">02 / CHINA TELECOM AI</span>
+              <div class="work-card-title">
+                <span>2026.03</span>
+                <div class="work-role-line">
+                  <strong class="work-company">中国电信</strong>
+                  <h3>Tele AI 产品经理</h3>
+                </div>
+                <p>数字人核心 PRD · 方案评审 · AIGC 视频评测</p>
               </div>
-              <p>布叮 AI · C 端产品 0→1</p>
-            </div>
-            <dl class="work-card-metrics">
-              <div><dd>1 个月</dd><dt>完成 0→1 上线</dt></div>
-              <div><dd>97%</dd><dt>用户激活率</dt></div>
-              <div><dd>8→1.2%</dd><dt>P0 缺陷率</dt></div>
-            </dl>
-            <ol class="work-card-points" data-work-points="buding"></ol>
-          </article>
+              <div class="work-takeaway-tag">
+                <span>主要收获</span>
+                <strong>体验简化</strong>
+                <strong>评测框架</strong>
+              </div>
+              <ol class="work-card-points" data-work-points="telestudio"></ol>
+            </article>
 
-          <aside class="tele-demo-dock" data-reveal aria-label="TeleStudio 数字人可交互 Demo">
-            <iframe
-              id="teleStudioMiniDemo"
-              src="./demos/telestudio/index.html?embed=1"
-              title="TeleStudio 数字人可交互 Demo"
-              loading="lazy"
-            ></iframe>
-          </aside>
-        </div>
+            <aside class="tele-demo-dock" data-reveal aria-label="TeleStudio 数字人可交互 Demo">
+              <div class="tele-demo-label">
+                <span>LIVE PRODUCT PREVIEW</span>
+                <strong>讲到数字人时，可直接在这里演示</strong>
+              </div>
+              <iframe
+                id="teleStudioMiniDemo"
+                src="./demos/telestudio/index.html?embed=1"
+                title="TeleStudio 数字人可交互 Demo"
+                loading="lazy"
+              ></iframe>
+            </aside>
+
+            <article class="work-card work-card--xiaomi" data-tilt-card data-reveal>
+              <div class="work-card-tags"><span>自定义宠物形象 · AI-native 工作流 · 可运行交付 · Agent Skill</span></div>
+              <span class="work-card-index">03 / XIAOMI</span>
+              <div class="work-card-title">
+                <span>2026.04 — 2026.07</span>
+                <div class="work-role-line">
+                  <strong class="work-company">小米</strong>
+                  <h3>AI 创新产品经理</h3>
+                </div>
+                <p>开源桌面陪伴硬件 · 软件侧产品经理</p>
+              </div>
+              <div class="work-takeaway-tag">
+                <span>主要收获</span>
+                <strong>资产效率</strong>
+                <strong>协作重构</strong>
+                <strong>GUI → Skill</strong>
+              </div>
+              <ol class="work-card-points" data-work-points="xiaomi"></ol>
+            </article>
+
+            <aside class="xiaomi-visual-dock" data-reveal aria-label="小米 Agent 桌面陪伴硬件项目视觉">
+              <header class="xiaomi-visual-head">
+                <span>PRODUCT EVIDENCE</span>
+                <strong>Agent 状态与硬件形态</strong>
+              </header>
+              <div class="xiaomi-visual-stack">
+                <figure class="xiaomi-visual xiaomi-visual--device">
+                  <a
+                    href="./assets/xiaomi/pet-device-concept.png"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="查看宠物形象生成与桌面硬件概念大图"
+                  >
+                    <img
+                      src="./assets/xiaomi/pet-device-concept.png"
+                      alt="手机采集宠物形象并生成桌面陪伴硬件形象的产品概念图"
+                      loading="lazy"
+                    />
+                  </a>
+                  <figcaption>
+                    <span>01 / DEVICE</span>
+                    <strong>宠物形象 → 桌面陪伴硬件</strong>
+                  </figcaption>
+                </figure>
+                <figure class="xiaomi-visual xiaomi-visual--states">
+                  <a
+                    href="./assets/xiaomi/agent-state-scenes.png"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="查看 Agent 任务状态界面大图"
+                  >
+                    <img
+                      src="./assets/xiaomi/agent-state-scenes.png"
+                      alt="设备录制、等待输入与完成反馈三种 Agent 状态界面"
+                      loading="lazy"
+                    />
+                  </a>
+                  <figcaption>
+                    <span>02 / FEEDBACK</span>
+                    <strong>运行 · 待干预 · 完成</strong>
+                  </figcaption>
+                </figure>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="work-chapter work-chapter--model" aria-label="大模型策略经历">
+          <div class="work-grid work-grid--model">
+            <article class="work-card work-card--baidu" data-tilt-card data-reveal>
+              <div class="work-card-tags"><span>模型策略 · 评测集 · SFT 数据 · 多轮对话</span></div>
+              <span class="work-card-index">04 / BAIDU</span>
+              <div class="work-card-title">
+                <span>2025.05 — 2025.09</span>
+                <div class="work-role-line">
+                  <strong class="work-company">百度</strong>
+                  <h3>大模型策略产品经理</h3>
+                </div>
+                <p>文心一言 · 理想体验、回复质量与 Bad Case 优化</p>
+              </div>
+              <div class="work-takeaway-tag">
+                <span>主要收获</span>
+                <strong>系统评测</strong>
+                <strong>能力边界</strong>
+              </div>
+              <ol class="work-card-points" data-work-points="baidu"></ol>
+            </article>
+          </div>
+        </section>
       </section>
 
       <section class="method-section" id="method" aria-labelledby="methodTitle" data-reveal>
         <header class="method-head">
           <div>
-            <span class="eyebrow">Product Methodology</span>
-            <h2 id="methodTitle">把 AI 能力变成可验证的产品</h2>
+            <span class="eyebrow">03 / ROLE MATCH</span>
+            <h2 id="methodTitle">岗位匹配</h2>
           </div>
-          <p>不是从功能清单出发，而是从场景成本、能力边界和验证证据出发。</p>
+          <p>用户需求 · 模型边界 · 内容交付 · 商业验证</p>
         </header>
         <ol class="method-steps">
           <li>
             <span>01</span>
-            <h3>定义场景</h3>
-            <p>还原用户动机、现有路径与真实成本，明确值得解决的决策节点。</p>
-            <small>USER / CONTEXT / COST</small>
+            <h3>从用户需求设计 AIGC 功能</h3>
+            <small>USER / CONTENT / NEED</small>
           </li>
           <li>
             <span>02</span>
-            <h3>拆解能力与边界</h3>
-            <p>把模型能力翻译为产品策略、状态反馈、异常处理和可评测标准。</p>
-            <small>CAPABILITY / UX / EVAL</small>
+            <h3>理解生成效果与模型边界</h3>
+            <small>IMAGE / VIDEO / BOUNDARY</small>
           </li>
           <li>
             <span>03</span>
-            <h3>用原型验证</h3>
-            <p>压缩 MVP 范围，用可交互 Demo 验证理解成本、使用意愿与关键假设。</p>
-            <small>MVP / PROTOTYPE / SIGNAL</small>
+            <h3>把生成结果组织成体验</h3>
+            <small>FLOW / FEEDBACK / DELIVERY</small>
           </li>
           <li>
             <span>04</span>
-            <h3>建立迭代闭环</h3>
-            <p>用行为数据、评测集和 Bad Case 归因决定优先级，并持续回到用户价值。</p>
-            <small>DATA / BAD CASE / ITERATE</small>
+            <h3>面向规模用户与商业指标</h3>
+            <small>SCALE / QUALITY / BUSINESS</small>
           </li>
         </ol>
+        <p class="method-demo-note">
+          <span>INTERVIEW DEMO</span>
+          个人 Demo · 业务理解 · 方案验证
+        </p>
       </section>
 
       <section class="portal" id="portal" aria-labelledby="experienceTitle">
@@ -725,6 +796,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="./config.js?v=20260712"></script>
-    <script src="./app.js?v=20260726-telestudio3"></script>
+    <script src="./app.js?v=20260727-talktrack13-commentvideo"></script>
   </body>
 </html>

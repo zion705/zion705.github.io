@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0",
+  "caseId": "a-line-denim-skirt",
+  "completedAt": "2026-07-27T05:32:38.072Z",
+  "executionMode": "local-orchestrated-artifacts",
+  "textPlan": {
+    "model": "doubao-seed-2-0-mini-260428",
+    "generatedAt": "2026-07-27T03:44:06.0000000Z",
+    "endpoint": "/v1/chat/completions",
+    "inputSha256": "da2dab1626745624e5e9120bbc89d500690516aab15d52e6a8a2a438663111c9",
+    "systemPromptSha256": "8f7f3b4af2d9c1c3ecdfb7f4c842bccfc88170fa02606bff629f81685f7310e7",
+    "plan": {
+      "path": "assets/output/llm-plan.json",
+      "bytes": 9938,
+      "sha256": "c73d29e3d015431be21137f65e062f3829a3ab2724cf6530f58324fe371e4b2d"
+    },
+    "validation": "passed",
+    "repairPolicy": "up to two structured-output repairs"
+  },
+  "openingVideo": {
+    "model": "doubao-seedance-2-0-fast-260128",
+    "artifact": {
+      "path": "assets/library/opener-generated.mp4",
+      "bytes": 2317045,
+      "sha256": "7b48d41f36ace51f5adbc4c51b6fa6b6b84fcf57b987d44b3db130d072b85475"
+    },
+    "durationSeconds": 5,
+    "aspectRatio": "9:16",
+    "resolution": "720p",
+    "role": "performance-only; not product evidence",
+    "finalRunReuse": "Real Seedance Fast artifact from the same case was reused after final text-plan tuning."
+  },
+  "voiceover": {
+    "engine": "Piper offline",
+    "voice": "en_US-lessac-medium",
+    "artifact": {
+      "path": "assets/library/voiceover-en-final.wav",
+      "bytes": 1996878,
+      "sha256": "e4c434809e55e99e8586673a893fa78cb29b40f8d063f56569698b6534d9ebfb"
+    },
+    "durationSeconds": 20.8,
+    "slots": [
+      {
+        "startSec": 0,
+        "endSec": 5.2
+      },
+      {
+        "startSec": 5.2,
+        "endSec": 10.4
+      },
+      {
+        "startSec": 10.4,
+        "endSec": 15.6
+      },
+      {
+        "startSec": 15.6,
+        "endSec": 20.8
+      }
+    ],
+    "externalTextEgress": false
+  },
+  "finalVideo": {
+    "artifact": {
+      "path": "assets/output/comment-reply-demo-en.mp4",
+      "bytes": 4437294,
+      "sha256": "57af2f3fb8454afa08b25e4329f3dcca4065f1221d166864fb5381acb2ac6564"
+    },
+    "durationSeconds": 20.8,
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "videoCodec": "H.264",
+    "audioCodec": "AAC"
+  },
+  "security": {
+    "apiKeyPersisted": false,
+    "browserCallsUpstream": false,
+    "staticSiteLoadsSanitizedPlanOnly": true
+  }
+}

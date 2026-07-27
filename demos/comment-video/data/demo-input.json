@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.0",
+  "caseId": "a-line-denim-skirt",
+  "generationConstraints": {
+    "language": "en-US",
+    "aspectRatio": "9:16",
+    "durationSec": {
+      "min": 20,
+      "max": 24,
+      "target": 20.8
+    },
+    "spokenLineRanges": [
+      {
+        "startSec": 0,
+        "endSec": 5.2
+      },
+      {
+        "startSec": 5.2,
+        "endSec": 10.4
+      },
+      {
+        "startSec": 10.4,
+        "endSec": 15.6
+      },
+      {
+        "startSec": 15.6,
+        "endSec": 20.8
+      }
+    ],
+    "openingDurationSec": 5,
+    "platform": "Vertical short-form video",
+    "goal": "Answer a pear-shaped shopper’s fit concern with visible sample evidence and a low-pressure sizing action."
+  },
+  "comment": {
+    "id": "comment-demo-skirt-001",
+    "text": "Does this skirt really not emphasize the hips on a pear-shaped body? The model photos don’t show it clearly.",
+    "author": "@FitQuestion",
+    "badge": "Frequently asked",
+    "note": "Synthetic comment created for this portfolio demo."
+  },
+  "merchantBrief": {
+    "whyReply": "This recurring fit question is blocking purchase decisions. The merchant wants to answer with front, side, and fabric evidence without making a universal fit claim.",
+    "responseFocus": [
+      "Acknowledge that model photos do not answer every fit question",
+      "Show the high-rise A-line shape from the front",
+      "Show visible room through the hip area from the side",
+      "Show that the fabric holds its shape without looking stiff",
+      "Ask shoppers to check the size chart by waist before ordering"
+    ],
+    "targetAudience": "Pear-shaped shoppers comparing skirt fits and worried that the silhouette may emphasize the hips",
+    "tone": "Direct, calm, evidence-led, and free of exaggerated slimming claims",
+    "mustAvoid": [
+      "Do not claim that the skirt works for every pear-shaped body",
+      "Do not promise instant slimming or body transformation",
+      "Do not invent fabric composition, measurements, or model data",
+      "Do not generalize one sample fit to every shopper"
+    ]
+  },
+  "product": {
+    "name": "High-Rise A-Line Denim Midi Skirt",
+    "sku": "DEMO-SKIRT-01",
+    "facts": [
+      {
+        "id": "skirt-f1",
+        "statement": "The sample has a high-rise A-line shape; the front-view asset shows the skirt opening below the hips.",
+        "source": "Merchant fit notes and front-view sample asset",
+        "evidenceAssetIds": [
+          "skirt-a1"
+        ]
+      },
+      {
+        "id": "skirt-f2",
+        "statement": "The side-view sample asset shows visible room through the hip area. This observation applies only to this sample and wearer.",
+        "source": "Merchant side-view sample asset",
+        "evidenceAssetIds": [
+          "skirt-a2"
+        ]
+      },
+      {
+        "id": "skirt-f3",
+        "statement": "The merchant describes the sample fabric as shape-holding without feeling stiff; the detail asset shows it forming a curve when pinched and falling naturally.",
+        "source": "Merchant fabric notes and fabric-detail asset",
+        "evidenceAssetIds": [
+          "skirt-a3"
+        ]
+      },
+      {
+        "id": "skirt-f4",
+        "statement": "The merchant’s sizing guidance is to check the size chart by waist before ordering.",
+        "source": "Merchant size guide",
+        "evidenceAssetIds": []
+      }
+    ],
+    "unknowns": [
+      "No publishable fabric composition or weight is provided",
+      "The wearer’s measurements and sample size are not provided",
+      "The assets do not cover every waist-to-hip ratio",
+      "Static assets cannot prove fit during every movement or use case"
+    ]
+  },
+  "assetLibrary": [
+    {
+      "id": "skirt-a0",
+      "file": "assets/library/opener-generated.mp4",
+      "type": "video",
+      "durationSec": 5.2,
+      "ratio": "9:16",
+      "description": "Seedance opener: a creator holds a phone and the black A-line skirt, then looks up to answer the fit question.",
+      "tags": [
+        "AI-generated",
+        "comment opener",
+        "creator",
+        "A-line skirt"
+      ],
+      "supportsFacts": [],
+      "rights": "Demo-generated opener; performance only, not product evidence"
+    },
+    {
+      "id": "skirt-a1",
+      "file": "assets/library/fit-front.png",
+      "type": "image",
+      "durationSec": 5.2,
+      "ratio": "9:16",
+      "description": "Front-view sample fit showing the high rise and the A-line shape opening below the hips.",
+      "tags": [
+        "sample fit",
+        "front view",
+        "high rise",
+        "A-line"
+      ],
+      "supportsFacts": [
+        "skirt-f1"
+      ],
+      "rights": "Authorized demo asset"
+    },
+    {
+      "id": "skirt-a2",
+      "file": "assets/library/fit-side.png",
+      "type": "image",
+      "durationSec": 5.2,
+      "ratio": "9:16",
+      "description": "Side-view sample fit showing visible room through the hip area.",
+      "tags": [
+        "sample fit",
+        "side view",
+        "hip room",
+        "A-line"
+      ],
+      "supportsFacts": [
+        "skirt-f2"
+      ],
+      "rights": "Authorized demo asset"
+    },
+    {
+      "id": "skirt-a3",
+      "file": "assets/library/fabric-detail.png",
+      "type": "image",
+      "durationSec": 5.2,
+      "ratio": "9:16",
+      "description": "Fabric close-up showing the sample holding a curve when pinched and falling naturally.",
+      "tags": [
+        "fabric detail",
+        "shape",
+        "soft structure",
+        "drape"
+      ],
+      "supportsFacts": [
+        "skirt-f3"
+      ],
+      "rights": "Authorized demo asset"
+    }
+  ],
+  "validationRules": {
+    "forbiddenPhrases": [
+      "works for every pear-shaped body",
+      "guaranteed slimming",
+      "will never emphasize your hips",
+      "fits everyone",
+      "one size fits all",
+      "must-buy",
+      "buy now before it’s gone"
+    ],
+    "allowedCtaActions": [
+      "open_product_detail",
+      "open_size_guide",
+      "open_product_and_size_guide",
+      "view_product_card",
+      "start_checkout"
+    ],
+    "ctaRequiredTerms": [
+      "size chart",
+      "product page",
+      "product details",
+      "before ordering",
+      "place your order"
+    ],
+    "ctaForbiddenPhrases": [
+      "buy right now",
+      "last chance",
+      "you’ll regret missing it",
+      "must-buy",
+      "order immediately"
+    ],
+    "requireFactIdsForProductClaims": true,
+    "requireKnownAssetIds": true,
+    "requireContinuousTimeline": true,
+    "commentCardRenderedInPost": true
+  }
+}
