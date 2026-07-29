@@ -888,7 +888,7 @@ const portalPages = {
       {
         title: "评论驱动 AIGC 商品视频工作流",
         meta: "真实 LLM 脚本 · Seedance 开场 · 素材检索 · 离线混剪成片。",
-        href: "./demos/comment-video/"
+        href: "./demos/comment-video/?v=20260729-latest"
       },
       {
         title: "AI Agent 多任务执行体验",

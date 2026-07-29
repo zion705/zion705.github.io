@@ -5,509 +5,267 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Echo Cutroom turns a customer comment and a merchant brief into an evidence-led product reply video."
+      content="A reference-to-creative workflow that turns a high-performing video into a grounded ecommerce video."
     />
-    <title>Echo Cutroom · Comment-to-Creative Agent</title>
+    <title>Echo Cutroom - Reference-to-Creative Agent</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=workflow-map-1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=reference-flow-1" />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to workspace</a>
-
     <header class="topbar">
-      <a class="brand" href="../../index.html" aria-label="Back to portfolio">
-        <span class="brand-mark" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </span>
-        <span>
-          <strong>Echo Cutroom</strong>
-          <small>Comment-to-Creative Agent</small>
-        </span>
+      <a class="brand" href="#top" aria-label="Echo Cutroom home">
+        <span class="brand-mark">EC</span>
+        <span>Echo Cutroom</span>
       </a>
-
-      <div class="run-state" aria-label="Demo mode">
-        <span class="state-dot" aria-hidden="true"></span>
-        Verified local replay
-      </div>
+      <span class="topbar-label">Reference-to-Creative Agent</span>
+      <span class="prototype-badge">Interactive prototype</span>
     </header>
 
-    <nav class="workspace-nav" aria-label="Demo pages">
-      <div class="nav-track" role="tablist" aria-label="Workspace">
-        <button
-          class="nav-tab is-active"
-          id="tab-brief"
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="view-brief"
-          data-view-target="brief"
-        >
-          <span>01</span>
-          Query → script
-        </button>
-        <button
-          class="nav-tab"
-          id="tab-assets"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="view-assets"
-          data-view-target="assets"
-        >
-          <span>02</span>
-          Select footage
-        </button>
-        <button
-          class="nav-tab nav-tab-system"
-          id="tab-workflow"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="view-workflow"
-          data-view-target="workflow"
-        >
-          <span aria-hidden="true">⌁</span>
-          System map
-        </button>
-      </div>
-      <p class="privacy-note">Files added here stay on this device.</p>
-    </nav>
-
-    <main id="main-content">
-      <section
-        class="workspace-view is-active"
-        id="view-brief"
-        role="tabpanel"
-        aria-labelledby="tab-brief"
-        data-view="brief"
-      >
-        <div class="view-heading">
-          <div>
-            <p class="eyebrow">User task 01 · Define the reply</p>
-            <h1>Give the agent the comment—and the merchant’s side of the story.</h1>
-          </div>
-          <p class="view-intro">
-            These two inputs become one grounded query packet. The output is a complete,
-            editable video script rather than six separate setup screens.
+    <main id="top">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow">ONE REFERENCE. ONE GROUNDED WORKFLOW.</p>
+          <h1>Borrow the pattern.<br /><span>Keep the product true.</span></h1>
+          <p class="hero-lede">
+            Give the agent a high-performing video. It extracts the creative grammar,
+            guides the merchant brief, grounds every claim in available assets, and
+            produces a new ecommerce video with an auditable scorecard.
           </p>
+          <button class="primary-button" data-scroll-to="stage-1">Explore the workflow <span>&darr;</span></button>
         </div>
 
-        <div class="brief-layout">
-          <form class="query-composer" id="query-form">
-            <div class="composer-topline">
-              <div>
-                <p class="section-kicker">Query composer</p>
-                <h2>What should this video answer?</h2>
-              </div>
-              <span class="local-badge">Local case</span>
+        <div class="film-reel" aria-label="Reference and generated video comparison">
+          <article class="phone-card reference-card">
+            <div class="phone-label"><span>01</span> Reference</div>
+            <div class="phone-frame">
+              <video src="./assets/reference/comment-reply-reference.mp4" controls playsinline preload="metadata"></video>
             </div>
+            <p>Comment-reply hook found on TikTok</p>
+          </article>
+          <div class="reel-bridge" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <b>pattern<br />transfer</b>
+          </div>
+          <article class="phone-card output-card">
+            <div class="phone-label"><span>06</span> New creative</div>
+            <div class="phone-frame">
+              <video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260729" controls playsinline preload="metadata"></video>
+            </div>
+            <p>Denim skirt case generated from grounded assets</p>
+          </article>
+        </div>
+      </section>
 
-            <label class="field-block" for="comment-input">
-              <span class="field-heading">
-                <strong>Original customer comment</strong>
-                <small>Use the customer’s exact words</small>
-              </span>
-              <textarea id="comment-input" rows="4" maxlength="320"></textarea>
-              <span class="field-counter"><span id="comment-count">0</span> / 320</span>
+      <nav class="stage-rail" aria-label="Workflow stages">
+        <div class="shell rail-inner">
+          <button class="rail-step is-active" data-stage-target="stage-1"><span>01</span> Analyze</button>
+          <button class="rail-step" data-stage-target="stage-2"><span>02</span> Brief</button>
+          <button class="rail-step" data-stage-target="stage-3"><span>03</span> Outline</button>
+          <button class="rail-step" data-stage-target="stage-4"><span>04</span> Ground</button>
+          <button class="rail-step" data-stage-target="stage-5"><span>05</span> Script</button>
+          <button class="rail-step" data-stage-target="stage-6"><span>06</span> Create</button>
+        </div>
+      </nav>
+
+      <section id="stage-1" class="workflow-stage shell">
+        <div class="stage-heading">
+          <div><span class="stage-number">01</span><p class="eyebrow">REFERENCE INTELLIGENCE</p></div>
+          <h2>Turn a video into a reusable creative pattern.</h2>
+          <p>The agent separates what should be imitated - structure, pacing and proof logic - from what must not be copied: identity, wording and unsupported product claims.</p>
+        </div>
+
+        <div class="analysis-layout">
+          <article class="panel upload-panel">
+            <div class="panel-head"><span>Reference input</span><span class="status-dot">Saved example</span></div>
+            <div class="reference-player">
+              <video id="reference-video" src="./assets/reference/comment-reply-reference.mp4" controls playsinline preload="metadata"></video>
+            </div>
+            <label class="secondary-button file-button">
+              Replace with your video
+              <input id="reference-upload" type="file" accept="video/*" />
             </label>
+            <p class="fine-print">This prototype replays a saved analysis. A production version can route the upload through the open-source stack shown below.</p>
+          </article>
 
-            <label class="field-block" for="merchant-input">
-              <span class="field-heading">
-                <strong>Merchant position and explanation</strong>
-                <small>What do you want to clarify, prove, or avoid claiming?</small>
-              </span>
-              <textarea id="merchant-input" rows="8" maxlength="1200"></textarea>
-              <span class="field-counter"><span id="merchant-count">0</span> / 1200</span>
-            </label>
+          <article class="panel beat-panel">
+            <div class="panel-head"><span>Timeline decomposition</span><span>00:00-00:31</span></div>
+            <ol class="beat-list">
+              <li><time>00-03s</time><div><b>Contrarian comment</b><p>Show the criticism verbatim before the creator speaks.</p></div><em>HOOK</em></li>
+              <li><time>03-07s</time><div><b>Visible reaction</b><p>Acknowledge the tension without sounding defensive.</p></div><em>HOLD</em></li>
+              <li><time>07-14s</time><div><b>Reframe the objection</b><p>Turn the attack into a reason to explain the product's value.</p></div><em>SHIFT</em></li>
+              <li><time>14-25s</time><div><b>Show grounded proof</b><p>Cut to evidence that directly answers the concern.</p></div><em>PROVE</em></li>
+              <li><time>25-31s</time><div><b>Low-pressure close</b><p>Invite the right customer instead of arguing with everyone.</p></div><em>CTA</em></li>
+            </ol>
+          </article>
+        </div>
 
-            <div class="compact-fields">
-              <label>
-                <span>Product</span>
-                <input id="product-input" type="text" />
-              </label>
-              <label>
-                <span>Target length</span>
-                <select id="duration-input">
-                  <option value="20.8">About 20 seconds</option>
-                  <option value="15">About 15 seconds</option>
-                  <option value="30">About 30 seconds</option>
-                </select>
-              </label>
-            </div>
+        <div class="pattern-strip">
+          <div><small>EXTRACTED PATTERN</small><strong>Objection</strong></div><i>&rarr;</i>
+          <div><strong>Human reaction</strong></div><i>&rarr;</i>
+          <div><strong>Reframe</strong></div><i>&rarr;</i>
+          <div><strong>Visual proof</strong></div><i>&rarr;</i>
+          <div><strong>Selective CTA</strong></div>
+        </div>
 
-            <div class="composer-action">
-              <p>
-                The browser replays the completed English model run. It does not send this
-                form to an API.
-              </p>
-              <button class="button button-primary" id="generate-script" type="submit">
-                Generate video script
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
+        <div class="guidance-grid">
+          <article><span>COMMENT</span><h3>Find a useful objection</h3><p>Choose a repeated concern that can be answered with visible product evidence - not rage bait alone.</p></article>
+          <article><span>BRIEF</span><h3>Add merchant context</h3><p>Explain what the commenter misunderstood, who the product is for and which claims are approved.</p></article>
+          <article><span>ASSETS</span><h3>Prepare proof, not decoration</h3><p>Upload front, side, detail or use-case footage that can truthfully resolve the objection.</p></article>
+        </div>
+
+        <details class="stack-details">
+          <summary><span>Open-source analysis architecture</span><small>View components + limits</small></summary>
+          <div class="stack-grid">
+            <a href="https://github.com/JacobFV/yt2ctx" target="_blank" rel="noreferrer"><b>yt2ctx</b><span>Reference ingestion, transcript, salient frames, style bible and shot specs</span></a>
+            <a href="https://github.com/Breakthrough/PySceneDetect" target="_blank" rel="noreferrer"><b>PySceneDetect</b><span>Detect shot boundaries before sampling representative frames</span></a>
+            <a href="https://github.com/SYSTRAN/faster-whisper" target="_blank" rel="noreferrer"><b>faster-whisper</b><span>Speech transcription with timestamps for hook and pacing analysis</span></a>
+            <div><b>Multimodal LLM</b><span>Fuse frames, transcript and scene timing into a structured pattern JSON</span></div>
+          </div>
+        </details>
+        <div class="stage-action"><button class="primary-button" data-scroll-to="stage-2">Use this pattern <span>&rarr;</span></button></div>
+      </section>
+
+      <section id="stage-2" class="workflow-stage stage-tint">
+        <div class="shell">
+          <div class="stage-heading compact">
+            <div><span class="stage-number">02</span><p class="eyebrow">MERCHANT BRIEF</p></div>
+            <h2>Tell the agent what is true.</h2>
+            <p>The reference suggests the form. Your brief supplies the business context and product truth.</p>
+          </div>
+          <form id="brief-form" class="brief-grid">
+            <label>Customer comment<textarea id="comment-input" rows="4">"Will this skirt emphasize my hips? The model photos do not show the fit clearly."</textarea><small>Best input: a recurring, answerable objection.</small></label>
+            <label>Merchant response<textarea id="response-input" rows="4">Answer the fit concern with visible front, side and fabric evidence. Avoid universal body-shape claims and end with a waist-based size-chart instruction.</textarea><small>Explain the misunderstanding and your preferred angle.</small></label>
+            <label>Audience<input id="audience-input" value="Pear-shaped shoppers comparing fit before ordering" /></label>
+            <label>Approved facts<input id="facts-input" value="High-rise A-line sample; front, side and fabric visuals available" /></label>
+            <div class="form-action"><button class="primary-button" type="submit">Generate creative outline <span>&rarr;</span></button></div>
           </form>
-
-          <aside class="query-packet" aria-labelledby="packet-title">
-            <div class="packet-head">
-              <p class="section-kicker">Live query packet</p>
-              <span class="packet-status"><i></i> Ready</span>
-            </div>
-            <h2 id="packet-title">Everything the planner receives</h2>
-
-            <div class="packet-row">
-              <span>COMMENT</span>
-              <p id="packet-comment"></p>
-            </div>
-            <div class="packet-row">
-              <span>MERCHANT VIEW</span>
-              <p id="packet-merchant"></p>
-            </div>
-            <div class="packet-row">
-              <span>FACT BOUNDARY</span>
-              <p id="packet-boundary">
-                Use only the provided front, side, fabric, and size-guide evidence.
-              </p>
-            </div>
-            <div class="packet-row">
-              <span>EXPECTED OUTPUT</span>
-              <p>Four timed spoken lines, storyboard, asset queries, opener prompt, and CTA.</p>
-            </div>
-
-            <div class="packet-foot">
-              <span>Model route</span>
-              <strong>Doubao Seed 2.0 Mini · structured JSON</strong>
-            </div>
-          </aside>
-        </div>
-
-        <section class="script-result" id="script-result" aria-live="polite" hidden>
-          <div class="result-heading">
-            <div>
-              <p class="eyebrow">Generated output</p>
-              <h2>One script, already mapped to four edit slots.</h2>
-            </div>
-            <div class="result-meta">
-              <span id="script-status">Completed run</span>
-              <span>20.8 sec</span>
-              <span>4 scenes</span>
-            </div>
-          </div>
-
-          <div class="script-grid" id="script-grid"></div>
-
-          <label class="script-editor" for="script-input">
-            <span>
-              <strong>Editable voiceover</strong>
-              <small id="script-edit-state">Matches the verified run</small>
-            </span>
-            <textarea id="script-input" rows="7"></textarea>
-          </label>
-
-          <div class="result-actions">
-            <button class="button button-secondary" id="restore-script" type="button">
-              Restore generated draft
-            </button>
-            <button class="button button-primary" id="continue-assets" type="button">
-              Continue to footage
-              <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        </section>
-      </section>
-
-      <section
-        class="workspace-view"
-        id="view-assets"
-        role="tabpanel"
-        aria-labelledby="tab-assets"
-        data-view="assets"
-        hidden
-      >
-        <div class="view-heading">
-          <div>
-            <p class="eyebrow">User task 02 · Build the evidence set</p>
-            <h1>Select the footage the editor is allowed to use.</h1>
-          </div>
-          <p class="view-intro">
-            Approved merchant assets carry every product claim. If the library is missing a
-            shot, add an image or video from your device.
-          </p>
-        </div>
-
-        <div class="asset-workspace">
-          <section class="library-panel" aria-labelledby="library-title">
-            <div class="library-toolbar">
-              <div>
-                <p class="section-kicker">Merchant asset library</p>
-                <h2 id="library-title">Match proof to the script</h2>
-              </div>
-              <label class="asset-search">
-                <span class="sr-only">Search assets</span>
-                <input
-                  id="asset-search"
-                  type="search"
-                  placeholder="Search front, side, fabric…"
-                />
-              </label>
-            </div>
-
-            <div class="coverage-bar">
-              <div>
-                <span id="selected-count">0 selected</span>
-                <strong id="coverage-state">Checking coverage…</strong>
-              </div>
-              <div class="coverage-track" aria-hidden="true">
-                <span id="coverage-fill"></span>
-              </div>
-            </div>
-
-            <div class="asset-grid" id="asset-grid">
-              <label class="upload-card" id="asset-dropzone" for="asset-upload">
-                <span class="upload-plus" aria-hidden="true">+</span>
-                <strong>Add footage</strong>
-                <small>Images or videos from this device</small>
-                <span class="upload-types">PNG · JPG · MP4 · MOV</span>
-              </label>
-            </div>
-            <input
-              class="sr-only"
-              id="asset-upload"
-              type="file"
-              accept="image/*,video/*"
-              multiple
-            />
-            <p class="upload-note" id="upload-note">
-              Local uploads appear in this selection only and are never sent anywhere.
-            </p>
-          </section>
-
-          <aside class="edit-preview" aria-labelledby="preview-title">
-            <div class="preview-heading">
-              <div>
-                <p class="section-kicker">Edit preview</p>
-                <h2 id="preview-title">Selected source stack</h2>
-              </div>
-              <span class="ratio-badge">9:16</span>
-            </div>
-
-            <div class="selected-stack" id="selected-stack"></div>
-
-            <div class="mini-timeline" aria-label="Four-part edit timeline">
-              <span class="segment generated" style="--w: 26%">Opener</span>
-              <span class="segment proof" style="--w: 25%">Front</span>
-              <span class="segment proof" style="--w: 24%">Side</span>
-              <span class="segment proof" style="--w: 25%">Fabric + size</span>
-            </div>
-
-            <button class="button button-primary button-wide" id="assemble-preview" type="button">
-              Open completed cut
-              <span aria-hidden="true">▶</span>
-            </button>
-
-            <div class="video-shell" id="video-shell" hidden>
-              <video id="result-video" controls playsinline preload="metadata">
-                <source
-                  src="./assets/output/comment-reply-demo-en.mp4?v=20260727-en1"
-                  type="video/mp4"
-                />
-                Your browser cannot play the MP4 preview.
-              </video>
-              <div class="video-caption">
-                <span>VERIFIED OUTPUT</span>
-                <p>English narration · captions · background music · no standalone end card</p>
-              </div>
-            </div>
-
-            <p class="static-note">
-              The included video is the verified pre-rendered cut. Newly added local files are
-              shown in the source stack but are not re-rendered by this static portfolio page.
-            </p>
-
-            <button class="text-button" id="open-workflow" type="button">
-              See every tool behind this output
-              <span aria-hidden="true">→</span>
-            </button>
-          </aside>
         </div>
       </section>
 
-      <section
-        class="workspace-view workflow-view"
-        id="view-workflow"
-        role="tabpanel"
-        aria-labelledby="tab-workflow"
-        data-view="workflow"
-        hidden
-      >
-        <div class="view-heading workflow-heading">
+      <section id="stage-3" class="workflow-stage shell is-locked">
+        <div class="lock-note">Complete the merchant brief to unlock</div>
+        <div class="stage-heading compact">
+          <div><span class="stage-number">03</span><p class="eyebrow">CREATIVE OUTLINE</p></div>
+          <h2>Adapt the pattern before touching generation.</h2>
+        </div>
+        <div class="outline-board">
+          <article><span>0-5s</span><em>HOOK</em><h3>Turn the objection into a fit check</h3><p>"Pear-shaped? Same. Here is what the product photos do not show."</p><small>Native A/V: creator opener + comment card</small></article>
+          <article><span>5-10s</span><em>PROOF 01</em><h3>Show the front silhouette</h3><p>Scope the A-line observation to this sample.</p><small>Image reference → native A/V proof</small></article>
+          <article><span>10-15s</span><em>PROOF 02</em><h3>Verify from the side</h3><p>Show the visible room through the hip area.</p><small>Image reference → native A/V proof</small></article>
+          <article><span>15-20s</span><em>PROOF 03</em><h3>Close with fabric evidence</h3><p>Show structure, then point shoppers to the size chart.</p><small>Image reference → native A/V proof</small></article>
+        </div>
+        <div class="stage-action"><button id="approve-outline" class="primary-button">Approve outline <span>&rarr;</span></button></div>
+      </section>
+
+      <section id="stage-4" class="workflow-stage stage-dark is-locked">
+        <div class="shell">
+          <div class="lock-note">Approve the outline to unlock</div>
+          <div class="stage-heading compact">
+            <div><span class="stage-number">04</span><p class="eyebrow">ASSET GROUNDING</p></div>
+            <h2>Every shot earns the right to exist.</h2>
+            <p>Assets are matched to the outline. Missing evidence becomes a constraint, not a prompt for hallucination.</p>
+          </div>
+          <div class="asset-grid">
+            <button class="asset-card is-selected" data-asset="opener">
+              <video src="./assets/library/native-av/native-hook.mp4?v=20260729" muted loop autoplay playsinline></video>
+              <span><b>Creator opener</b><small>Hook + reaction</small></span><i>Selected</i>
+            </button>
+            <button class="asset-card is-selected" data-asset="front">
+              <img src="./assets/library/fit-front.png" alt="Front fit of denim skirt" />
+              <span><b>Front fit</b><small>A-line proof</small></span><i>Selected</i>
+            </button>
+            <button class="asset-card is-selected" data-asset="side">
+              <img src="./assets/library/fit-side.png" alt="Side fit of denim skirt" />
+              <span><b>Side fit</b><small>Second angle</small></span><i>Selected</i>
+            </button>
+            <button class="asset-card is-selected" data-asset="detail">
+              <img src="./assets/library/fabric-detail.png" alt="Denim fabric detail" />
+              <span><b>Fabric detail</b><small>Texture proof</small></span><i>Selected</i>
+            </button>
+            <label class="asset-card upload-asset">
+              <input id="asset-upload" type="file" accept="image/*,video/*" multiple />
+              <strong>+</strong><span><b>Add local proof</b><small>Image or video</small></span>
+            </label>
+          </div>
+          <div class="constraint-card"><b>Grounding rule</b><p>No rear-view asset was provided. The final script cannot describe or generate the back of the skirt.</p></div>
+          <div class="stage-action"><button id="ground-assets" class="light-button">Ground script in selected assets <span>&rarr;</span></button></div>
+        </div>
+      </section>
+
+      <section id="stage-5" class="workflow-stage shell is-locked">
+        <div class="lock-note">Select evidence to unlock</div>
+        <div class="stage-heading compact">
+          <div><span class="stage-number">05</span><p class="eyebrow">PRODUCTION SCRIPT</p></div>
+          <h2>A shot-level plan that production can execute.</h2>
+        </div>
+        <div class="script-table">
+          <div class="script-row header"><span>TIME</span><span>VISUAL</span><span>VOICE + TEXT</span><span>GROUNDING</span></div>
+          <div class="script-row"><time>00-05</time><p>Creator lifts the skirt. Comment card appears in the upper-left safe area.</p><p>"Pear-shaped? Same. Here is what the product photos do not show."</p><mark>Native dialogue<br />Asset: opener</mark></div>
+          <div class="script-row"><time>05-10</time><p>Animated front-view sample traces the silhouette with one hand.</p><p>"From the front, the A-line shape opens below the hips."</p><mark>Native dialogue<br />Asset: front</mark></div>
+          <div class="script-row"><time>10-15</time><p>Animated side-view sample turns gently to show the hip area.</p><p>"From the side, this sample leaves visible room through the hip."</p><mark>Native dialogue<br />Asset: side</mark></div>
+          <div class="script-row"><time>15-20</time><p>Hand pinches and releases the fabric. Size-chart prompt closes the video.</p><p>"The fabric still holds its shape. Check the waist chart before ordering."</p><mark>Native dialogue<br />Back excluded</mark></div>
+        </div>
+        <div class="stage-action"><button id="render-video" class="primary-button">Generate final creative <span>&rarr;</span></button></div>
+      </section>
+
+      <section id="stage-6" class="workflow-stage stage-result is-locked">
+        <div class="shell result-layout">
+          <div class="lock-note">Approve production script to unlock</div>
           <div>
-            <p class="eyebrow">System map · Inputs, tools, outputs</p>
-            <h1>The six old screens are now one transparent production line.</h1>
+            <div class="stage-heading compact">
+              <div><span class="stage-number">06</span><p class="eyebrow">CREATIVE + EVALUATION</p></div>
+              <h2>The output is scored against the brief, not a promise to go viral.</h2>
+            </div>
+            <div class="evaluation-verdict">
+              <span id="evaluation-status">OFFLINE REVIEW</span>
+              <div><b id="evaluation-label">Ready for offline review; marketing lift not yet validated</b><p>No composite "viral score" is produced.</p></div>
+            </div>
+            <div class="evaluation-lanes">
+              <article class="evaluation-lane">
+                <div class="lane-title"><span>01</span><div><b>Template replication</b><small>Did we reproduce the creative grammar?</small></div></div>
+                <dl>
+                  <div><dt>Semantic beat coverage</dt><dd id="beat-coverage">4 / 5</dd></div>
+                  <div><dt>Reference cuts, first 31s</dt><dd id="reference-cuts">measuring</dd></div>
+                  <div><dt>Output authored segments</dt><dd id="output-segments">4</dd></div>
+                  <div><dt>Missing beat</dt><dd id="missing-beat">standalone reframe</dd></div>
+                </dl>
+                <p class="method-note"><span>METHOD</span> Human-reviewed beat mapping + open-source FFmpeg scene-change signals. Cuts describe pacing; they do not prove semantic equivalence.</p>
+              </article>
+              <article class="evaluation-lane">
+                <div class="lane-title"><span>02</span><div><b>Marketing readiness</b><small>Is it safe and testable as commerce content?</small></div></div>
+                <dl>
+                  <div><dt>Product claim traceability</dt><dd id="claim-trace">4 / 4</dd></div>
+                  <div><dt>Forbidden claims</dt><dd id="forbidden-claims">0</dd></div>
+                  <div><dt>Technical delivery</dt><dd id="technical-gate">passed</dd></div>
+                  <div><dt>DOVER UGC quality</dt><dd id="dover-status">not run</dd></div>
+                </dl>
+                <p class="method-note warning"><span>LIMIT</span> Offline quality is only a launch gate. CTR, CVR and sales lift require real traffic.</p>
+              </article>
+            </div>
+            <div class="experiment-card">
+              <div><span>ONLINE VALIDATION</span><h3>Baseline creative vs. reference-driven creative</h3></div>
+              <div class="metric-pills"><span>6s hold</span><span>Product CTR</span><span>Purchase CVR</span><span>Refund guardrail</span></div>
+              <a href="https://github.com/growthbook/growthbook" target="_blank" rel="noreferrer">GrowthBook-compatible experiment spec &nearr;</a>
+            </div>
+            <details class="provenance-details">
+              <summary>Evaluation provenance</summary>
+              <div id="evaluation-provenance"></div>
+            </details>
           </div>
-          <p class="view-intro">
-            Follow the signal from a customer comment to the final MP4. Select any node to
-            inspect the exact tool, input, output, and execution mode.
-          </p>
-        </div>
-
-        <div class="mode-legend" aria-label="Execution mode legend">
-          <span><i class="human"></i> Human input</span>
-          <span><i class="api"></i> Actual AI API</span>
-          <span><i class="local"></i> Local processing</span>
-          <span><i class="static"></i> Static output</span>
-        </div>
-
-        <div class="workflow-layout">
-          <div class="signal-map" id="workflow-map" aria-label="End-to-end production workflow">
-            <div class="lane-label">PLAN</div>
-            <div class="flow-row flow-row-plan">
-              <button class="flow-node mode-human is-selected" type="button" data-node="query">
-                <span class="node-index">01</span>
-                <strong>Query + merchant brief</strong>
-                <small>Comment and response position</small>
-                <em>Case packet</em>
-              </button>
-              <span class="flow-arrow" aria-hidden="true">→</span>
-              <button class="flow-node mode-api" type="button" data-node="plan">
-                <span class="node-index">02</span>
-                <strong>Generate video plan</strong>
-                <small>Doubao Seed 2.0 Mini</small>
-                <em>Structured JSON</em>
-              </button>
-              <span class="flow-arrow" aria-hidden="true">→</span>
-              <button class="flow-node mode-local" type="button" data-node="validate">
-                <span class="node-index">03</span>
-                <strong>Validate claims</strong>
-                <small>Fact and timing rules</small>
-                <em>Approved plan</em>
-              </button>
-            </div>
-
-            <div class="lane-label">SOURCE</div>
-            <div class="flow-row flow-row-source">
-              <button class="flow-node mode-human" type="button" data-node="assets">
-                <span class="node-index">04</span>
-                <strong>Match or upload evidence</strong>
-                <small>Local metadata matcher</small>
-                <em>Selected asset IDs</em>
-              </button>
-              <span class="flow-arrow" aria-hidden="true">→</span>
-              <button class="flow-node mode-local gate-node" type="button" data-node="gap">
-                <span class="node-index">05</span>
-                <strong>Evidence gap?</strong>
-                <small>Fact-to-shot coverage</small>
-                <em>Ready / revise</em>
-              </button>
-              <div class="gap-loop" aria-label="Missing evidence loops back to upload">
-                <span>Missing proof</span>
-                <b aria-hidden="true">↶</b>
-                <small>Upload a shot or remove the claim</small>
-              </div>
-            </div>
-
-            <div class="lane-label">CREATE</div>
-            <div class="parallel-wrap">
-              <div class="parallel-branch">
-                <span>VISUAL</span>
-                <button class="flow-node mode-api" type="button" data-node="opener">
-                  <span class="node-index">06A</span>
-                  <strong>Generate opener</strong>
-                  <small>Seedance 2.0 Fast</small>
-                  <em>5-second vertical MP4</em>
-                </button>
-              </div>
-              <div class="parallel-sign" aria-hidden="true">+</div>
-              <div class="parallel-branch">
-                <span>AUDIO</span>
-                <button class="flow-node mode-local" type="button" data-node="voice">
-                  <span class="node-index">06B</span>
-                  <strong>Create voiceover</strong>
-                  <small>Piper English TTS</small>
-                  <em>Timed WAV</em>
-                </button>
-              </div>
-            </div>
-
-            <div class="flow-down" aria-hidden="true">↓</div>
-            <div class="lane-label">FINISH</div>
-            <div class="flow-row flow-row-finish">
-              <button class="flow-node mode-local" type="button" data-node="edit">
-                <span class="node-index">07</span>
-                <strong>Assemble the cut</strong>
-                <small>FFmpeg edit + captions + BGM</small>
-                <em>20.8-second draft</em>
-              </button>
-              <span class="flow-arrow" aria-hidden="true">→</span>
-              <button class="flow-node mode-local" type="button" data-node="evaluate">
-                <span class="node-index">08</span>
-                <strong>Evaluate and gate</strong>
-                <small>Rubric + deterministic checks</small>
-                <em>Pass / revise</em>
-              </button>
-              <span class="flow-arrow" aria-hidden="true">→</span>
-              <button class="flow-node mode-static" type="button" data-node="output">
-                <span class="node-index">09</span>
-                <strong>Publish the artifact</strong>
-                <small>Static portfolio output</small>
-                <em>MP4 + run manifest</em>
-              </button>
-            </div>
-          </div>
-
-          <aside class="node-inspector" aria-live="polite">
-            <div class="inspector-head">
-              <span id="inspector-mode">Human input</span>
-              <strong id="inspector-step">01</strong>
-            </div>
-            <h2 id="inspector-title">Query + merchant brief</h2>
-            <p id="inspector-summary">
-              What is the shopper really asking—and what can the merchant prove?
-            </p>
-
-            <dl>
-              <div>
-                <dt>TOOL</dt>
-                <dd id="inspector-tool">Demo form + normalized case schema</dd>
-              </div>
-              <div>
-                <dt>INPUT</dt>
-                <dd id="inspector-input">Original comment, merchant response goal, and claim boundaries</dd>
-              </div>
-              <div>
-                <dt>OUTPUT</dt>
-                <dd id="inspector-output">A normalized case packet for the planner</dd>
-              </div>
-            </dl>
-
-            <p class="accuracy-note" id="inspector-note">
-              This is the only information the user needs to prepare before generation.
-            </p>
-          </aside>
-        </div>
-
-        <div class="workflow-principles">
-          <article>
-            <span>01</span>
-            <strong>Facts first</strong>
-            <p>No product claim enters the script without an approved fact boundary.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <strong>Real assets first</strong>
-            <p>AI generates the missing performance hook, not the product evidence.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <strong>Human review remains</strong>
-            <p>The merchant selects sources and can revise the script before release.</p>
+          <article class="final-video">
+            <div class="phone-label"><span>OUTPUT</span> Grounded creative</div>
+            <div class="phone-frame"><video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260729" controls playsinline preload="metadata"></video></div>
+            <a class="secondary-button" href="./assets/output/comment-reply-demo-native-av.mp4" download>Download native A/V demo</a>
           </article>
         </div>
       </section>
     </main>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-    <script src="./data/workflow-data.js?v=workflow-map-1"></script>
-    <script src="./app.js?v=workflow-map-1"></script>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./data/evaluation-data.js"></script>
+    <script src="./app.js?v=evaluation-1"></script>
   </body>
 </html>
