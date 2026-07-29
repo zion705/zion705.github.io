@@ -1520,6 +1520,23 @@ h2 {
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
+.method-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 4px 0 18px;
+}
+
+.method-evidence span {
+  padding: 5px 8px;
+  border: 1px solid rgba(86, 112, 87, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--soft);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
 .work-card-index {
   position: absolute;
   top: 23px;
@@ -1769,7 +1786,7 @@ h2 {
 
 .method-steps {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6276,6 +6293,67 @@ body.case-open {
   grid-row: 3;
 }
 
+.work-sequence-grid .work-stream-label {
+  grid-column: 1 / -1;
+}
+
+.work-stream-label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding: 0 4px 10px;
+  border-bottom: 1px solid rgba(73, 60, 48, 0.12);
+}
+
+.work-stream-label span {
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.work-stream-label h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.work-sequence-grid .work-stream-label--delivery {
+  grid-row: 1;
+  margin-top: 0;
+}
+
+.work-sequence-grid .work-card--buding,
+.work-sequence-grid .buding-demo-dock {
+  grid-row: 2;
+}
+
+.work-sequence-grid .work-stream-label--evaluation {
+  grid-row: 3;
+}
+
+.work-sequence-grid .work-card--baidu {
+  grid-column: 1 / -1;
+  grid-row: 4;
+}
+
+.work-sequence-grid .work-card--telestudio,
+.work-sequence-grid .tele-demo-dock {
+  grid-row: 5;
+}
+
+.work-sequence-grid .work-stream-label--native {
+  grid-row: 6;
+}
+
+.work-sequence-grid .work-card--xiaomi,
+.work-sequence-grid .xiaomi-visual-dock {
+  grid-row: 7;
+}
+
 .xiaomi-visual-dock {
   position: relative;
   isolation: isolate;
@@ -6534,8 +6612,14 @@ body.case-open {
   }
 
   .work-chapter--product .work-card--buding,
+  .work-sequence-grid .work-card--baidu,
   .work-chapter--product .work-card--telestudio,
   .work-chapter--product .work-card--xiaomi {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .work-sequence-grid .work-stream-label {
     grid-column: 1;
     grid-row: auto;
   }
