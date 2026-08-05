@@ -1,7 +1,6 @@
-const stageIds = ["stage-1", "stage-2", "stage-3", "stage-4", "stage-5", "stage-6"];
+const stageIds = ["stage-1", "stage-2", "stage-3", "stage-4", "stage-5", "stage-6", "stage-7"];
 const stageButtons = [...document.querySelectorAll(".rail-step")];
 const toast = document.querySelector("#toast");
-let unlockedStage = 1;
 let toastTimer;
 
 function showToast(message) {
@@ -16,7 +15,6 @@ function scrollToStage(id) {
 }
 
 function unlock(index, message) {
-  unlockedStage = Math.max(unlockedStage, index);
   const section = document.querySelector(`#${stageIds[index]}`);
   section?.classList.remove("is-locked");
   showToast(message);
@@ -29,10 +27,6 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
 
 stageButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
-    if (index > unlockedStage) {
-      showToast("Complete the current stage first.");
-      return;
-    }
     scrollToStage(button.dataset.stageTarget);
   });
 });
@@ -58,6 +52,16 @@ document.querySelector("#reference-upload").addEventListener("change", (event) =
   video.src = URL.createObjectURL(file);
   video.load();
   showToast("Local video loaded. Saved analysis remains for this prototype.");
+});
+
+const commentCandidates = [...document.querySelectorAll(".comment-candidate")];
+commentCandidates.forEach((candidate) => {
+  candidate.addEventListener("click", () => {
+    commentCandidates.forEach((item) => item.classList.toggle("is-selected", item === candidate));
+    document.querySelector("#comment-input").value = candidate.dataset.comment;
+    document.querySelector("#response-input").value = `${candidate.dataset.reply} Answer with visible evidence, avoid universal body-shape claims, and close with the waist chart.`;
+    showToast(`${candidate.dataset.hookType} hook selected · ${candidate.dataset.hookScore}/100`);
+  });
 });
 
 document.querySelector("#brief-form").addEventListener("submit", (event) => {

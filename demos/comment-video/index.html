@@ -21,6 +21,7 @@
         <span>Echo Cutroom</span>
       </a>
       <span class="topbar-label">Reference-to-Creative Agent</span>
+      <a class="topbar-validation-link" href="#stage-7">A/C/D validation <span aria-hidden="true">↓</span></a>
       <span class="prototype-badge">Interactive prototype</span>
     </header>
 
@@ -52,9 +53,9 @@
           <article class="phone-card output-card">
             <div class="phone-label"><span>06</span> New creative</div>
             <div class="phone-frame">
-              <video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260729" controls playsinline preload="metadata"></video>
+              <video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260805-hook2" controls playsinline preload="metadata"></video>
             </div>
-            <p>Denim skirt case generated from grounded assets</p>
+            <p>Black A-line skirt case generated from grounded assets</p>
           </article>
         </div>
       </section>
@@ -67,6 +68,7 @@
           <button class="rail-step" data-stage-target="stage-4"><span>04</span> Ground</button>
           <button class="rail-step" data-stage-target="stage-5"><span>05</span> Script</button>
           <button class="rail-step" data-stage-target="stage-6"><span>06</span> Create</button>
+          <button class="rail-step" data-stage-target="stage-7"><span>07</span> Validate</button>
         </div>
       </nav>
 
@@ -111,7 +113,7 @@
         </div>
 
         <div class="guidance-grid">
-          <article><span>COMMENT</span><h3>Find a useful objection</h3><p>Choose a repeated concern that can be answered with visible product evidence - not rage bait alone.</p></article>
+          <article><span>COMMENT</span><h3>Mine for tension, not noise</h3><p>Classify real comments as question, conflict, warning or challenge. Rank them by audience fit, tension, proofability and purchase intent.</p></article>
           <article><span>BRIEF</span><h3>Add merchant context</h3><p>Explain what the commenter misunderstood, who the product is for and which claims are approved.</p></article>
           <article><span>ASSETS</span><h3>Prepare proof, not decoration</h3><p>Upload front, side, detail or use-case footage that can truthfully resolve the objection.</p></article>
         </div>
@@ -135,9 +137,47 @@
             <h2>Tell the agent what is true.</h2>
             <p>The reference suggests the form. Your brief supplies the business context and product truth.</p>
           </div>
+          <section class="comment-selector" aria-labelledby="comment-selector-title">
+            <div class="comment-selector-head">
+              <div>
+                <p class="eyebrow">COMMENT SELECTOR</p>
+                <h3 id="comment-selector-title">Pick the comment that earns the first three seconds.</h3>
+              </div>
+              <div class="score-key" aria-label="Scoring dimensions">
+                <span>Audience 25</span><span>Tension 25</span><span>Proof 30</span><span>Intent 20</span>
+              </div>
+            </div>
+            <div class="comment-candidates">
+              <button class="comment-candidate is-selected" type="button" data-hook-type="CONFLICT" data-hook-score="96" data-comment="Show the side view. If it clings to pear-shaped hips, you owe me the return shipping." data-reply="Return shipping? Deal. Front, side, fabric—no model-photo magic.">
+                <span class="candidate-rank">01</span><span class="candidate-type">CONFLICT + PROOF</span>
+                <strong>“Show the side view. If it clings to pear-shaped hips, you owe me the return shipping.”</strong>
+                <small>Audience + playful stake + visible test + buying signal</small>
+                <b><i style="--score: 96%"></i><em>96</em></b>
+              </button>
+              <button class="comment-candidate" type="button" data-hook-type="CHALLENGE" data-hook-score="87" data-comment="Show the side view. If it does not cling, I will buy it." data-reply="Deal. Five seconds, one side view, no flattering pose.">
+                <span class="candidate-rank">02</span><span class="candidate-type">CHALLENGE</span>
+                <strong>“Show the side view. If it does not cling, I will buy it.”</strong>
+                <small>Highest purchase intent; slightly weaker audience targeting</small>
+                <b><i style="--score: 87%"></i><em>87</em></b>
+              </button>
+              <button class="comment-candidate" type="button" data-hook-type="WARNING" data-hook-score="82" data-comment="Avoid this skirt if you are pear-shaped—the side view tells the truth." data-reply="Exactly. So here is the side view, without the product-page posing.">
+                <span class="candidate-rank">03</span><span class="candidate-type">WARNING</span>
+                <strong>“Avoid this skirt if you are pear-shaped—the side view tells the truth.”</strong>
+                <small>Strong stop signal; needs careful non-defensive handling</small>
+                <b><i style="--score: 82%"></i><em>82</em></b>
+              </button>
+              <button class="comment-candidate" type="button" data-hook-type="QUESTION" data-hook-score="81" data-comment="Does this actually work on pear-shaped hips, or only on the model?" data-reply="Fair question. Let us show the angles the product page missed.">
+                <span class="candidate-rank">04</span><span class="candidate-type">QUESTION</span>
+                <strong>“Does this actually work on pear-shaped hips, or only on the model?”</strong>
+                <small>Highly relevant and provable, but lower emotional contrast</small>
+                <b><i style="--score: 81%"></i><em>81</em></b>
+              </button>
+            </div>
+            <p class="selector-note"><span>Recommendation</span> Use the highest-scoring real comment available. Never fabricate it as a customer quote; generated alternatives are writing prompts for the merchant to search against.</p>
+          </section>
           <form id="brief-form" class="brief-grid">
-            <label>Customer comment<textarea id="comment-input" rows="4">"Will this skirt emphasize my hips? The model photos do not show the fit clearly."</textarea><small>Best input: a recurring, answerable objection.</small></label>
-            <label>Merchant response<textarea id="response-input" rows="4">Answer the fit concern with visible front, side and fabric evidence. Avoid universal body-shape claims and end with a waist-based size-chart instruction.</textarea><small>Explain the misunderstanding and your preferred angle.</small></label>
+            <label>Selected customer comment<textarea id="comment-input" rows="4">Show the side view. If it clings to pear-shaped hips, you owe me the return shipping.</textarea><small>Use the exact wording only when it comes from a real comment.</small></label>
+            <label>Hook reply + merchant boundary<textarea id="response-input" rows="4">Return shipping? Deal. Front, side, fabric—no model-photo magic. Answer with visible evidence, avoid universal body-shape claims, and close with the waist chart.</textarea><small>The first sentence supplies contrast; the rest constrains the proof.</small></label>
             <label>Audience<input id="audience-input" value="Pear-shaped shoppers comparing fit before ordering" /></label>
             <label>Approved facts<input id="facts-input" value="High-rise A-line sample; front, side and fabric visuals available" /></label>
             <div class="form-action"><button class="primary-button" type="submit">Generate creative outline <span>&rarr;</span></button></div>
@@ -145,14 +185,14 @@
         </div>
       </section>
 
-      <section id="stage-3" class="workflow-stage shell is-locked">
-        <div class="lock-note">Complete the merchant brief to unlock</div>
+      <section id="stage-3" class="workflow-stage shell">
+        <div class="lock-note">Saved example · jump in anytime</div>
         <div class="stage-heading compact">
           <div><span class="stage-number">03</span><p class="eyebrow">CREATIVE OUTLINE</p></div>
           <h2>Adapt the pattern before touching generation.</h2>
         </div>
         <div class="outline-board">
-          <article><span>0-5s</span><em>HOOK</em><h3>Turn the objection into a fit check</h3><p>"Pear-shaped? Same. Here is what the product photos do not show."</p><small>Native A/V: creator opener + comment card</small></article>
+          <article><span>0-5s</span><em>HOOK</em><h3>Accept the challenge with a reversal</h3><p>"Return shipping? Deal. Front, side, fabric—no model-photo magic."</p><small>Emotion + rhythmic delivery + three impact beats</small></article>
           <article><span>5-10s</span><em>PROOF 01</em><h3>Show the front silhouette</h3><p>Scope the A-line observation to this sample.</p><small>Image reference → native A/V proof</small></article>
           <article><span>10-15s</span><em>PROOF 02</em><h3>Verify from the side</h3><p>Show the visible room through the hip area.</p><small>Image reference → native A/V proof</small></article>
           <article><span>15-20s</span><em>PROOF 03</em><h3>Close with fabric evidence</h3><p>Show structure, then point shoppers to the size chart.</p><small>Image reference → native A/V proof</small></article>
@@ -160,9 +200,9 @@
         <div class="stage-action"><button id="approve-outline" class="primary-button">Approve outline <span>&rarr;</span></button></div>
       </section>
 
-      <section id="stage-4" class="workflow-stage stage-dark is-locked">
+      <section id="stage-4" class="workflow-stage stage-dark">
         <div class="shell">
-          <div class="lock-note">Approve the outline to unlock</div>
+          <div class="lock-note">Saved example · jump in anytime</div>
           <div class="stage-heading compact">
             <div><span class="stage-number">04</span><p class="eyebrow">ASSET GROUNDING</p></div>
             <h2>Every shot earns the right to exist.</h2>
@@ -170,19 +210,19 @@
           </div>
           <div class="asset-grid">
             <button class="asset-card is-selected" data-asset="opener">
-              <video src="./assets/library/native-av/native-hook.mp4?v=20260729" muted loop autoplay playsinline></video>
+              <video src="./assets/library/native-av/native-hook.mp4?v=20260805-hook2" muted loop autoplay playsinline></video>
               <span><b>Creator opener</b><small>Hook + reaction</small></span><i>Selected</i>
             </button>
             <button class="asset-card is-selected" data-asset="front">
-              <img src="./assets/library/fit-front.png" alt="Front fit of denim skirt" />
+              <img src="./assets/library/fit-front.png" alt="Front fit of black A-line skirt" />
               <span><b>Front fit</b><small>A-line proof</small></span><i>Selected</i>
             </button>
             <button class="asset-card is-selected" data-asset="side">
-              <img src="./assets/library/fit-side.png" alt="Side fit of denim skirt" />
+              <img src="./assets/library/fit-side.png" alt="Side fit of black A-line skirt" />
               <span><b>Side fit</b><small>Second angle</small></span><i>Selected</i>
             </button>
             <button class="asset-card is-selected" data-asset="detail">
-              <img src="./assets/library/fabric-detail.png" alt="Denim fabric detail" />
+              <img src="./assets/library/fabric-detail.png" alt="Black fabric detail" />
               <span><b>Fabric detail</b><small>Texture proof</small></span><i>Selected</i>
             </button>
             <label class="asset-card upload-asset">
@@ -195,15 +235,15 @@
         </div>
       </section>
 
-      <section id="stage-5" class="workflow-stage shell is-locked">
-        <div class="lock-note">Select evidence to unlock</div>
+      <section id="stage-5" class="workflow-stage shell">
+        <div class="lock-note">Saved example · jump in anytime</div>
         <div class="stage-heading compact">
           <div><span class="stage-number">05</span><p class="eyebrow">PRODUCTION SCRIPT</p></div>
           <h2>A shot-level plan that production can execute.</h2>
         </div>
         <div class="script-table">
           <div class="script-row header"><span>TIME</span><span>VISUAL</span><span>VOICE + TEXT</span><span>GROUNDING</span></div>
-          <div class="script-row"><time>00-05</time><p>Creator lifts the skirt. Comment card appears in the upper-left safe area.</p><p>"Pear-shaped? Same. Here is what the product photos do not show."</p><mark>Native dialogue<br />Asset: opener</mark></div>
+          <div class="script-row"><time>00-05</time><p>Creator reacts with widened eyes, leans in, then points to the skirt. Comment card sits below the face; three impact beats punctuate the proof list.</p><p>"Return shipping? Deal. Front, side, fabric—no model-photo magic."</p><mark>Conflict hook<br />Score: 96</mark></div>
           <div class="script-row"><time>05-10</time><p>Animated front-view sample traces the silhouette with one hand.</p><p>"From the front, the A-line shape opens below the hips."</p><mark>Native dialogue<br />Asset: front</mark></div>
           <div class="script-row"><time>10-15</time><p>Animated side-view sample turns gently to show the hip area.</p><p>"From the side, this sample leaves visible room through the hip."</p><mark>Native dialogue<br />Asset: side</mark></div>
           <div class="script-row"><time>15-20</time><p>Hand pinches and releases the fabric. Size-chart prompt closes the video.</p><p>"The fabric still holds its shape. Check the waist chart before ordering."</p><mark>Native dialogue<br />Back excluded</mark></div>
@@ -211,9 +251,9 @@
         <div class="stage-action"><button id="render-video" class="primary-button">Generate final creative <span>&rarr;</span></button></div>
       </section>
 
-      <section id="stage-6" class="workflow-stage stage-result is-locked">
+      <section id="stage-6" class="workflow-stage stage-result">
         <div class="shell result-layout">
-          <div class="lock-note">Approve production script to unlock</div>
+          <div class="lock-note">Saved output · jump in anytime</div>
           <div>
             <div class="stage-heading compact">
               <div><span class="stage-number">06</span><p class="eyebrow">CREATIVE + EVALUATION</p></div>
@@ -257,9 +297,40 @@
           </div>
           <article class="final-video">
             <div class="phone-label"><span>OUTPUT</span> Grounded creative</div>
-            <div class="phone-frame"><video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260729" controls playsinline preload="metadata"></video></div>
+            <div class="phone-frame"><video src="./assets/output/comment-reply-demo-native-av.mp4?v=20260805-hook2" controls playsinline preload="metadata"></video></div>
             <a class="secondary-button" href="./assets/output/comment-reply-demo-native-av.mp4" download>Download native A/V demo</a>
           </article>
+        </div>
+      </section>
+
+      <section id="stage-7" class="workflow-stage validation-stage">
+        <div class="shell">
+          <div class="stage-heading compact validation-heading">
+            <div><span class="stage-number">07</span><p class="eyebrow">VALIDATION LOOP</p></div>
+            <h2>Prove the workflow, then improve the weakest result.</h2>
+            <p>Three cases separate generation reliability, cross-category transfer and evidence boundaries. They do not claim statistical stability or sales lift.</p>
+          </div>
+          <div class="validation-matrix" aria-label="A C D validation cases">
+            <article><span>A</span><div><b>Small appliance</b><p>Desk fan · complete creative</p></div><em>Rendered</em></article>
+            <article><span>C</span><div><b>Kitchen storage</b><p>Food container · complete creative</p></div><em>Rendered</em></article>
+            <article class="is-blocked"><span>D</span><div><b>Missing evidence</b><p>“Microwave-safe + leakproof”</p></div><em>Blocked before API</em></article>
+          </div>
+          <div class="validation-body">
+            <div class="validation-videos">
+              <article><div class="mini-phone"><video controls playsinline preload="metadata" src="./assets/stability/runs/case-a-desk-fan-v2/final.mp4"></video></div><div><small>A · DESK FAN</small><b>Comment read → emotional reply → visible controls</b><p>Technical gate and claim grounding passed.</p></div></article>
+              <article><div class="mini-phone"><video controls playsinline preload="metadata" src="./assets/stability/runs/case-c-food-container-v2/final.mp4"></video></div><div><small>C · FOOD CONTAINER</small><b>Comment read → emotional reply → divider proof</b><p>Technical gate and claim grounding passed.</p></div></article>
+            </div>
+            <div class="iteration-note">
+              <span>ONE OBSERVED FAILURE → ONE WORKFLOW CHANGE</span>
+              <h3>Batch submission failed under a one-task concurrency limit.</h3>
+              <p>The runner now submits, polls, downloads and verifies each shot before starting the next. Unsupported claims still stop before paid generation.</p>
+              <div><b>Before</b><i>submit all shots</i><strong>→</strong><b>After</b><i>serial + resumable queue</i></div>
+            </div>
+          </div>
+          <div class="validation-footer">
+            <p><b>What this proves:</b> two new categories reached complete A/V cuts; one unsafe claim was rejected; the live failure produced a reusable queue fix.</p>
+            <p><b>What remains online:</b> 3-second hold, 6-second hold, CTR, CVR and refund rate require real traffic.</p>
+          </div>
         </div>
       </section>
     </main>
