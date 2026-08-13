@@ -809,7 +809,7 @@ h2 {
 
 .intro-capabilities {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1544,6 +1544,21 @@ h2 {
   color: var(--muted);
   font-size: 11px;
   font-weight: 850;
+}
+
+.work-story-label {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  padding: 6px 10px;
+  border: 1px solid rgba(var(--card-accent), 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  color: var(--soft);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: 0.04em;
 }
 
 .work-card-title {
@@ -6354,6 +6369,36 @@ body.case-open {
   grid-row: 7;
 }
 
+.c-product-grid .work-card--xiaomi,
+.c-product-grid .xiaomi-visual-dock {
+  grid-row: 1;
+}
+
+.c-product-grid .work-card--xiaomi { order: 1; }
+.c-product-grid .xiaomi-visual-dock { order: 2; }
+
+.c-product-grid .work-card--baidu {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  order: 3;
+}
+
+.c-product-grid .work-card--telestudio,
+.c-product-grid .tele-demo-dock {
+  grid-row: 3;
+}
+
+.c-product-grid .work-card--telestudio { order: 4; }
+.c-product-grid .tele-demo-dock { order: 5; }
+
+.c-product-grid .work-card--buding,
+.c-product-grid .buding-demo-dock {
+  grid-row: 4;
+}
+
+.c-product-grid .work-card--buding { order: 6; }
+.c-product-grid .buding-demo-dock { order: 7; }
+
 .xiaomi-visual-dock {
   position: relative;
   isolation: isolate;
@@ -6620,6 +6665,17 @@ body.case-open {
   }
 
   .work-sequence-grid .work-stream-label {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .c-product-grid .work-card--xiaomi,
+  .c-product-grid .xiaomi-visual-dock,
+  .c-product-grid .work-card--baidu,
+  .c-product-grid .work-card--telestudio,
+  .c-product-grid .tele-demo-dock,
+  .c-product-grid .work-card--buding,
+  .c-product-grid .buding-demo-dock {
     grid-column: 1;
     grid-row: auto;
   }
